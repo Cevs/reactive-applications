@@ -62,15 +62,18 @@ public class ImageService {
      */
     public Mono<Void> createImage(Flux<FilePart> files){
         return files
+                .log("createImage-files")
                 .flatMap(file ->{
                     Mono<Image> saveDatabaseImage = imageRepository.save(
                             new Image(
                                     UUID.randomUUID().toString(),
                                     file.filename()
+
                             )
-                    );
+                    ).log("createImage-save");
 
                     Mono<Void> copyFile = Mono.just(Paths.get(UPLOAD_ROOT,file.filename()).toFile())
+                            .log("createImage-picktarget")
                             .map(destFile ->{
                                 try {
                                     destFile.createNewFile();
@@ -78,17 +81,24 @@ public class ImageService {
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
-                            }).flatMap(file::transferTo);
+                            })
+                            .log("createImage-flatMap")
+                            .flatMap(file::transferTo)
+                            .log("createImage-copy");
                     //To ensure both of these operations are completed, join them together
-                    return Mono.when(saveDatabaseImage, copyFile);
+                    return Mono.when(saveDatabaseImage, copyFile).log("createImage-when");
                 })
-                .then(); //Signal when all files have been processed
+                .log("createImage-flatMap")
+                .then()
+                .log("createImage-then"); //Signal when all files have been processed
     }
 
     public Mono<Void> deleteImage(String filename){
         Mono<Void> deleteDatabaseImage = imageRepository
                 .findByName(filename)
-                .flatMap(image -> imageRepository.delete(image));
+                .log("deleteImage-find")
+                .flatMap(image -> imageRepository.delete(image))
+                .log("deleteImage-record");
 
         Mono<Void> deleteFiles = Mono.fromRunnable(()->{
             try {
@@ -102,7 +112,10 @@ public class ImageService {
         });
 
         // When using .when() and .then() is also known as PROMISE PATTERN
-        return Mono.when(deleteDatabaseImage, deleteFiles).then();
+        return Mono.when(deleteDatabaseImage, deleteFiles)
+                .log("deleteImage-when")
+                .then()
+                .log("deleteImage-done");
     }
 
 

@@ -1,6 +1,7 @@
 package com.cevs.reactivesocialapp.services;
 
-import com.cevs.reactivesocialapp.Image;
+import com.cevs.reactivesocialapp.domain.Image;
+import com.cevs.reactivesocialapp.repositories.ImageRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
@@ -17,6 +18,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 @Service
 public class ImageService {
@@ -25,9 +27,11 @@ public class ImageService {
 
     //Base folder where images will be saved
     private final ResourceLoader resourceLoader;
+    private final ImageRepository imageRepository;
 
-    public ImageService(ResourceLoader resourceLoader) {
+    public ImageService(ResourceLoader resourceLoader, ImageRepository imageRepository) {
         this.resourceLoader = resourceLoader;
+        this.imageRepository = imageRepository;
     }
 
     public Flux<Image> findAllImages() {
@@ -51,27 +55,60 @@ public class ImageService {
         );
     }
 
+    /*
+        Istovremeno spremi sliku u bazu i na server.
+        Ukratko, ne čeka se da se prvo spremi datoteka u bazu pa da se tek onda krene spremati na server,
+        vec se radnje odvijaju simultano
+     */
     public Mono<Void> createImage(Flux<FilePart> files){
-        return files.flatMap(file -> file.transferTo(
-                Paths.get(UPLOAD_ROOT, file.filename()).toFile()
-        )).then();
+        return files
+                .flatMap(file ->{
+                    Mono<Image> saveDatabaseImage = imageRepository.save(
+                            new Image(
+                                    UUID.randomUUID().toString(),
+                                    file.filename()
+                            )
+                    );
+
+                    Mono<Void> copyFile = Mono.just(Paths.get(UPLOAD_ROOT,file.filename()).toFile())
+                            .map(destFile ->{
+                                try {
+                                    destFile.createNewFile();
+                                    return destFile;
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }).flatMap(file::transferTo);
+                    //To ensure both of these operations are completed, join them together
+                    return Mono.when(saveDatabaseImage, copyFile);
+                })
+                .then(); //Signal when all files have been processed
     }
 
     public Mono<Void> deleteImage(String filename){
-        return Mono.fromRunnable(()->{
-            try{
-                Files.deleteIfExists(Paths.get(UPLOAD_ROOT, filename));
-            }catch (IOException e){
+        Mono<Void> deleteDatabaseImage = imageRepository
+                .findByName(filename)
+                .flatMap(image -> imageRepository.delete(image));
+
+        Mono<Void> deleteFiles = Mono.fromRunnable(()->{
+            try {
+                Files.deleteIfExists(
+                        Paths.get(UPLOAD_ROOT, filename)
+                );
+            } catch (IOException e) {
+
                 throw new RuntimeException(e);
             }
         });
+
+        // When using .when() and .then() is also known as PROMISE PATTERN
+        return Mono.when(deleteDatabaseImage, deleteFiles).then();
     }
 
 
     /*
         Preload test images
      */
-    @Bean
     CommandLineRunner setUp(){
         //Lambda automatically gets converted into a CommandLineRunner via Java 8 SAM ( Single abstraction method)
         return args -> {

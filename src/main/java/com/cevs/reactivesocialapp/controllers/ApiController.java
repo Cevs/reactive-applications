@@ -1,8 +1,8 @@
-package com.cevs.reactivesocialapp;
+package com.cevs.reactivesocialapp.controllers;
 
+import com.cevs.reactivesocialapp.domain.Image;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +19,7 @@ public class ApiController {
     @GetMapping(API_BASE_PATH + "/images")
     Flux<Image> images(){
         return Flux.just(
-                new Image("1", "Image 1"),
+                new Image("1", "space_debris_1.jpg"),
                 new Image("2", "Image 2"),
                 new Image("3", "Image 3")
         );

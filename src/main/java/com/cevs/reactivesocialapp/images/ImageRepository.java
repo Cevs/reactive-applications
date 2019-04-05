@@ -1,6 +1,5 @@
-package com.cevs.reactivesocialapp.repositories;
+package com.cevs.reactivesocialapp.images;
 
-import com.cevs.reactivesocialapp.domain.Image;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

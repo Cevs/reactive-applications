@@ -1,6 +1,6 @@
-package com.cevs.reactivesocialapp.controllers;
+package com.cevs.reactivesocialapp;
 
-import com.cevs.reactivesocialapp.services.ImageService;
+import com.cevs.reactivesocialapp.images.ImageService;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.codec.multipart.FilePart;

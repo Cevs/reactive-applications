@@ -1,7 +1,7 @@
 package com.cevs.reactivesocialapp;
 
-import com.cevs.reactivesocialapp.domain.Image;
-import com.cevs.reactivesocialapp.repositories.ImageRepository;
+import com.cevs.reactivesocialapp.images.Image;
+import com.cevs.reactivesocialapp.images.ImageRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

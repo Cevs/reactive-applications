@@ -1,6 +1,6 @@
 package com.cevs.reactivesocialapp;
 
-import com.cevs.reactivesocialapp.domain.Image;
+import com.cevs.reactivesocialapp.images.Image;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

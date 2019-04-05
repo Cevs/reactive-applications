@@ -1,9 +1,6 @@
-package com.cevs.reactivesocialapp.services;
+package com.cevs.reactivesocialapp.images;
 
-import com.cevs.reactivesocialapp.domain.Image;
-import com.cevs.reactivesocialapp.repositories.ImageRepository;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.codec.multipart.FilePart;

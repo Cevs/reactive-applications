@@ -1,6 +1,6 @@
-package com.cevs.reactivesocialapp.controllers;
+package com.cevs.reactivesocialapp;
 
-import com.cevs.reactivesocialapp.domain.Image;
+import com.cevs.reactivesocialapp.images.Image;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;

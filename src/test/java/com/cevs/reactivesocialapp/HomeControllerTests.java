@@ -1,8 +1,7 @@
 package com.cevs.reactivesocialapp;
 
-import com.cevs.reactivesocialapp.controllers.HomeController;
-import com.cevs.reactivesocialapp.domain.Image;
-import com.cevs.reactivesocialapp.services.ImageService;
+import com.cevs.reactivesocialapp.images.Image;
+import com.cevs.reactivesocialapp.images.ImageService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

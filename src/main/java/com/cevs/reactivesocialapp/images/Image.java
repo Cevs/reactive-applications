@@ -1,4 +1,4 @@
-package com.cevs.reactivesocialapp.domain;
+package com.cevs.reactivesocialapp.images;
 
 import lombok.Data;
 import lombok.Getter;

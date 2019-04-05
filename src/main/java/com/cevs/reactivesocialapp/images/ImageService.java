@@ -83,7 +83,7 @@ public class ImageService {
                 .log("deleteImage-find")
                 .flatMap(image -> imageRepository.delete(image))
                 .log("deleteImage-record");
-
+        
         Mono<Void> deleteFiles = Mono.fromRunnable(()->{
             try {
                 Files.deleteIfExists(

@@ -1,17 +1,11 @@
 package com.cevs.reactivesocialapp.images;
 
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.util.FileSystemUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -32,14 +26,7 @@ public class ImageService {
     }
 
     public Flux<Image> findAllImages() {
-        try{
-            return Flux.fromIterable(
-                    //Directory stream is lazy iterable (which means that nothing is fetched until next() is called)
-                    Files.newDirectoryStream(Paths.get(UPLOAD_ROOT))
-            ).map(path-> new Image(path.hashCode()+"", path.getFileName().toString()));
-        }catch (IOException ex){
-            return Flux.empty();
-        }
+        return imageRepository.findAll().log("findAll");
     }
 
     public Mono<Resource> findOneImage(String filename){
@@ -113,27 +100,5 @@ public class ImageService {
                 .log("deleteImage-when")
                 .then()
                 .log("deleteImage-done");
-    }
-
-
-    /*
-        Preload test images
-     */
-    CommandLineRunner setUp(){
-        //Lambda automatically gets converted into a CommandLineRunner via Java 8 SAM ( Single abstraction method)
-        return args -> {
-            FileSystemUtils.deleteRecursively(new File(UPLOAD_ROOT));
-            Files.createDirectory(Paths.get(UPLOAD_ROOT));
-
-            FileCopyUtils.copy("Test file",
-                    new FileWriter(UPLOAD_ROOT +
-                            "Image 1"));
-            FileCopyUtils.copy("Test file2",
-                    new FileWriter(UPLOAD_ROOT +
-                            "Image 2"));
-            FileCopyUtils.copy("Test file3",
-                    new FileWriter(UPLOAD_ROOT +
-                            "Image 3"));
-        };
     }
 }

@@ -1,8 +1,10 @@
 package com.cevs.reactivesocialapp;
 
 import com.cevs.reactivesocialapp.images.Image;
+import com.cevs.reactivesocialapp.images.ImageRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,13 +18,12 @@ public class ApiController {
     private static final Logger log = LoggerFactory.getLogger(ApiController.class);
     private static final String API_BASE_PATH = "/api";
 
+    @Autowired
+    ImageRepository imageRepository;
+
     @GetMapping(API_BASE_PATH + "/images")
     Flux<Image> images(){
-        return Flux.just(
-                new Image("1", "space_debris_1.jpg"),
-                new Image("2", "Image 2"),
-                new Image("3", "Image 3")
-        );
+        return imageRepository.findAll();
     }
 
     @PostMapping(API_BASE_PATH + "/images")

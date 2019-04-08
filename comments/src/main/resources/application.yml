@@ -34,3 +34,9 @@ logging:
       springframework:
         cloud: DEBUG
         integration: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream, info, health

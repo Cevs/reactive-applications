@@ -1,6 +1,7 @@
 package com.cevs.reactivesocialapp;
 
 import com.cevs.reactivesocialapp.images.Comment;
+import com.cevs.reactivesocialapp.images.CommentHelper;
 import com.cevs.reactivesocialapp.images.ImageService;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.InputStreamResource;
@@ -26,11 +27,11 @@ public class HomeController {
     private static final String FILENAME = "{filename:.+}";
 
     private final ImageService imageService;
-    private final RestTemplate restTemplate;
+    private final CommentHelper commentHelper;
 
-    public HomeController(ImageService imageService, RestTemplate restTemplate) {
+    public HomeController(ImageService imageService, CommentHelper commentHelper) {
         this.imageService = imageService;
-        this.restTemplate = restTemplate;
+        this.commentHelper = commentHelper;
     }
 
     /*
@@ -72,14 +73,7 @@ public class HomeController {
                 .map(image-> new HashMap<String, Object>(){{
                     put("id", image.getId());
                     put("name", image.getName());
-                    put("comments",
-                            restTemplate.exchange(
-                                    "http://COMMENTS/comments/{imageId}",
-                                    HttpMethod.GET,
-                                    null,
-                                    new ParameterizedTypeReference<List<Comment>>() {},
-                                    image.getId()).getBody()
-                    );
+                    put("comments", commentHelper.getComments(image));
                 }})
         );
         return Mono.just("index");

@@ -16,6 +16,8 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<spring-cloud-dependencies.version>Finchley.M9</spring-cloud-dependencies.version>
+		<spring-cloud-stream-dependencies.version>Elmhurst.RELEASE</spring-cloud-stream-dependencies.version>
 	</properties>
 
 	<dependencies>
@@ -74,12 +76,12 @@
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>Finchley.M9</version>
+				<version>${spring-cloud-dependencies.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-stream-dependencies</artifactId>
-				<version>Elmhurst.RELEASE</version>
+				<version>${spring-cloud-stream-dependencies.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

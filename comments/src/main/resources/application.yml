@@ -1,0 +1,36 @@
+server:
+  port: 9000
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka
+
+spring:
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: reactive-social-application
+          group:  comments
+          content-type: application/json
+        output:
+          destination: reactive-social-application
+
+  application:
+    name: comments
+
+  devtools:
+    restart:
+      log-condition-evaluation-delta: false
+
+logging:
+  level:
+    web: DEBUG
+    reactor:
+      core: TRACE
+      util: TRACE
+    org:
+      springframework:
+        cloud: DEBUG
+        integration: DEBUG

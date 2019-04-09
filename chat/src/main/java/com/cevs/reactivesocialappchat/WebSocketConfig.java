@@ -14,16 +14,34 @@ import java.util.Map;
 @Configuration
 public class WebSocketConfig {
 
+    private final InboundChatService inboundChatService;
+    private final OutboundChatService outboundChatService;
+
+    public WebSocketConfig(InboundChatService inboundChatService, OutboundChatService outboundChatService) {
+        this.inboundChatService = inboundChatService;
+        this.outboundChatService = outboundChatService;
+    }
+
     @Bean
     HandlerMapping webSocketMapping(CommentService commentService){
         Map<String, WebSocketHandler> urlMap = new HashMap<>();
         urlMap.put("/topic/comments.new", commentService);
+        urlMap.put("/topic/chatMessage.new", outboundChatService);
+        urlMap.put("/app/chatMessage.new", inboundChatService);
+
         Map<String, CorsConfiguration> corsConfigurationMap =
                 new HashMap<>();
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.addAllowedOrigin("http://localhost:8080");
         corsConfigurationMap.put(
                 "/topic/comments.new", corsConfiguration);
+        corsConfigurationMap.put(
+                "/topic/chatMessage.new", corsConfiguration
+        );
+        corsConfigurationMap.put(
+                "/app/chatMessage.new", corsConfiguration
+        );
+
         SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
         mapping.setOrder(10);   //Need an order level of 10 to get viewed ahead of certain other route handlers provided by spring boot
         mapping.setUrlMap(urlMap);

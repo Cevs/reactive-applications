@@ -11,12 +11,12 @@ spring:
           group: comments-chat
           content-type: application/json
         newComments:
-          destination: reactive-social-application-chat
-          group: comments-chat
+          destination: reactive-social-application-user-chat
+          group: comments-user-chat
           content-type: application/json
         clientToBroker:
-          destination: reactive-social-application-chat-messages
+          destination: reactive-social-application-chat-user-messages
           group: app-chatMessages
         brokerToClient:
-          destination: reactive-social-application-chat-messages
+          destination: reactive-social-application-chat-user-messages
           group: topic-chatMessages

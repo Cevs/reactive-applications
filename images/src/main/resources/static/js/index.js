@@ -39,4 +39,27 @@
                 comment.value = '';
             });
         });
+
+    var outboundChatMessages = new
+    WebSocket('ws://localhost:8200/app/chatMessage.new');
+    // Post new chat messages
+    outboundChatMessages.onopen = function(event) {
+        document.getElementById('chatButton')
+            .addEventListener('click', function () {
+                var chatInput = document.getElementById('chatInput');
+                console.log('Publishing "' + chatInput.value + '"');
+                outboundChatMessages.send(chatInput.value);
+                chatInput.value = '';
+                chatInput.focus();
+            });
+    }
+
+    var inboundChatMessages =
+        new WebSocket('ws://localhost:8200/topic/chatMessage.new');
+    // Listen for new chat messages
+    inboundChatMessages.onmessage = function (event) {
+        console.log('Received ' + event.data);
+        var chatDisplay = document.getElementById('chatDisplay');
+        chatDisplay.value = chatDisplay.value + event.data + '\n';
+    };
 })();

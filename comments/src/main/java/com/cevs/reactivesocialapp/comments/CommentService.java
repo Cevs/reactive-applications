@@ -1,5 +1,7 @@
 package com.cevs.reactivesocialapp.comments;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
@@ -12,6 +14,7 @@ import reactor.core.publisher.Mono;
 @EnableBinding(CustomProcessor.class)
 public class CommentService {
 
+    private final static Logger log = LoggerFactory.getLogger(CustomProcessor.class);
     private CommentRepository commentRepository;
 
     public CommentService(CommentRepository commentRepository) {
@@ -20,11 +23,15 @@ public class CommentService {
 
     @StreamListener
     @Output(CustomProcessor.OUTPUT)
-    public Flux<Void> save(@Input(CustomProcessor.INPUT) Flux<Comment> newComments){
+    public Flux<Comment> save(@Input(CustomProcessor.INPUT) Flux<Comment> newComments){
         return commentRepository
                 .saveAll(newComments)
                 .log("commentService-save")
                 //.thenMany(Mono.empty());
-                .flatMap(comment -> Mono.empty());
+                //.flatMap(comment -> Mono.empty());
+        .map(comment->{
+            log.info("Saving new comment " + comment);
+            return comment;
+        });
     }
 }

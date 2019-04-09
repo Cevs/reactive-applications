@@ -1,0 +1,22 @@
+server:
+  port: 8200
+spring:
+  application:
+    name: chat
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: reactive-social-application-chat
+          group: comments-chat
+          content-type: application/json
+        newComments:
+          destination: reactive-social-application-chat
+          group: comments-chat
+          content-type: application/json
+        clientToBroker:
+          destination: reactive-social-application-chat-messages
+          group: app-chatMessages
+        brokerToClient:
+          destination: reactive-social-application-chat-messages
+          group: topic-chatMessages

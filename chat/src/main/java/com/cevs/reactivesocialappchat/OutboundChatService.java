@@ -51,9 +51,13 @@ public class OutboundChatService extends UserParsingHandshakeHandler {
 
     private boolean validate(Message<String> message, String user){
         if(message.getPayload().startsWith("@")){
-            String targetUser = message.getPayload().substring(1,message.getPayload().indexOf(" "));
-            String sender = message.getHeaders().get(ChatServiceStream.USER_HEADER, String.class);
-            return user.equals(sender) || user.equals(targetUser);
+            if(message.getPayload().contains(" ")){
+                String targetUser = message.getPayload().substring(1,message.getPayload().indexOf(" "));
+                String sender = message.getHeaders().get(ChatServiceStream.USER_HEADER, String.class);
+                return user.equals(sender) || user.equals(targetUser);
+            }else{
+                return true;
+            }
         }
         else{
             return true;
@@ -64,7 +68,13 @@ public class OutboundChatService extends UserParsingHandshakeHandler {
         String user = message.getHeaders()
                 .get(ChatServiceStream.USER_HEADER, String.class);
         if (message.getPayload().startsWith("@")) {
-            return "(" + user + "): " + message.getPayload();
+            if(message.getPayload().contains(" ")){
+                String targetUser = message.getPayload().substring(1,message.getPayload().indexOf(" "));
+                String content = message.getPayload().substring(message.getPayload().indexOf(" "));
+                return "(" + user + ")("+targetUser + content;
+            }else{
+                return "(" + user + ")(all): " + message.getPayload();
+        }
         } else {
             return "(" + user + ")(all): " + message.getPayload();
         }

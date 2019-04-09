@@ -40,6 +40,40 @@
             });
         });
 
+
+    document.getElementById('connect')
+        .addEventListener('click', function () {
+            document.getElementById('connect').style.display = 'none';
+            document.getElementById('disconnect').style.display = 'inline';
+            usernameInput = document.getElementById('username');
+            document.getElementById('chatBox').style.display = 'inline';
+
+            var inboundChatMessages =
+                new WebSocket('ws://localhost:8200/topic/chatMessage.new?user='+usernameInput.value);
+            // Listen for new chat messages
+            inboundChatMessages.onmessage = function (event) {
+                console.log('Received ' + event.data);
+                var chatDisplay = document.getElementById('chatDisplay');
+                chatDisplay.value = chatDisplay.value + event.data + '\n';
+            };
+        });
+
+    document.getElementById('disconnect')
+        .addEventListener('click', function () {
+            document.getElementById('connect').style.display = 'inline';
+            document.getElementById('disconnect').style.display = 'none';
+            document.getElementById('chatBox').style.display = 'none';
+            if (newComments != null) {
+                newComments.close();
+            }
+            if (outboundChatMessages != null) {
+                outboundChatMessages.close();
+            }
+            if (inboundChatMessages != null) {
+                inboundChatMessages.close();
+            }
+        });
+
     var outboundChatMessages = new
     WebSocket('ws://localhost:8200/app/chatMessage.new');
     // Post new chat messages
@@ -52,14 +86,5 @@
                 chatInput.value = '';
                 chatInput.focus();
             });
-    }
-
-    var inboundChatMessages =
-        new WebSocket('ws://localhost:8200/topic/chatMessage.new');
-    // Listen for new chat messages
-    inboundChatMessages.onmessage = function (event) {
-        console.log('Received ' + event.data);
-        var chatDisplay = document.getElementById('chatDisplay');
-        chatDisplay.value = chatDisplay.value + event.data + '\n';
     };
 })();

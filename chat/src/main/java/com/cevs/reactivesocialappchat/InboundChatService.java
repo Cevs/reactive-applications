@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 
 @Service
 @EnableBinding(ChatServiceStream.class)
-public class InboundChatService implements WebSocketHandler {
+public class InboundChatService extends UserParsingHandshakeHandler{
 
     private final ChatServiceStream chatServiceStream;
 
@@ -19,23 +19,28 @@ public class InboundChatService implements WebSocketHandler {
     }
 
     @Override
-    public Mono<Void> handle(WebSocketSession session) {
+    protected Mono<Void> handleInternal(WebSocketSession session) {
         return session
                 .receive()
-                .log("inbound-incoming-chat-message")
+                .log(getUser(session.getId())
+                        + "-inbound-incoming-chat-message")
                 .map(WebSocketMessage::getPayloadAsText)
-                .log("inbound-converter-to-text")
-                .map(s->session.getId() + ": " + s)
-                .log("inbound-mark-with.session-id")
-                .flatMap(this::broadcast)
-                .log("inbound-broadcast-to-broker")
+                .log(getUser(session.getId())
+                        + "-inbound-convert-to-text")
+                .flatMap(message ->
+                        broadcast(message, getUser(session.getId())))
+                .log(getUser(session.getId())
+                        + "-inbound-broadcast-to-broker")
                 .then();
     }
 
-    public Mono<?> broadcast(String message){
+    public Mono<?> broadcast(String message, String user){
         return Mono.fromRunnable(()->{
             chatServiceStream.clientToBroker().send(
-                    MessageBuilder.withPayload(message).build()
+                    MessageBuilder
+                            .withPayload(message)
+                            .setHeader(ChatServiceStream.USER_HEADER, user)
+                            .build()
             );
         });
     }

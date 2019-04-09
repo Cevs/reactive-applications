@@ -11,6 +11,8 @@ public interface ChatServiceStream {
     String CLIENT_TO_BROKER = "clientToBroker";
     String BROKER_TO_CLIENT = "brokerToClient";
 
+    String USER_HEADER = "User";
+
     @Input(NEW_COMMENTS)
     SubscribableChannel newComments();
 

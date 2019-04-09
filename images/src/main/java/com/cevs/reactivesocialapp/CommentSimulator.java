@@ -12,7 +12,6 @@ import reactor.core.publisher.Mono;
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Component
 public class CommentSimulator {
 
     private final CommentController commentController;

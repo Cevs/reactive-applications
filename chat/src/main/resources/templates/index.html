@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" href="css/main.css" rel="stylesheet"/>
+</head>
+<body>
+<div>
+    Name: <span th:text="${authentication.name}"/>
+    Auth: <span th:text="${authentication.authorities}"/>
+</div>
+<hr/>
+
+<div id="images"></div>
+
+<div id="chatBox">
+    Greetings!
+    <br/>
+    <textarea id="chatDisplay"
+              rows="10" cols="80"
+              disabled="true"></textarea>
+    <br/>
+    <input id="chatInput" type="text"
+           style="width: 500px" value=""/>
+    <br/>
+    <button id="chatButton">Send</button>
+    <br/>
+</div>
+</body>
+</html>

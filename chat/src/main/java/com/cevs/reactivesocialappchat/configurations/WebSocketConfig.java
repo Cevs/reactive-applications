@@ -1,5 +1,8 @@
-package com.cevs.reactivesocialappchat;
+package com.cevs.reactivesocialappchat.configurations;
 
+import com.cevs.reactivesocialappchat.CommentService;
+import com.cevs.reactivesocialappchat.InboundChatService;
+import com.cevs.reactivesocialappchat.OutboundChatService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -29,23 +32,10 @@ public class WebSocketConfig {
         urlMap.put("/topic/chatMessage.new", outboundChatService);
         urlMap.put("/app/chatMessage.new", inboundChatService);
 
-        Map<String, CorsConfiguration> corsConfigurationMap =
-                new HashMap<>();
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("http://localhost:8080");
-        corsConfigurationMap.put(
-                "/topic/comments.new", corsConfiguration);
-        corsConfigurationMap.put(
-                "/topic/chatMessage.new", corsConfiguration
-        );
-        corsConfigurationMap.put(
-                "/app/chatMessage.new", corsConfiguration
-        );
-
         SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
         mapping.setOrder(10);   //Need an order level of 10 to get viewed ahead of certain other route handlers provided by spring boot
         mapping.setUrlMap(urlMap);
-        mapping.setCorsConfigurations(corsConfigurationMap);
+
         return mapping;
     }
 

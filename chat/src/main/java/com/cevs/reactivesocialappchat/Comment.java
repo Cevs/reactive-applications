@@ -1,4 +1,4 @@
-package com.cevs.reactivesocialappchat.domain;
+package com.cevs.reactivesocialappchat;
 
 import lombok.Data;
 

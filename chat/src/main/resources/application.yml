@@ -20,31 +20,3 @@ spring:
         brokerToClient:
           destination: reactive-social-application-chat-user-messages
           group: topic-chatMessages
-    gateway:
-      routes:
-        - id: imagesService
-          uri: lb://IMAGES
-          predicates:
-            - Path=/imagesService/**
-          filters:
-            - RewritePath=/imagesService/(?<segment>.*),/$\{segment}
-            - RewritePath=/imagesServicee, /
-            - SaveSession
-        - id: images
-          uri: lb://IMAGES
-          predicates:
-            - Path=/images/**
-          filters:
-            - SaveSession
-        - id: mainCss
-          uri: lb://IMAGES
-          predicates:
-            - Path=/main.css
-          filters:
-            - SaveSession
-        - id: commentsService
-          uri: lb://IMAGES
-          predicates:
-            - Path=/comments/**
-          filters:
-            - SaveSession

@@ -71,7 +71,7 @@ public class OutboundChatService extends UserParsingHandshakeHandler {
             if(message.getPayload().contains(" ")){
                 String targetUser = message.getPayload().substring(1,message.getPayload().indexOf(" "));
                 String content = message.getPayload().substring(message.getPayload().indexOf(" "));
-                return "(" + user + ")("+targetUser + content;
+                return "(" + user + ")("+targetUser+"):" + content;
             }else{
                 return "(" + user + ")(all): " + message.getPayload();
         }

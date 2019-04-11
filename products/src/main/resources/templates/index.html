@@ -16,31 +16,31 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="image : ${images}">
-            <td th:text="${image.id}"></td>
-            <td th:text="${image.name}"></td>
-            <td><a href="@{'/images/' + ${image.name} + '/raw'}"><img th:src="@{'/images/' + ${image.name} + '/raw'}" class="thumbnail" /></a></td>
+        <tr th:each="product : ${products}">
+            <td th:text="${product.id}"></td>
+            <td th:text="${product.name}"></td>
+            <td><a href="@{'/products/' + ${product.name} + '/raw'}"><img th:src="@{'/products/' + ${product.name} + '/raw'}" class="thumbnail" /></a></td>
             <td>
-                <form th:method="delete" th:action="@{'/images/' + ${image.name}}">
+                <form th:method="delete" th:action="@{'/products/' + ${product.name}}">
                     <input type="submit" value="Delete"/>
                 </form>
             </td>
             <!-- tag::comments[] -->
             <td>
-                <ul th:id="'comments-' + ${image.id}">
-                    <li th:each="comment : ${image.comments}" th:text="${comment.comment}"></li>
+                <ul th:id="'comments-' + ${product.id}">
+                    <li th:each="comment : ${product.comments}" th:text="${comment.comment}"></li>
                 </ul>
             </td>
             <td>
-                <input th:id="'comment-' + ${image.id}" type="text" value="" />
-                <button th:id="${image.id}" class="comment">Submit</button>
+                <input th:id="'comment-' + ${product.id}" type="text" value="" />
+                <button th:id="${product.id}" class="comment">Submit</button>
             </td>
             <!-- end::comments[] -->
         </tr>
         </tbody>
     </table>
 
-    <form method="post" enctype="multipart/form-data" action="/images">
+    <form method="post" enctype="multipart/form-data" action="/products">
         <p><input type="file" name="file" /></p>
         <p><input type="submit" value="Upload" /></p>
     </form>

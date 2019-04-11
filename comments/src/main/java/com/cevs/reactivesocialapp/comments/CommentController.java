@@ -15,8 +15,8 @@ public class CommentController {
         this.commentRepository = commentRepository;
     }
 
-    @GetMapping("/comments/{imageId}")
-    public Flux<Comment> comments(@PathVariable String imageId){
-        return commentRepository.findByImageId(imageId);
+    @GetMapping("/comments/{productId}")
+    public Flux<Comment> comments(@PathVariable String productId){
+        return commentRepository.findByProductId(productId);
     }
 }

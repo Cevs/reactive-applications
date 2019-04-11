@@ -8,6 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Comment {
     @Id private String id;
-    private String imageId;
+    private String productId;
     private String comment;
 }

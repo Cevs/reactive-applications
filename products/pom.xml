@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.cevs</groupId>
-	<artifactId>reactive-social-app-images</artifactId>
+	<artifactId>reactive-social-app-products</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>images</name>
+	<name>products</name>
 
 	<properties>
 		<java.version>1.8</java.version>

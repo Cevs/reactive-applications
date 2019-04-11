@@ -11,7 +11,7 @@
         console.log('Recieved ' + event.data + "!");
         var parsedMessage = JSON.parse(event.data);
         var ul = document.getElementById(
-            'comments-' + parsedMessage.imageId
+            'comments-' + parsedMessage.productId
         );
         var li = document.createElement("li");
         li.appendChild(
@@ -32,8 +32,7 @@
 
                 var formData = new FormData();
                 formData.append('comment', comment.value);
-                formData.append('imageId', button.id);
-
+                formData.append('productId', button.id);
                 xhr.send(formData);
 
                 comment.value = '';
@@ -61,7 +60,7 @@
             newComments.onmessage = function (event) {
                 console.log('Received ' + event.data);
                 var parsedMesssage = JSON.parse(event.data);
-                var ul = document.getElementById('comments-' + parsedMesssage.imageId);
+                var ul = document.getElementById('comments-' + parsedMesssage.productId);
                 var li = document.createElement('li');
                 li.appendChild(document.createTextNode(parsedMesssage.comment));
                 ul.appendChild(li);

@@ -16,7 +16,7 @@ spring:
           group: comments-service
           content-type: application/json
   application:
-    name: images
+    name: products
 
   devtools:
     restart:

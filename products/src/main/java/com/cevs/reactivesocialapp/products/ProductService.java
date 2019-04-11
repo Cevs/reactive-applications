@@ -1,4 +1,4 @@
-package com.cevs.reactivesocialapp.images;
+package com.cevs.reactivesocialapp.products;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -12,24 +12,24 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
-public class ImageService {
+public class ProductService {
 
     private static String UPLOAD_ROOT = "upload-dir";
 
-    //Base folder where images will be saved
+    //Base folder where products will be saved
     private final ResourceLoader resourceLoader;
-    private final ImageRepository imageRepository;
+    private final ProductRepository productRepository;
 
-    public ImageService(ResourceLoader resourceLoader, ImageRepository imageRepository) {
+    public ProductService(ResourceLoader resourceLoader, ProductRepository productRepository) {
         this.resourceLoader = resourceLoader;
-        this.imageRepository = imageRepository;
+        this.productRepository = productRepository;
     }
 
-    public Flux<Image> findAllImages() {
-        return imageRepository.findAll().log("findAll");
+    public Flux<Product> findAllProducts() {
+        return productRepository.findAll().log("findAll");
     }
 
-    public Mono<Resource> findOneImage(String filename){
+    public Mono<Resource> findOneProduct(String filename){
         //If we put Mono.just() instead of Mono.fromSupplier() the resource fetching would happen immediately
         //when the method is called.
         //By putting it inside a Java 8 Supplier, that won't happen until the lambda is invoked, and because
@@ -39,17 +39,12 @@ public class ImageService {
         );
     }
 
-    /*
-        Istovremeno spremi sliku u bazu i na server.
-        Ukratko, ne čeka se da se prvo spremi datoteka u bazu pa da se tek onda krene spremati na server,
-        vec se radnje odvijaju simultano
-     */
-    public Mono<Void> createImage(Flux<FilePart> files){
+    public Mono<Void> createProduct(Flux<FilePart> files){
         return files
                 .log("createImage-files")
                 .flatMap(file ->{
-                    Mono<Image> saveDatabaseImage = imageRepository.save(
-                            new Image(
+                    Mono<Product> saveDatabaseImage = productRepository.save(
+                            new Product(
                                     UUID.randomUUID().toString(),
                                     file.filename()
 
@@ -77,11 +72,11 @@ public class ImageService {
                 .log("createImage-then"); //Signal when all files have been processed
     }
 
-    public Mono<Void> deleteImage(String filename){
-        Mono<Void> deleteDatabaseImage = imageRepository
+    public Mono<Void> deleteProduct(String filename){
+        Mono<Void> deleteDatabaseProduct = productRepository
                 .findByName(filename)
                 .log("deleteImage-find")
-                .flatMap(image -> imageRepository.delete(image))
+                .flatMap(image -> productRepository.delete(image))
                 .log("deleteImage-record");
         
         Mono<Void> deleteFiles = Mono.fromRunnable(()->{
@@ -96,7 +91,7 @@ public class ImageService {
         });
 
         // When using .when() and .then() is also known as PROMISE PATTERN
-        return Mono.when(deleteDatabaseImage, deleteFiles)
+        return Mono.when(deleteDatabaseProduct, deleteFiles)
                 .log("deleteImage-when")
                 .then()
                 .log("deleteImage-done");

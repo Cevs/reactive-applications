@@ -1,4 +1,4 @@
-package com.cevs.reactivesocialapp.images;
+package com.cevs.reactivesocialapp.products;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.core.ParameterizedTypeReference;
@@ -19,16 +19,16 @@ public class CommentHelper {
     }
 
     @HystrixCommand(fallbackMethod = "defaultComments")
-    public List<Comment> getComments(Image image){
+    public List<Comment> getComments(Product product){
         return restTemplate.exchange(
-                "http://COMMENTS/comments/{imageId}",
+                "http://COMMENTS/comments/{productId}",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<Comment>>() {},
-                image.getId()).getBody();
+                product.getId()).getBody();
     }
 
-    public List<Comment> defaultComments(Image image){
+    public List<Comment> defaultComments(Product image){
         return Collections.emptyList();
     }
 }

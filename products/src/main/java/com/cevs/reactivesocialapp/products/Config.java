@@ -1,4 +1,4 @@
-package com.cevs.reactivesocialapp.images;
+package com.cevs.reactivesocialapp.products;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;

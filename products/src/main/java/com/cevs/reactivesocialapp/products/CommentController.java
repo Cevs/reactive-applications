@@ -1,5 +1,7 @@
-package com.cevs.reactivesocialapp.images;
+package com.cevs.reactivesocialapp.products;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.cloud.stream.messaging.Source;
@@ -10,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
@@ -22,6 +23,7 @@ import reactor.core.publisher.Mono;
 @EnableBinding(Source.class)
 public class CommentController {
 
+    private static final Logger log = LoggerFactory.getLogger(CommentController.class);
     private FluxSink<Message<Comment>> commentSink;
     // Message -> Spring abstraction for a POJO wrapped as transportable message
     // that includes the ability to add headers and other information

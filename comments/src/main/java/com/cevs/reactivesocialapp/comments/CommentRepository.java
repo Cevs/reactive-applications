@@ -7,7 +7,7 @@ import reactor.core.publisher.Mono;
 
 @Repository
 public interface CommentRepository extends ReactiveCrudRepository<Comment, String> {
-   Flux<Comment> findByImageId(String imageId);
+   Flux<Comment> findByProductId(String productId);
    Flux<Comment> saveAll(Flux<Comment> newComment);
    Mono<Comment> findById(String id);
    Mono<Void> deleteAll();

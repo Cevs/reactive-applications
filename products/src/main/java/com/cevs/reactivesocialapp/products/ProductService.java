@@ -1,11 +1,14 @@
 package com.cevs.reactivesocialapp.products;
 
+import com.cevs.reactivesocialapp.dto.ProductDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -15,6 +18,7 @@ import java.util.UUID;
 public class ProductService {
 
     private static String UPLOAD_ROOT = "upload-dir";
+    private final static Logger log = LoggerFactory.getLogger(ProductService.class);
 
     //Base folder where products will be saved
     private final ResourceLoader resourceLoader;
@@ -39,37 +43,33 @@ public class ProductService {
         );
     }
 
-    public Mono<Void> createProduct(Flux<FilePart> files){
-        return files
-                .log("createImage-files")
-                .flatMap(file ->{
-                    Mono<Product> saveDatabaseImage = productRepository.save(
-                            new Product(
-                                    UUID.randomUUID().toString(),
-                                    file.filename()
 
-                            )
-                    ).log("createImage-save");
+    public Mono<Void> insertProduct(ProductDto product){
 
-                    Mono<Void> copyFile = Mono.just(Paths.get(UPLOAD_ROOT,file.filename()).toFile())
-                            .log("createImage-picktarget")
-                            .map(destFile ->{
-                                try {
-                                    destFile.createNewFile();
-                                    return destFile;
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            })
-                            .log("createImage-flatMap")
-                            .flatMap(file::transferTo)
-                            .log("createImage-copy");
-                    //To ensure both of these operations are completed, join them together
-                    return Mono.when(saveDatabaseImage, copyFile).log("createImage-when");
+        Mono<Product> saveDatabaseProduct = productRepository.save(
+                new Product(
+                        UUID.randomUUID().toString(),
+                        product.getName(),
+                        product.getDescription(),
+                        product.getPrice(),
+                        product.getCategory(),
+                        product.getImage().filename()
+                )
+        );
+
+        Mono<Void> copyFile = Mono.just(Paths.get(UPLOAD_ROOT, product.getImage().filename()).toFile())
+                .log("create-image")
+                .map(destFile->{
+                    try{
+                        destFile.createNewFile();
+                        return destFile;
+                    }catch (IOException e){
+                        throw new RuntimeException(e);
+                    }
                 })
-                .log("createImage-flatMap")
-                .then()
-                .log("createImage-then"); //Signal when all files have been processed
+                .flatMap(product.getImage()::transferTo);
+
+        return Mono.when(copyFile, saveDatabaseProduct);
     }
 
     public Mono<Void> deleteProduct(String filename){

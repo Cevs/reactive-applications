@@ -17,3 +17,29 @@ td, th {
     background-color: lightcoral;
     padding: 1em;
 }
+
+.thumbnail {
+    width: 350px;
+    overflow: hidden;
+}
+.view-img img{
+    width:350px;
+    height:350px;
+    display:block;
+}
+
+.thumbnail-product{
+    width:100%;
+
+    overflow: hidden;;
+}
+
+.view-img-product img{
+    width:100%;
+    height:50%;
+    display:block;
+}
+
+#uploadProductImage{
+    display:none;
+}

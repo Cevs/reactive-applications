@@ -1,15 +1,16 @@
 package com.cevs.reactivesocialapp;
 
+import com.cevs.reactivesocialapp.dto.ProductDto;
 import com.cevs.reactivesocialapp.products.CommentHelper;
 import com.cevs.reactivesocialapp.products.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
@@ -23,6 +24,8 @@ public class HomeController {
 
     private final ProductService productService;
     private final CommentHelper commentHelper;
+
+    private static final Logger log = LoggerFactory.getLogger(HomeController.class);
 
     public HomeController(ProductService productService, CommentHelper commentHelper) {
         this.productService = productService;
@@ -50,9 +53,9 @@ public class HomeController {
                 });
     }
 
-    @PostMapping(value = BASE_PATH)
-    public Mono<String> createFile(@RequestPart(name = "file") Flux<FilePart> files){
-        return productService.createProduct(files).then(Mono.just("redirect:/"));
+    @PostMapping(value = BASE_PATH + "/new")
+    public Mono<String> insertProduct(ProductDto product){
+        return productService.insertProduct(product).then(Mono.just("redirect:/"));
     }
 
     @DeleteMapping(value = BASE_PATH + "/" + FILENAME)
@@ -62,12 +65,16 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public Mono<String> index(Model model){
+    public Mono<String> index(Model model) {
         model.addAttribute("products",
                 productService.findAllProducts()
                 .map(product-> new HashMap<String, Object>(){{
+                    log.info(product.toString());
                     put("id", product.getId());
                     put("name", product.getName());
+                    put("imageName", product.getImageName());
+                    put("category", product.getCategory());
+                    put("price", product.getPrice());
                     put("comments", commentHelper.getComments(product));
                 }})
         );

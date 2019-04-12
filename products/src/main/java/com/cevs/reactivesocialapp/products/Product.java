@@ -1,26 +1,22 @@
 package com.cevs.reactivesocialapp.products;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Document(collection="products")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Product {
 
     @Id private String id;
     private String name;
     private String description;
     private double price;
-
-    public Product(String id, String name){
-        this.id = id;
-        this.name = name;
-    }
+    private String category;
+    private String imageName;
 }

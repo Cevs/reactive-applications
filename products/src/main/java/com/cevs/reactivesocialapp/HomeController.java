@@ -72,6 +72,7 @@ public class HomeController {
                     log.info(product.toString());
                     put("id", product.getId());
                     put("name", product.getName());
+                    put("description", product.getDescription());
                     put("imageName", product.getImageName());
                     put("category", product.getCategory());
                     put("price", product.getPrice());

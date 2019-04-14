@@ -9,7 +9,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-@Component
+
 public class InitApplication {
 
     private static final String UPLOAD_ROOT = "upload-dir";

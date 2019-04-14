@@ -99,6 +99,7 @@
         <tr>
             <th>Image</th>
             <th>Name</th>
+            <th>Description</th>
             <th>Category</th>
             <th>Price</th>
             <th>User Review</th>
@@ -110,6 +111,7 @@
         <tr th:each="product : ${products}">
             <td><a href="@{'/products/' + ${product.imageName} + '/raw'}"><img th:src="@{'/products/' + ${product.imageName} + '/raw'}" class="thumbnail" /></a></td>
             <td th:text="${product.name}"></td>
+            <td th:text="${product.description}"></td>
             <td th:text="${product.category}"></td>
             <td th:text="${product.price}"></td>
             <!-- tag::comments[] -->

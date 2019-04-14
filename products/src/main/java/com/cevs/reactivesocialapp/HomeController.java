@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
+import org.thymeleaf.spring5.context.webflux.IReactiveDataDriverContextVariable;
+import org.thymeleaf.spring5.context.webflux.ReactiveDataDriverContextVariable;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
@@ -66,7 +68,24 @@ public class HomeController {
 
     @GetMapping("/")
     public Mono<String> index(Model model) {
-        model.addAttribute("products",
+
+        IReactiveDataDriverContextVariable reactiveDataDrivenMode =
+                new ReactiveDataDriverContextVariable(  productService.findAllProducts()
+                        .map(product-> new HashMap<String, Object>(){{
+                            log.info(product.toString());
+                            put("id", product.getId());
+                            put("name", product.getName());
+                            put("description", product.getDescription());
+                            put("imageName", product.getImageName());
+                            put("category", product.getCategory());
+                            put("price", product.getPrice());
+                            put("comments", commentHelper.getComments(product));
+                        }})
+                        ,1);
+
+        model.addAttribute("products", reactiveDataDrivenMode);
+
+        /*model.addAttribute("products",
                 productService.findAllProducts()
                 .map(product-> new HashMap<String, Object>(){{
                     log.info(product.toString());
@@ -78,7 +97,7 @@ public class HomeController {
                     put("price", product.getPrice());
                     put("comments", commentHelper.getComments(product));
                 }})
-        );
+        );*/
         return Mono.just("index");
     }
 }

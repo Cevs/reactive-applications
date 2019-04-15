@@ -9,28 +9,27 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 @Service
 @EnableBinding(Processor.class)
-public class CommentService {
+public class ReviewService {
 
-    private final static Logger log = LoggerFactory.getLogger(CommentService.class);
-    private CommentRepository commentRepository;
+    private final static Logger log = LoggerFactory.getLogger(ReviewService.class);
+    private ReviewRepository reviewRepository;
 
-    public CommentService(CommentRepository commentRepository) {
-        this.commentRepository = commentRepository;
+    public ReviewService(ReviewRepository reviewRepository) {
+        this.reviewRepository = reviewRepository;
     }
 
     @StreamListener
     @Output(Processor.OUTPUT)
-    public Flux<Comment> save(@Input(Processor.INPUT) Flux<Comment> newComments){
-        return commentRepository
+    public Flux<Review> save(@Input(Processor.INPUT) Flux<Review> newComments){
+        return reviewRepository
                 .saveAll(newComments)
                 .log("commentService-save")
-        .map(comment->{
-            log.info("Saving new comment " + comment);
-            return comment;
+        .map(review ->{
+            log.info("Saving new review " + review);
+            return review;
         });
     }
 }

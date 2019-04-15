@@ -6,8 +6,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Document
-public class Comment {
-    @Id private String id;
+public class Review {
+    private String userId;
     private String productId;
     private String comment;
+    private String date;
 }

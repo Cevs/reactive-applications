@@ -1,8 +1,8 @@
 package com.cevs.reactivesocialapp;
 
-import com.cevs.reactivesocialapp.products.Comment;
+import com.cevs.reactivesocialapp.products.Review;
 import com.cevs.reactivesocialapp.products.CommentController;
-import com.cevs.reactivesocialapp.products.ProductRepository;
+import com.cevs.reactivesocialapp.repositories.ProductRepository;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import reactor.core.publisher.Flux;
@@ -30,10 +30,10 @@ public class CommentSimulator {
                 .interval(Duration.ofMillis(5000))
                 .flatMap(tick-> productRepository.findAll())
                 .map(image -> {
-                    Comment comment = new Comment();
-                    comment.setProductId(image.getId());
-                    comment.setComment("Comment #" + counter.getAndIncrement());
-                    return Mono.just(comment);
+                    Review review = new Review();
+                    review.setProductId(image.getId());
+                    review.setComment("Review #" + counter.getAndIncrement());
+                    return Mono.just(review);
                 })
                 .flatMap(newCommnet->
                         Mono.defer(()->commentController.addComment(newCommnet)))

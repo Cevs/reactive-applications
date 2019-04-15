@@ -1,4 +1,4 @@
-package com.cevs.reactivesocialapp;
+package com.cevs.reactivesocialapp.controllers;
 
 import com.cevs.reactivesocialapp.dto.ProductDto;
 import com.cevs.reactivesocialapp.products.CommentHelper;
@@ -79,25 +79,11 @@ public class HomeController {
                             put("imageName", product.getImageName());
                             put("category", product.getCategory());
                             put("price", product.getPrice());
-                            put("comments", commentHelper.getComments(product));
+                            put("comments", commentHelper.getComments(product.getId()));
                         }})
                         ,1);
 
         model.addAttribute("products", reactiveDataDrivenMode);
-
-        /*model.addAttribute("products",
-                productService.findAllProducts()
-                .map(product-> new HashMap<String, Object>(){{
-                    log.info(product.toString());
-                    put("id", product.getId());
-                    put("name", product.getName());
-                    put("description", product.getDescription());
-                    put("imageName", product.getImageName());
-                    put("category", product.getCategory());
-                    put("price", product.getPrice());
-                    put("comments", commentHelper.getComments(product));
-                }})
-        );*/
         return Mono.just("index");
     }
 }

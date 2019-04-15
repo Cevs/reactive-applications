@@ -102,8 +102,6 @@
             <th>Description</th>
             <th>Category</th>
             <th>Price</th>
-            <th>User Review</th>
-            <th></th>
             <th></th>
         </tr>
         </thead>
@@ -115,15 +113,15 @@
             <td th:text="${product.category}"></td>
             <td th:text="${product.price}"></td>
             <!-- tag::comments[] -->
-            <td>
+            <!--<td>
                 <ul th:id="'comments-' + ${product.id}">
-                    <li th:each="comment : ${product.comments}" th:text="${comment.comment}"></li>
+                    <li th:each="review : ${product.comments}" th:text="${review.review}"></li>
                 </ul>
             </td>
             <td>
-                <input th:id="'comment-' + ${product.id}" type="text" value="" />
-                <button th:id="${product.id}" class="comment">Submit</button>
-            </td>
+                <input th:id="'review-' + ${product.id}" type="text" value="" />
+                <button th:id="${product.id}" class="review">Submit</button>
+            </td>-->
             <!-- end::comments[] -->
             <td>
                 <form th:method="delete" th:action="@{'/products/' + ${product.name}}">

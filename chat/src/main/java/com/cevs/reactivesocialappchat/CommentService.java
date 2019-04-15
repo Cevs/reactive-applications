@@ -19,33 +19,33 @@ import reactor.core.publisher.Mono;
 public class CommentService implements WebSocketHandler {
 
     private ObjectMapper mapper;
-    private Flux<Comment> flux;
-    private FluxSink<Comment> webSocketCommentSink;
+    private Flux<Review> flux;
+    private FluxSink<Review> webSocketCommentSink;
     private final static Logger log = LoggerFactory.getLogger(CommentService.class);
 
     public CommentService(ObjectMapper mapper) {
         this.mapper = mapper;
-        this.flux = Flux.<Comment>create(
-                emmiter -> this.webSocketCommentSink = emmiter,
+        this.flux = Flux.<Review>create(
+                emitter -> this.webSocketCommentSink = emitter,
                 FluxSink.OverflowStrategy.IGNORE)
                 .publish()
                 .autoConnect();
     }
 
     @StreamListener(Sink.INPUT)
-    public void broadcast(Comment comment){
+    public void broadcast(Review review){
         if(webSocketCommentSink != null){
-            log.info("Publishing " + comment.toString() + " to websocket...");
-            webSocketCommentSink.next(comment);
+            log.info("Publishing " + review.toString() + " to websocket...");
+            webSocketCommentSink.next(review);
         }
     }
 
     @Override
     public Mono<Void> handle(WebSocketSession session) {
         return session.send(this.flux
-        .map(comment->{
+        .map(review ->{
             try{
-                return mapper.writeValueAsString(comment);
+                return mapper.writeValueAsString(review);
             }catch (JsonProcessingException e){
                 throw new RuntimeException(e);
             }

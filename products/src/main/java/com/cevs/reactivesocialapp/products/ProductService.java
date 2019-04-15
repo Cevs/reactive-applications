@@ -1,6 +1,7 @@
 package com.cevs.reactivesocialapp.products;
 
 import com.cevs.reactivesocialapp.dto.ProductDto;
+import com.cevs.reactivesocialapp.repositories.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;

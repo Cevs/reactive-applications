@@ -43,3 +43,18 @@ td, th {
 #uploadProductImage{
     display:none;
 }
+
+.img-single-product{
+    height:350px !important;
+    width:400px !important;
+    display:block;
+}
+
+customer-profile{
+    height: 10px !important;
+    width: 10px !important;
+}
+
+.product-top{
+    margin-botom:10px;
+}

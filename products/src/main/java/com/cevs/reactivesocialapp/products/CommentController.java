@@ -24,30 +24,30 @@ import reactor.core.publisher.Mono;
 public class CommentController {
 
     private static final Logger log = LoggerFactory.getLogger(CommentController.class);
-    private FluxSink<Message<Comment>> commentSink;
+    private FluxSink<Message<Review>> commentSink;
     // Message -> Spring abstraction for a POJO wrapped as transportable message
     // that includes the ability to add headers and other information
-    private Flux<Message<Comment>> flux;
+    private Flux<Message<Review>> flux;
 
     public CommentController() {
-        this.flux = Flux.<Message<Comment>>create(
+        this.flux = Flux.<Message<Review>>create(
                 emitter -> this.commentSink = emitter,
                 FluxSink.OverflowStrategy.IGNORE
         ).publish().autoConnect();
     }
 
     @PostMapping("/comments")
-    public Mono<ResponseEntity<?>> addComment(Mono<Comment> newComment){
+    public Mono<ResponseEntity<?>> addComment(Mono<Review> newComment){
         if(commentSink != null){
             return newComment
-                    .map(comment -> {
+                    .map(review -> {
                         commentSink.next(
                                 MessageBuilder
-                                        .withPayload(comment)
+                                        .withPayload(review)
                                         .setHeader(MessageHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE).build());
-                        return comment;
+                        return review;
                     })
-                    .flatMap(comment -> {
+                    .flatMap(review -> {
                         return Mono.just(ResponseEntity.noContent().build()); //return HTTP 204(No Content) -> Indicate success
                     });
         }else{

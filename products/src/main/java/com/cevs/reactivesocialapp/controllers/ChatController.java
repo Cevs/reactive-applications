@@ -1,4 +1,4 @@
-package com.cevs.reactivesocialapp;
+package com.cevs.reactivesocialapp.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

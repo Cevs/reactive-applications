@@ -6,9 +6,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
-public interface CommentRepository extends ReactiveCrudRepository<Comment, String> {
-   Flux<Comment> findByProductId(String productId);
-   Flux<Comment> saveAll(Flux<Comment> newComment);
-   Mono<Comment> findById(String id);
+public interface ReviewRepository extends ReactiveCrudRepository<Review, String> {
+   Flux<Review> findByProductId(String productId);
+   Flux<Review> saveAll(Flux<Review> newComment);
+   Mono<Review> findById(String id);
    Mono<Void> deleteAll();
 }

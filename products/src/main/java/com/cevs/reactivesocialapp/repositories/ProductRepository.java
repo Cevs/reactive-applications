@@ -1,5 +1,6 @@
-package com.cevs.reactivesocialapp.products;
+package com.cevs.reactivesocialapp.repositories;
 
+import com.cevs.reactivesocialapp.products.Product;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;

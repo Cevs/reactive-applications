@@ -1,9 +1,9 @@
 package com.cevs.reactivesocialapp.services;
 
-import com.cevs.reactivesocialapp.User;
+import com.cevs.reactivesocialapp.domain.User;
 import com.cevs.reactivesocialapp.dto.UserReview;
 import com.cevs.reactivesocialapp.products.CommentHelper;
-import com.cevs.reactivesocialapp.products.Product;
+import com.cevs.reactivesocialapp.domain.Product;
 import com.cevs.reactivesocialapp.repositories.ProductRepository;
 import com.cevs.reactivesocialapp.repositories.UserRepository;
 import org.slf4j.Logger;

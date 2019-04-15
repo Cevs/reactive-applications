@@ -1,5 +1,6 @@
-package com.cevs.reactivesocialapp.products;
+package com.cevs.reactivesocialapp.services;
 
+import com.cevs.reactivesocialapp.domain.Product;
 import com.cevs.reactivesocialapp.dto.ProductDto;
 import com.cevs.reactivesocialapp.repositories.ProductRepository;
 import org.slf4j.Logger;
@@ -16,24 +17,26 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
-public class ProductService {
+public class ProductServiceImpl implements ProductService {
 
     private static String UPLOAD_ROOT = "upload-dir";
-    private final static Logger log = LoggerFactory.getLogger(ProductService.class);
+    private final static Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     //Base folder where products will be saved
     private final ResourceLoader resourceLoader;
     private final ProductRepository productRepository;
 
-    public ProductService(ResourceLoader resourceLoader, ProductRepository productRepository) {
+    public ProductServiceImpl(ResourceLoader resourceLoader, ProductRepository productRepository) {
         this.resourceLoader = resourceLoader;
         this.productRepository = productRepository;
     }
 
+    @Override
     public Flux<Product> findAllProducts() {
         return productRepository.findAll().log("findAll");
     }
 
+    @Override
     public Mono<Resource> findOneProduct(String filename){
         //If we put Mono.just() instead of Mono.fromSupplier() the resource fetching would happen immediately
         //when the method is called.
@@ -44,7 +47,7 @@ public class ProductService {
         );
     }
 
-
+    @Override
     public Mono<Void> insertProduct(ProductDto product){
 
         Mono<Product> saveDatabaseProduct = productRepository.save(
@@ -73,6 +76,7 @@ public class ProductService {
         return Mono.when(copyFile, saveDatabaseProduct);
     }
 
+    @Override
     public Mono<Void> deleteProduct(String filename){
         Mono<Void> deleteDatabaseProduct = productRepository
                 .findByName(filename)

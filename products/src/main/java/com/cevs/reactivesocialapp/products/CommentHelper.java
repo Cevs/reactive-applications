@@ -1,5 +1,6 @@
 package com.cevs.reactivesocialapp.products;
 
+import com.cevs.reactivesocialapp.domain.Review;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

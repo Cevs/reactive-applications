@@ -2,7 +2,7 @@ package com.cevs.reactivesocialapp.controllers;
 
 
 import com.cevs.reactivesocialapp.dto.UserReview;
-import com.cevs.reactivesocialapp.products.Product;
+import com.cevs.reactivesocialapp.domain.Product;
 import com.cevs.reactivesocialapp.services.SingleProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;

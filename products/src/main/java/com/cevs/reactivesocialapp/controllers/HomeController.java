@@ -2,7 +2,7 @@ package com.cevs.reactivesocialapp.controllers;
 
 import com.cevs.reactivesocialapp.dto.ProductDto;
 import com.cevs.reactivesocialapp.products.CommentHelper;
-import com.cevs.reactivesocialapp.products.ProductService;
+import com.cevs.reactivesocialapp.services.ProductServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.InputStreamResource;
@@ -24,13 +24,13 @@ public class HomeController {
     private static final String BASE_PATH = "/products";
     private static final String FILENAME = "{filename:.+}";
 
-    private final ProductService productService;
+    private final ProductServiceImpl productServiceImpl;
     private final CommentHelper commentHelper;
 
     private static final Logger log = LoggerFactory.getLogger(HomeController.class);
 
-    public HomeController(ProductService productService, CommentHelper commentHelper) {
-        this.productService = productService;
+    public HomeController(ProductServiceImpl productServiceImpl, CommentHelper commentHelper) {
+        this.productServiceImpl = productServiceImpl;
         this.commentHelper = commentHelper;
     }
 
@@ -44,7 +44,7 @@ public class HomeController {
     @GetMapping(value = BASE_PATH + "/" + FILENAME + "/raw", produces = MediaType.IMAGE_JPEG_VALUE)
     @ResponseBody
     public Mono<ResponseEntity<?>> oneRawImage(@PathVariable String filename){
-        return productService.findOneProduct(filename)
+        return productServiceImpl.findOneProduct(filename)
                 .map(resource -> {
                     try {
                         return ResponseEntity.ok().contentLength(resource.contentLength())
@@ -57,20 +57,20 @@ public class HomeController {
 
     @PostMapping(value = BASE_PATH + "/new")
     public Mono<String> insertProduct(ProductDto product){
-        return productService.insertProduct(product).then(Mono.just("redirect:/"));
+        return productServiceImpl.insertProduct(product).then(Mono.just("redirect:/"));
     }
 
     @DeleteMapping(value = BASE_PATH + "/" + FILENAME)
     public Mono<String> deleteFile(@PathVariable String filename){
         //use then() to wait until the delete is done before returning back a mono-wrapped redirect:/
-        return productService.deleteProduct(filename).then(Mono.just("redirect:/"));
+        return productServiceImpl.deleteProduct(filename).then(Mono.just("redirect:/"));
     }
 
     @GetMapping("/")
     public Mono<String> index(Model model) {
 
         IReactiveDataDriverContextVariable reactiveDataDrivenMode =
-                new ReactiveDataDriverContextVariable(  productService.findAllProducts()
+                new ReactiveDataDriverContextVariable(  productServiceImpl.findAllProducts()
                         .map(product-> new HashMap<String, Object>(){{
                             log.info(product.toString());
                             put("id", product.getId());

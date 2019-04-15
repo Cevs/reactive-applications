@@ -1,6 +1,6 @@
 package com.cevs.reactivesocialapp;
 
-import com.cevs.reactivesocialapp.products.Review;
+import com.cevs.reactivesocialapp.domain.Review;
 import com.cevs.reactivesocialapp.products.CommentController;
 import com.cevs.reactivesocialapp.repositories.ProductRepository;
 import org.springframework.boot.context.event.ApplicationReadyEvent;

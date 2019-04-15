@@ -61,4 +61,20 @@ public class SingleProductServiceImpl implements SingleProductService {
                 resourceLoader.getResource("file:" + UPLOAD_ROOT + "/" + filename)
         );
     }
+
+    @Override
+    public Flux<Product> getSimilarProducts(String productId) {
+        return productRepository.findAll()
+                .flatMap(product -> {
+                    Mono<Product> monoProduct = productRepository.findById(productId);
+                    return monoProduct.map(originalProduct -> {
+                        if(product.getCategory().equals(originalProduct.getCategory())){
+                            return product;
+                        }else{
+                            return new Product("","","",0,"","");
+                        }
+                    });
+                })
+                .filter(product -> !product.getId().equals(""));
+    }
 }

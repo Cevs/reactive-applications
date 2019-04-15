@@ -9,5 +9,7 @@ import reactor.core.publisher.Mono;
 @Repository
 public interface ProductRepository extends ReactiveCrudRepository<Product, String> {
     Mono<Product> findByName(String name);
+    Mono<Product> findById(String productId);
     Flux<Product> findAll();
+    Flux<Product> findByCategory(String category);
 }

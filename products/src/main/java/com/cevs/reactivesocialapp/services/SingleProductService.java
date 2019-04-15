@@ -10,4 +10,5 @@ public interface SingleProductService {
     Flux<UserReview> getCompositeProductData(String productId);
     Mono<Product> getProductInfo(String productId);
     Mono<Resource> findOneProduct(String filename);
+    Flux<Product> getSimilarProducts(String productId);
 }

@@ -32,19 +32,16 @@ public class SingleProductController {
     @GetMapping("/product/{productId}")
     public Mono<String> product(@PathVariable String productId, Model model){
 
-        Flux<UserReview> flux = singleProductService.getCompositeProductData(productId);
+        Flux<UserReview> fluxUserReview = singleProductService.getCompositeProductData(productId);
         Mono<Product> monoProduct = singleProductService.getProductInfo(productId);
+        Flux<Product> fluxSimilarProduct = singleProductService.getSimilarProducts(productId);
 
-        IReactiveDataDriverContextVariable reactiveDataDrivenMode =
-                new ReactiveDataDriverContextVariable(flux
-                        .map(data-> new HashMap<String, Object>(){{
-                            put("user",data.getUser());
-                            put("review", data.getReview());
-                        }})
-                        ,1);
+        IReactiveDataDriverContextVariable reactiveFluxSimilarProducts =
+                new ReactiveDataDriverContextVariable(fluxSimilarProduct,1);
 
-        model.addAttribute("userReviews", reactiveDataDrivenMode);
+        model.addAttribute("userReviews", fluxUserReview);
         model.addAttribute("product", monoProduct);
+        model.addAttribute("similarProducts", reactiveFluxSimilarProducts);
 
         return Mono.just("product");
     }

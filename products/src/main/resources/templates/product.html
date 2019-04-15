@@ -103,23 +103,31 @@
     <!-- Main section -->
 
     <!-- Similar products section -->
-
     <div class="card">
         <h5 class="card-header text-center">Similar Products</h5>
-        <div class="card-body">
-            <div class="card mb-3">
-                <div class="row no-gutters">
-                    <div class="col-md-2 align-self-center">
-                        <img th:src="@{../images/placeholder.jpg}" class="card-img mx-auto">
-                    </div>
-                    <div class="col-md-10 align-self-center">
-                        <div class="card-body">
-                            <p class="card-text">About</p>
-                            <p class="card-text">Price</p>
+        <div th:each="similarProduct : ${similarProducts}" class="card-body">
+            <a th:href="@{'/product/' + ${similarProduct.id}}" >
+                <div class="card mb-3">
+                    <div class="row no-gutters">
+                        <div class="col-md-2 align-self-center">
+                            <img th:src="@{'/products/' + ${similarProduct.imageName} + '/raw'}" class="card-img mx-auto">
+                        </div>
+                        <div class="col-md-10 align-self-center">
+                            <div class="card-body">
+                                <h5 class="card-title">About</h5>
+                                <p class="card-text"><strong>Name:</strong></p>
+                                <p class="card-text" th:text="${similarProduct.name}"></p>
+                                <p class="card-text"><strong>Description:</strong></p>
+                                <p class="card-text" th:text="${similarProduct.description}"></p>
+                                <p class="card-text"><strong>Price:</strong></p>
+                                <p class="card-text" th:text="${similarProduct.price}"></p>
+                                <p class="card-text"><strong>Category:</strong></p>
+                                <p class="card-text" th:text="${similarProduct.category}"></p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
     <!-- Similar products section -->

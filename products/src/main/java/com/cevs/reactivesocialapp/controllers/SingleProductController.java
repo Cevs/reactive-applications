@@ -3,7 +3,10 @@ package com.cevs.reactivesocialapp.controllers;
 
 import com.cevs.reactivesocialapp.dto.UserReview;
 import com.cevs.reactivesocialapp.domain.Product;
+import com.cevs.reactivesocialapp.services.AdvertisementService;
 import com.cevs.reactivesocialapp.services.SingleProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
@@ -26,8 +29,11 @@ public class SingleProductController {
 
     @Autowired
     SingleProductService singleProductService;
+    @Autowired
+    AdvertisementService advertisementService;
 
     private static final String FILENAME = "{filename:.+}";
+    private static final Logger log = LoggerFactory.getLogger(SingleProductController.class);
 
     @GetMapping("/product/{productId}")
     public Mono<String> product(@PathVariable String productId, Model model){
@@ -42,7 +48,15 @@ public class SingleProductController {
         model.addAttribute("userReviews", fluxUserReview);
         model.addAttribute("product", monoProduct);
         model.addAttribute("similarProducts", reactiveFluxSimilarProducts);
-
+        model.addAttribute("initialAdvertisements",
+                advertisementService.getInitialAdvertisement()
+                .map(objects -> {
+                    return new HashMap<String, String>(){{
+                        put("primaryImage", objects.getT1().getImageName());
+                        put("secondaryImage" , objects.getT2().getImageName());
+                    }};
+                })
+        );
         return Mono.just("product");
     }
 

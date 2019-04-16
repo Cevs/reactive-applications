@@ -1,10 +1,10 @@
 package com.cevs.reactivesocialapp;
 
+import com.cevs.reactivesocialapp.domain.Advertisement;
 import com.cevs.reactivesocialapp.domain.Review;
 import com.cevs.reactivesocialapp.domain.Product;
 import com.cevs.reactivesocialapp.domain.User;
 import com.thedeanda.lorem.Lorem;
-import com.thedeanda.lorem.LoremIpsum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -25,24 +25,40 @@ public class InitDatabase {
     private final int numberOfUsers = 10;
     private final int numberOfProducts = 20;
     private final int numberOfComments = 100;
+    private final int numberOfAdvertisements = 3;
 
     private List<User> userList;
     private List<Product> productList;
     private List<Review> reviewList;
+    private List<Advertisement> advertisementList;
 
     @Bean
     CommandLineRunner init(MongoOperations operations){
         this.operations = operations;
-        this.lorem = new LoremIpsum();
         return args -> {
             operations.dropCollection(Product.class);
             operations.dropCollection(Review.class);
             operations.dropCollection(User.class);
+            operations.dropCollection(Advertisement.class);
 
             insertProducts();
             insertUsers();
             insertComments();
+            insertAdvertisements();
         };
+    }
+
+    private void insertAdvertisements(){
+        advertisementList = new ArrayList<>();
+        for(int i = 1; i<=numberOfAdvertisements; i++){
+            advertisementList.add(getAdvertisement(i));
+        }
+        operations.insertAll(advertisementList);
+    }
+
+    private Advertisement getAdvertisement(int id){
+        String imageName = "advertisement" + id + ".jpg";
+        return new Advertisement(id+"", imageName);
     }
 
     private void insertComments() {

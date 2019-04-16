@@ -83,22 +83,20 @@
             </div>
         </div>
         <!-- About section -->
+        <!-- Advertisement section-->
         <div class="col-sm align-self-center">
             <div class="card border-light mb-3 mx-auto" style="max-width: 18rem;">
-                <div class="card-header">Commercial 1</div>
-                <div class="card-body">
-                    <h5 class="card-title">Light card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-            <div class="card border-light mb-3 mx-auto" style="max-width: 18rem;">
-                <div class="card-header">Commercial 2</div>
-                <div class="card-body">
-                    <h5 class="card-title">Light card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <div class="card-body p-0">
+                    <img id="advertisementImagePrimary" th:src="@{'/advertisement/' + ${initialAdvertisements.primaryImage} + '/raw'}" class="card-img customer-profile mx-auto p-1">
+                </div><br/>
+                <div class="card border-light mb-3 mx-auto" style="max-width: 18rem;">
+                    <div class="card-body p-0" >
+                        <img id="advertisementImageSecondary" th:src="@{'/advertisement/' + ${initialAdvertisements.secondaryImage} + '/raw'}"   class="card-img customer-profile mx-auto p-1">
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- Advertisement section-->
     </div>
     <!-- Main section -->
 

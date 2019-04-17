@@ -34,6 +34,7 @@ public class CommentService implements WebSocketHandler {
 
     @StreamListener(Sink.INPUT)
     public void broadcast(Review review){
+        log.info("STIGAO REVIEW: " + review.toString());
         if(webSocketCommentSink != null){
             log.info("Publishing " + review.toString() + " to websocket...");
             webSocketCommentSink.next(review);

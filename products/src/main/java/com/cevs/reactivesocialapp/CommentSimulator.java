@@ -1,7 +1,7 @@
 package com.cevs.reactivesocialapp;
 
 import com.cevs.reactivesocialapp.domain.Review;
-import com.cevs.reactivesocialapp.controllers.CommentController;
+import com.cevs.reactivesocialapp.controllers.ReviewController;
 import com.cevs.reactivesocialapp.repositories.ProductRepository;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -13,13 +13,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class CommentSimulator {
 
-    private final CommentController commentController;
+    private final ReviewController reviewController;
     private final ProductRepository productRepository;
 
     private final AtomicInteger counter;
 
-    public CommentSimulator(CommentController commentController, ProductRepository productRepository) {
-        this.commentController = commentController;
+    public CommentSimulator(ReviewController reviewController, ProductRepository productRepository) {
+        this.reviewController = reviewController;
         this.productRepository = productRepository;
         this.counter = new AtomicInteger(1);
     }
@@ -36,7 +36,7 @@ public class CommentSimulator {
                     return Mono.just(review);
                 })
                 .flatMap(newCommnet->
-                        Mono.defer(()->commentController.addComment(newCommnet)))
+                        Mono.defer(()-> reviewController.addReview(newCommnet)))
         .subscribe();
     }
 }

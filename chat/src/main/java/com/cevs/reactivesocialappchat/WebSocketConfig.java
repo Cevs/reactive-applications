@@ -25,7 +25,7 @@ public class WebSocketConfig {
     @Bean
     HandlerMapping webSocketMapping(CommentService commentService){
         Map<String, WebSocketHandler> urlMap = new HashMap<>();
-        urlMap.put("/topic/comments.new", commentService);
+        urlMap.put("/topic/reviews.new", commentService);
         urlMap.put("/topic/chatMessage.new", outboundChatService);
         urlMap.put("/app/chatMessage.new", inboundChatService);
 
@@ -34,7 +34,7 @@ public class WebSocketConfig {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.addAllowedOrigin("http://localhost:8080");
         corsConfigurationMap.put(
-                "/topic/comments.new", corsConfiguration);
+                "/topic/reviews.new", corsConfiguration);
         corsConfigurationMap.put(
                 "/topic/chatMessage.new", corsConfiguration
         );

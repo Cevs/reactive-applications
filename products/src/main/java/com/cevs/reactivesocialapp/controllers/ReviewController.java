@@ -1,8 +1,10 @@
 package com.cevs.reactivesocialapp.controllers;
 
 import com.cevs.reactivesocialapp.domain.Review;
+import com.cevs.reactivesocialapp.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.cloud.stream.messaging.Source;
@@ -22,27 +24,28 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @EnableBinding(Source.class)
-public class CommentController {
+public class ReviewController {
 
-    private static final Logger log = LoggerFactory.getLogger(CommentController.class);
-    private FluxSink<Message<Review>> commentSink;
+    private static final Logger log = LoggerFactory.getLogger(ReviewController.class);
+    private FluxSink<Message<Review>> reviewSink;
     // Message -> Spring abstraction for a POJO wrapped as transportable message
     // that includes the ability to add headers and other information
     private Flux<Message<Review>> flux;
 
-    public CommentController() {
+    public ReviewController() {
         this.flux = Flux.<Message<Review>>create(
-                emitter -> this.commentSink = emitter,
+                emitter -> this.reviewSink = emitter,
                 FluxSink.OverflowStrategy.IGNORE
         ).publish().autoConnect();
     }
 
-    @PostMapping("/comments")
-    public Mono<ResponseEntity<?>> addComment(Mono<Review> newComment){
-        if(commentSink != null){
-            return newComment
+    @PostMapping("/reviews")
+    public Mono<ResponseEntity<?>> addReview(Mono<Review> newReview){
+        if(reviewSink != null){
+            return newReview
                     .map(review -> {
-                        commentSink.next(
+                        log.info("REVIEW_PROCESSED: " + review.toString());
+                        reviewSink.next(
                                 MessageBuilder
                                         .withPayload(review)
                                         .setHeader(MessageHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE).build());

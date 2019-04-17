@@ -27,7 +27,7 @@ public class CommentHelper {
     public List<Review> getComments(long productId){
         List<Review> reviewList = new ArrayList<>();
         reviewList = restTemplate.exchange(
-                "http://COMMENTS/comments/{productId}",
+                "http://REVIEWS/reviews/{productId}",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<Review>>() {},

@@ -11,16 +11,16 @@ spring:
     stream:
       bindings:
         input:
-          destination: reactive-social-application-comments
-          group: comments-service
+          destination: reactive-social-application-reviews
+          group: reviews-service
           content-type: application/json
         output:
           destination: reactive-social-application-chat
-          group: comments-chat
+          group: reviews-chat
           content-type: application/json
 
   application:
-    name: comments
+    name: reviews
 
   devtools:
     restart:

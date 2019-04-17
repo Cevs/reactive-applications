@@ -11,17 +11,17 @@ import reactor.core.publisher.Flux;
 @RestController
 public class ReviewController {
 
-    private final Logger log = LoggerFactory.getLogger("CommentController");
+    private final Logger log = LoggerFactory.getLogger(ReviewController.class);
     private final ReviewRepository reviewRepository;
 
     public ReviewController(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
     }
 
-    @GetMapping("/comments/{productId}")
+    @GetMapping("/reviews/{productId}")
     public Flux<Review> comments(@PathVariable long productId){
         return reviewRepository.findByProductId(productId).map(review -> {
-                log.info("FETCH COMMENT: " + review.toString());
+                log.info("FETCH REVIEW: " + review.toString());
                 return review;
         });
     }

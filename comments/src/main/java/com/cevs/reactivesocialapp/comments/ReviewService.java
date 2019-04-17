@@ -26,7 +26,7 @@ public class ReviewService {
     public Flux<Review> save(@Input(Processor.INPUT) Flux<Review> newComments){
         return reviewRepository
                 .saveAll(newComments)
-                .log("commentService-save")
+                .log("reviewService-save")
         .map(review ->{
             log.info("Saving new review " + review);
             return review;

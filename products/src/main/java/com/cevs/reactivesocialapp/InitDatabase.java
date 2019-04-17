@@ -102,6 +102,9 @@ public class InitDatabase {
         }
 
         operations.insertAll(userList);
+        operations.insert(new User(
+           11,"alemartin@foi.hr","AlenMartincevic","profile11.jpg"
+        ));
     }
 
     private User generateRandomUser(long id){

@@ -1,9 +1,8 @@
 package com.cevs.reactivesocialapp.controllers;
 
 import com.cevs.reactivesocialapp.dto.ProductDto;
-import com.cevs.reactivesocialapp.products.CommentHelper;
+import com.cevs.reactivesocialapp.CommentHelper;
 import com.cevs.reactivesocialapp.services.ProductService;
-import com.cevs.reactivesocialapp.services.ProductServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.InputStreamResource;

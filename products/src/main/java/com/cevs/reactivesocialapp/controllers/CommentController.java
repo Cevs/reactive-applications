@@ -1,4 +1,4 @@
-package com.cevs.reactivesocialapp.products;
+package com.cevs.reactivesocialapp.controllers;
 
 import com.cevs.reactivesocialapp.domain.Review;
 import org.slf4j.Logger;

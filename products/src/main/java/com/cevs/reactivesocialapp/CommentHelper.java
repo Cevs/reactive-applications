@@ -1,4 +1,4 @@
-package com.cevs.reactivesocialapp.products;
+package com.cevs.reactivesocialapp;
 
 import com.cevs.reactivesocialapp.domain.Review;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;

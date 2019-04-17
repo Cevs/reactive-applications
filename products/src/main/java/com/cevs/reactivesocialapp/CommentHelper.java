@@ -24,7 +24,7 @@ public class CommentHelper {
     }
 
     @HystrixCommand(fallbackMethod = "defaultComments")
-    public List<Review> getComments(String productId){
+    public List<Review> getComments(long productId){
         List<Review> reviewList = new ArrayList<>();
         reviewList = restTemplate.exchange(
                 "http://COMMENTS/comments/{productId}",
@@ -36,7 +36,7 @@ public class CommentHelper {
         return reviewList;
     }
 
-    public List<Review> defaultComments(String produceId){
+    public List<Review> defaultComments(long produceId){
         log.info("Return empty");
         return Collections.emptyList();
     }

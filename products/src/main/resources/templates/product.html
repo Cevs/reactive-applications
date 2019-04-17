@@ -33,12 +33,12 @@
 
 <div class="container" style="padding-top: 20px; margin:0;max-width: 100%;">
     <!-- Main section -->
-    <div class="row product-top">
-        <div class="col-sm align-self-center">
+    <div class="row product-top align-items-start">
+        <div class="col-sm">
             <img th:src="@{'/products/' + ${product.imageName} + '/raw'}" class="img-thumbnail rounded img-single-product mx-auto" width="700" height="500">
         </div>
         <!-- About section -->
-        <div class="col-lg-6 align-self-center">
+        <div class="col-lg-6">
             <div class="card text-center">
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs">
@@ -53,25 +53,40 @@
                 <div class="card-body">
                     <div class="product-about">
                         <h5 class="card-title">About</h5>
-                        <p class="card-text"><strong>Name:</strong></p>
-                        <p class="card-text" th:text="${product.name}"></p>
-                        <p class="card-text"><strong>Description:</strong></p>
-                        <p class="card-text" th:text="${product.description}"></p>
-                        <p class="card-text"><strong>Price:</strong></p>
-                        <p class="card-text" th:text="${product.price}"></p>
-                        <p class="card-text"><strong>Category:</strong></p>
-                        <p class="card-text" th:text="${product.category}"></p>
+                        <table class="table table-borderless">
+                            <tr>
+                                <th class="text-left"><p><strong>Name:</strong></p></th>
+                                <td><p th:text="${product.name}"></p></td>
+                                <th class="text-left"><p><strong>Category:</strong></p></th>
+                                <td><p th:text="${product.category}"></p></td>
+                            </tr>
+                            <tr>
+                                <th class="text-left"><p><strong>Quantity:</strong></p></th>
+                                <td><p th:text="${product.quantity}"></p></td>
+                                <th class="text-left"><p><strong>Available:</strong></p></th>
+                                <td th:switch="${product.available}">
+                                    <p th:case = 'true' >Yes</p>
+                                    <p th:case = 'false'>No</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-left"><p><strong>Price:</strong></p></th>
+                                <td><p th:text="${product.price}"></p></td>
+                                <th class="text-left"><p><strong>Description:</strong></p></th>
+                                <td><p th:text="${product.description}"></p></td>
+                            </tr>
+                        </table>
                     </div>
                     <div class="product-review" style="display:none">
                         <h5 class="card-title">User review</h5>
                         <div th:each="userReview : ${userReviews}" class="card mb-3">
-                            <div class="row no-gutters">
-                                <div class="col-md-2 align-self-center">
+                            <div class="row no-gutters p-1">
+                                <div class="col-md-2  align-self-center">
                                     <img th:src="@{'/products/' + ${userReview.user.imageName} + '/raw'}"  class="card-img customer-profile mx-auto p-1" alt="...">
                                     <p style="font-size:12px; margin:0" th:text="${userReview.user.username}"></p>
                                     <p class="card-text"><small class="text-muted" style="font-size:12px;" th:text="${userReview.review.date}"></small></p>
                                 </div>
-                                <div class="col-md-10 align-self-center">
+                                <div class="col-md-10  align-self-center">
                                     <div class="card-body pt-0 pb-0">
                                         <p class="card-text"  style="font-size:14px;" th:text="${userReview.review.comment}"></p>
                                     </div>
@@ -84,48 +99,45 @@
         </div>
         <!-- About section -->
         <!-- Advertisement section-->
-        <div class="col-sm align-self-center">
-            <div class="card border-light mb-3 mx-auto" style="max-width: 18rem;">
-                <div class="card-body p-0">
-                    <img id="advertisementImagePrimary" th:src="@{'/advertisement/' + ${initialAdvertisements.primaryImage} + '/raw'}" class="card-img customer-profile mx-auto p-1">
-                </div><br/>
-                <div class="card border-light mb-3 mx-auto" style="max-width: 18rem;">
-                    <div class="card-body p-0" >
-                        <img id="advertisementImageSecondary" th:src="@{'/advertisement/' + ${initialAdvertisements.secondaryImage} + '/raw'}"   class="card-img customer-profile mx-auto p-1">
-                    </div>
-                </div>
-            </div>
+        <div class="col-sm">
+            <img id="advertisementImagePrimary" th:src="@{'/advertisement/' + ${initialAdvertisements.primaryImage} + '/raw'}" class="card-img  mx-auto p-1 advertisement-image">
+            <br/>
+            <img id="advertisementImageSecondary" th:src="@{'/advertisement/' + ${initialAdvertisements.secondaryImage} + '/raw'}"   class="card-img mx-auto p-1 advertisement-image">
         </div>
         <!-- Advertisement section-->
     </div>
     <!-- Main section -->
 
     <!-- Similar products section -->
-    <div class="card">
+    <div class="card" style="border: none" >
         <h5 class="card-header text-center">Similar Products</h5>
-        <div th:each="similarProduct : ${similarProducts}" class="card-body">
-            <a th:href="@{'/product/' + ${similarProduct.id}}" >
-                <div class="card mb-3">
-                    <div class="row no-gutters">
-                        <div class="col-md-2 align-self-center">
-                            <img th:src="@{'/products/' + ${similarProduct.imageName} + '/raw'}" class="card-img mx-auto">
-                        </div>
-                        <div class="col-md-10 align-self-center">
-                            <div class="card-body">
-                                <h5 class="card-title">About</h5>
-                                <p class="card-text"><strong>Name:</strong></p>
-                                <p class="card-text" th:text="${similarProduct.name}"></p>
-                                <p class="card-text"><strong>Description:</strong></p>
-                                <p class="card-text" th:text="${similarProduct.description}"></p>
-                                <p class="card-text"><strong>Price:</strong></p>
-                                <p class="card-text" th:text="${similarProduct.price}"></p>
-                                <p class="card-text"><strong>Category:</strong></p>
-                                <p class="card-text" th:text="${similarProduct.category}"></p>
-                            </div>
-                        </div>
-                    </div>
+        <div class="row align-items-start justify-content-center p-2" style="border: none;" >
+            <div th:each="similarProduct : ${similarProducts}" class="card m-2" style="width:20rem">
+                <img th:src="@{'/products/' + ${similarProduct.imageName} + '/raw'}" class="card-img mx-auto p-2" style="width:20rem; height: 15rem;">
+                <div class="card-body p-2 m-2">
+                    <table class="table table-borderless m-0 table-similar-products">
+                        <tr>
+                            <th class="text-left"><p><strong>Name:</strong></p></th>
+                            <td><p th:text="${similarProduct.name}"></p></td>
+                        </tr>
+                        <tr>
+                            <th class="text-left"><p><strong>Category:</strong></p></th>
+                            <td><p th:text="${similarProduct.category}"></p></td>
+                        </tr>
+                        <tr>
+                            <th class="text-left"><p><strong>Price:</strong></p></th>
+                            <td><p th:text="${similarProduct.price}"></p></td>
+                        </tr>
+                        <tr>
+                            <th class="text-left"><p><strong>Available:</strong></p></th>
+                            <td th:switch="${product.available}">
+                                <p th:case = 'true' >Yes</p>
+                                <p th:case = 'false'>No</p>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-            </a>
+            </div>
         </div>
     </div>
     <!-- Similar products section -->

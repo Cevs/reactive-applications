@@ -36,7 +36,7 @@ public class SingleProductController {
     private static final Logger log = LoggerFactory.getLogger(SingleProductController.class);
 
     @GetMapping("/product/{productId}")
-    public Mono<String> product(@PathVariable String productId, Model model){
+    public Mono<String> product(@PathVariable long productId, Model model){
 
         Flux<UserReview> fluxUserReview = singleProductService.getCompositeProductData(productId);
         Mono<Product> monoProduct = singleProductService.getProductInfo(productId);

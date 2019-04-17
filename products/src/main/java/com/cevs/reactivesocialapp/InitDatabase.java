@@ -22,10 +22,14 @@ public class InitDatabase {
     private static final Logger log = LoggerFactory.getLogger(InitDatabase.class);
     private MongoOperations operations;
 
-    private final int numberOfUsers = 10;
-    private final int numberOfProducts = 20;
-    private final int numberOfComments = 100;
-    private final int numberOfAdvertisements = 3;
+    private static final int NUMBER_OF_USERS = 10;
+    private static final int NUMBER_OF_PRODUCTS = 20;
+    private static final int NUMBER_OF_COMMENTS = 100;
+    private static final int NUMBER_OF_ADVERTISEMENTS = 3;
+    private static final int MIN_PRODUCT_SUPPLIES = 10;
+    private static final int MAX_PRODUCT_SUPPLIES = 50;
+    private static final int MIN_BASE_DISCOUNT = 0;
+    private static final int MAX_BASE_DISCOUNT = 10;
 
     private List<User> userList;
     private List<Product> productList;
@@ -50,20 +54,20 @@ public class InitDatabase {
 
     private void insertAdvertisements(){
         advertisementList = new ArrayList<>();
-        for(int i = 1; i<=numberOfAdvertisements; i++){
+        for(long i = 1; i<=NUMBER_OF_ADVERTISEMENTS; i++){
             advertisementList.add(getAdvertisement(i));
         }
         operations.insertAll(advertisementList);
     }
 
-    private Advertisement getAdvertisement(int id){
+    private Advertisement getAdvertisement(long id){
         String imageName = "advertisement" + id + ".jpg";
-        return new Advertisement(id+"", imageName);
+        return new Advertisement(id, imageName);
     }
 
     private void insertComments() {
         reviewList = new ArrayList<>();
-        for(int i = 1; i<=numberOfComments; i++){
+        for(int i = 1; i<=NUMBER_OF_COMMENTS; i++){
             reviewList.add(generateRandomReview());
         }
         operations.insertAll(reviewList);
@@ -71,8 +75,8 @@ public class InitDatabase {
 
     private Review generateRandomReview(){
         return new Review(
-                userList.get((int)Math.floor(Math.random()*numberOfUsers)).getId(),
-                productList.get((int)Math.floor(Math.random()*numberOfProducts)).getId(),
+                userList.get((int)Math.floor(Math.random()*NUMBER_OF_USERS)).getId(),
+                productList.get((int)Math.floor(Math.random()*NUMBER_OF_PRODUCTS)).getId(),
                 lorem.getWords(10,20),
                 createRandomDate(2016,2018).toString()
         );
@@ -93,19 +97,19 @@ public class InitDatabase {
     private void insertUsers(){
         userList = new ArrayList<>();
 
-        for(int i = 1; i<=numberOfUsers; i++){
+        for(long i = 1; i<=NUMBER_OF_USERS; i++){
             userList.add(generateRandomUser(i));
         }
 
         operations.insertAll(userList);
     }
 
-    private User generateRandomUser(int id){
+    private User generateRandomUser(long id){
         String firstName = lorem.getFirstName();
         String lastName = lorem.getLastName();
         String email = lastName+"."+firstName+"@gmail.com";
         return new User(
-                id+"",
+                id,
                 email,
                 firstName+lastName,
                 getRandomUserImage()
@@ -113,31 +117,34 @@ public class InitDatabase {
     }
 
     private String getRandomUserImage(){
-        return  "profile" + (int)Math.ceil(Math.random()*numberOfUsers) + ".jpg";
+        return  "profile" + (int)Math.ceil(Math.random()*NUMBER_OF_USERS) + ".jpg";
     }
 
     private void insertProducts(){
         productList = new ArrayList<>();
 
-        for(int i = 1; i<=numberOfProducts; i++){
+        for(long i = 1; i<=NUMBER_OF_PRODUCTS; i++){
             productList.add(generateRandomProduct(i));
         }
 
         operations.insertAll(productList);
     }
 
-    private Product generateRandomProduct(int id){
+    private Product generateRandomProduct(long id){
         return new Product(
-                id+"",
+                id,
                 generateProductName(id),
                 generateProductDescription(),
                 generateProductPrice(),
                 generateProductCategory(),
+                generateProductQuantity(),
+                setAvailability(),
+                generateBaseDiscount(),
                 generateProductImageName()
         );
     }
 
-    private String generateProductName(int id){
+    private String generateProductName(long id){
         return "Product " + id;
     }
 
@@ -152,6 +159,19 @@ public class InitDatabase {
     private String generateProductCategory(){
         return "Category " + (int)Math.ceil(Math.random()*10);
     }
+
+    private int generateProductQuantity(){
+        return (int)(MIN_PRODUCT_SUPPLIES + Math.round(Math.random()*MAX_PRODUCT_SUPPLIES));
+    }
+
+    private boolean setAvailability(){
+        return true;
+    }
+
+    private int generateBaseDiscount(){
+        return (int)(MIN_BASE_DISCOUNT + +Math.round(Math.random()*MAX_BASE_DISCOUNT));
+    }
+
     private String generateProductImageName(){
         return "image" + (int)Math.ceil(Math.random()*7) +".jpg";
     }

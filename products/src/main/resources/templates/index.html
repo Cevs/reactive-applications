@@ -46,7 +46,7 @@
                         </button>
                     </div>
                     <div class="modal-body row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label>Picture</label>
                                 <div class="thumbnail-product">
@@ -58,8 +58,12 @@
                                     </button>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" name="name" class="form-control" id="productName">
+                            </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <input type="number" value="-1" readonly id="productId" name="id" class="d-none">
                             <div class="form-group">
                                 <label>Category</label>
@@ -71,10 +75,6 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" name="name" class="form-control" id="productName">
-                            </div>
-                            <div class="form-group">
                                 <label>Description</label>
                                 <input type="text" id="productDescription" name="description" class="form-control">
                             </div>
@@ -82,7 +82,23 @@
                                 <label>Price</label>
                                 <input type="number" name="price" class="form-control" id="productPrice">
                             </div>
-
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Quantity</label>
+                                <input type="number" name="quantity" class="form-control" id="productQuantity">
+                            </div>
+                            <div class="form-group">
+                                <label>Available</label>
+                                <select class="custom-select" name="available" id="productAvailability">
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Base Discount</label>
+                                <input type="number" name="baseDiscount" class="form-control" id="productBaseDiscount">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">

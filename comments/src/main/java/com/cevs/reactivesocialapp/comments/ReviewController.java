@@ -19,7 +19,7 @@ public class ReviewController {
     }
 
     @GetMapping("/comments/{productId}")
-    public Flux<Review> comments(@PathVariable String productId){
+    public Flux<Review> comments(@PathVariable long productId){
         return reviewRepository.findByProductId(productId).map(review -> {
                 log.info("FETCH COMMENT: " + review.toString());
                 return review;

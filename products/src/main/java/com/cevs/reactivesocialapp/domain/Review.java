@@ -11,8 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Review {
-    private String userId;
-    private String productId;
+    private long userId;
+    private long productId;
     private String comment;
     private String date;
 }

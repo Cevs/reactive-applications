@@ -79,7 +79,7 @@ public class HomeController {
                             put("imageName", product.getImageName());
                             put("category", product.getCategory());
                             put("price", product.getPrice());
-                            put("comments", commentHelper.getComments(product.getId()));
+                            //put("comments", commentHelper.getComments(product.getId()));
                         }})
                         ,1);
 

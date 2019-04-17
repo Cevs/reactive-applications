@@ -11,6 +11,6 @@ import org.springframework.data.annotation.Id;
 @AllArgsConstructor
 @ToString
 public class Advertisement {
-    @Id private String id;
+    @Id private long id;
     private String imageName;
 }

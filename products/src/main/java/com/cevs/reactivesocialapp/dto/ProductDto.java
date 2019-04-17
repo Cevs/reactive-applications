@@ -9,5 +9,8 @@ public class ProductDto {
     private String description;
     private double price;
     private String category;
+    private int quantity;
+    private boolean available;
+    private int baseDiscount;
     private FilePart image;
 }

@@ -50,16 +50,28 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Mono<Void> insertProduct(ProductDto product){
 
-        Mono<Product> saveDatabaseProduct = productRepository.save(
-                new Product(
-                        UUID.randomUUID().toString(),
-                        product.getName(),
-                        product.getDescription(),
-                        product.getPrice(),
-                        product.getCategory(),
-                        product.getImage().filename()
-                )
-        );
+
+        Mono<Product> monoLastProduct = productRepository.findTopByOrderByIdDesc();
+
+        Mono<Product> saveProductDb = monoLastProduct
+                .map(lastProduct -> {
+                    return lastProduct.getId();
+                }).map(id -> {
+                    return new Product(
+                            id+1,
+                            product.getName(),
+                            product.getDescription(),
+                            product.getPrice(),
+                            product.getCategory(),
+                            product.getQuantity(),
+                            product.isAvailable(),
+                            product.getBaseDiscount(),
+                            product.getImage().filename()
+                    );
+                })
+                .flatMap(newProduct -> {
+                    return productRepository.save(newProduct);
+                });
 
         Mono<Void> copyFile = Mono.just(Paths.get(UPLOAD_ROOT, product.getImage().filename()).toFile())
                 .log("create-image")
@@ -73,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
                 })
                 .flatMap(product.getImage()::transferTo);
 
-        return Mono.when(copyFile, saveDatabaseProduct);
+        return Mono.when(copyFile, saveProductDb);
     }
 
     @Override

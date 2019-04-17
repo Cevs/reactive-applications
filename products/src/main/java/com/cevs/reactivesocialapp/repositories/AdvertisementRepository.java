@@ -7,8 +7,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
-public interface AdvertisementRepository extends ReactiveCrudRepository<Advertisement, String> {
+public interface AdvertisementRepository extends ReactiveCrudRepository<Advertisement, Long> {
     Flux<Advertisement> findAll();
-    Mono<Advertisement> findById(String advertisementId);
+    Mono<Advertisement> findById(long advertisementId);
     Mono<Long>  count();
 }

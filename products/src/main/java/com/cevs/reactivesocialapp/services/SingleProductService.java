@@ -7,8 +7,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface SingleProductService {
-    Flux<UserReview> getCompositeProductData(String productId);
-    Mono<Product> getProductInfo(String productId);
+    Flux<UserReview> getCompositeProductData(long productId);
+    Mono<Product> getProductInfo(long productId);
     Mono<Resource> findOneProduct(String filename);
-    Flux<Product> getSimilarProducts(String productId);
+    Flux<Product> getSimilarProducts(long productId);
 }

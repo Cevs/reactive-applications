@@ -30,7 +30,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             Mono<Advertisement> advertisement  = advertisementCount.map(count->{
                 return (interval % count)+1;
             }).flatMap(advertisementId ->{
-                return advertisementRepository.findById(advertisementId+"");
+                return advertisementRepository.findById(advertisementId);
             });
             return advertisement;
         });
@@ -46,7 +46,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
                     Mono<Advertisement> advertisement  = advertisementCount.map(count->{
                         return (interval % count)+1;
                     }).flatMap(advertisementId ->{
-                        return advertisementRepository.findById(advertisementId+"").map(c->c);
+                        return advertisementRepository.findById(advertisementId).map(c->c);
                     });
                     return advertisement;
                 });
@@ -57,7 +57,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
                     Mono<Advertisement> advertisement  = advertisementCount.map(count->{
                         return ((interval % count)+2>count)?1:(interval % count)+2;
                     }).flatMap(advertisementId ->{
-                        return advertisementRepository.findById(advertisementId+"").map(c ->c);
+                        return advertisementRepository.findById(advertisementId).map(c ->c);
                     });
                     return advertisement;
                 });
@@ -67,8 +67,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public Mono<Tuple2<Advertisement, Advertisement>> getInitialAdvertisement() {
-        Mono<Advertisement> monoPrimaryAdvertisement = advertisementRepository.findById("1");
-        Mono<Advertisement> monoSecondaryAdvertisement = advertisementRepository.findById("2");
+        Mono<Advertisement> monoPrimaryAdvertisement = advertisementRepository.findById(1);
+        Mono<Advertisement> monoSecondaryAdvertisement = advertisementRepository.findById(2);
 
         return Mono.zip(monoPrimaryAdvertisement, monoSecondaryAdvertisement);
     }

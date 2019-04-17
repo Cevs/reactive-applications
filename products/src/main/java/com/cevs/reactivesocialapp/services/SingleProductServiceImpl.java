@@ -34,7 +34,7 @@ public class SingleProductServiceImpl implements SingleProductService {
     }
 
     @Override
-    public Flux<UserReview> getCompositeProductData(String productId) {
+    public Flux<UserReview> getCompositeProductData(long productId) {
 
         return Flux.fromIterable(commentHelper.getComments(productId)).log("from-iterable")
                 .flatMap(review -> {
@@ -48,7 +48,7 @@ public class SingleProductServiceImpl implements SingleProductService {
     }
 
     @Override
-    public Mono<Product> getProductInfo(String productId) {
+    public Mono<Product> getProductInfo(long productId) {
         return productRepository.findById(productId).map(product ->{
             log.info("PRODUCT_DEBUG: "+product.toString());
             return product;
@@ -63,7 +63,7 @@ public class SingleProductServiceImpl implements SingleProductService {
     }
 
     @Override
-    public Flux<Product> getSimilarProducts(String productId) {
+    public Flux<Product> getSimilarProducts(long productId) {
         return productRepository.findAll()
                 .flatMap(product -> {
                     Mono<Product> monoProduct = productRepository.findById(productId);
@@ -71,10 +71,10 @@ public class SingleProductServiceImpl implements SingleProductService {
                         if(product.getCategory().equals(originalProduct.getCategory())){
                             return product;
                         }else{
-                            return new Product("","","",0,"","");
+                            return new Product(0,"","",0,"",0,false,0,"");
                         }
                     });
                 })
-                .filter(product -> !product.getId().equals(""));
+                .filter(product -> !(product.getId() == 0));
     }
 }

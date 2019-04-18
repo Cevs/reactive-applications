@@ -2,6 +2,10 @@ table {
     border-collapse: collapse;
 }
 
+.nav-bar a{
+    color:white !important;
+}
+
 td, th {
     border: 1px solid #999;
     padding: 0.5rem;
@@ -71,4 +75,11 @@ a:hover, a:visited, a:link, a:active
 .table-similar-products td{
     padding:0 !important;
     padding-left: 10% !important;
+}
+
+.card-text{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
 }

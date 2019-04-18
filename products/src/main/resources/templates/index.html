@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Index</title>
     <link type="text/css" href="css/main.css" rel="stylesheet"/>
+    <link type="text/css" href="css/sidebar.css" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -23,133 +24,189 @@
             <li class="nav-item">
                 <a class="nav-link" href="/chat">Chat</a>
             </li>
-
         </ul>
     </div>
 </nav>
-<div>
 
-    <!-- Button trigger modal -->
-    <button type="button" id ="addNewProduct" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-        New Product
-    </button>
+<div class="wrapper">
+<!-- Sidebar  -->
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <h3>Reactively</h3>
 
-    <form id="formAddNewProduct" th:object="${productDto}">
-        <!-- Modal -->
-        <div class="modal fade" id="modalInsertProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">New Product</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body row">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label>Picture</label>
-                                <div class="thumbnail-product">
-                                    <div class="view-img-product">
-                                        <img th:src="@{images/placeholder.jpg}" id="image">
+        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-align-justify"></i>
+        </button>
+    </div>
+
+    <ul class="list-unstyled components">
+        <li class="active">
+
+            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle menu"><i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <ul class="collapse list-unstyled" id="homeSubmenu">
+                <li>
+                    <a href="#"><span>Home 1</span></a>
+                </li>
+                <li>
+                    <a href="#"><span>Home 2</span></a>
+                </li>
+                <li>
+                    <a href="#"><span>Home 3</span></a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" class="menu">
+                <i class="fas fa-briefcase"></i>
+                <span>About</span>
+            </a>
+            <a href="#categorySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle menu">
+                <i class="fas fa-copy"></i>
+                <span>Category</span>
+            </a>
+            <ul class="collapse list-unstyled" id="categorySubmenu">
+                <li>
+                    <a href="#"><span>Page 1</span></a>
+                </li>
+                <li>
+                    <a href="#"><span>Page 2</span></a>
+                </li>
+                <li>
+                    <a href="#"><span>Page 3</span></a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" class="menu">
+                <i class="fas fa-image"></i>
+                <span>Portfolio</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" class="menu">
+                <i class="fas fa-question"></i>
+                <span>FAQ</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" class="menu">
+                <i class="fas fa-paper-plane"></i>
+                <span>Contact</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<div id="content">
+    <div class="container" style="padding-top: 20px; margin:0;max-width: 100%;">
+        <!-- Button trigger modal -->
+        <button type="button" id ="addNewProduct" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            New Product
+        </button>
+
+        <form id="formAddNewProduct" th:object="${productDto}">
+            <!-- Modal -->
+            <div class="modal fade" id="modalInsertProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">New Product</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Picture</label>
+                                    <div class="thumbnail-product">
+                                        <div class="view-img-product">
+                                            <img th:src="@{images/placeholder.jpg}" id="image">
+                                        </div>
+                                        <input type="file" id="uploadProductImage" name="image">
+                                        <button id="btnSelectImageProduct" type="button" class="btn btn-dark w-100 btn-upload">Select Image
+                                        </button>
                                     </div>
-                                    <input type="file" id="uploadProductImage" name="image">
-                                    <button id="btnSelectImageProduct" type="button" class="btn btn-dark w-100 btn-upload">Select Image
-                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" name="name" class="form-control" id="productName">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" name="name" class="form-control" id="productName">
+                            <div class="col-lg-4">
+                                <input type="number" value="-1" readonly id="productId" name="id" class="d-none">
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <select class="custom-select" name="category" id="productCategory">
+                                        <option value="Books">Books</option>
+                                        <option value="IT equipment">IT equipment</option>
+                                        <option value="Vehicles">Vehicles</option>
+                                        <option value="Clothes">Clothes</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <input type="text" id="productDescription" name="description" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Price</label>
+                                    <input type="number" name="price" class="form-control" id="productPrice">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Quantity</label>
+                                    <input type="number" name="quantity" class="form-control" id="productQuantity">
+                                </div>
+                                <div class="form-group">
+                                    <label>Available</label>
+                                    <select class="custom-select" name="available" id="productAvailability">
+                                        <option value="true">Yes</option>
+                                        <option value="false">No</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Base Discount</label>
+                                    <input type="number" name="baseDiscount" class="form-control" id="productBaseDiscount">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <input type="number" value="-1" readonly id="productId" name="id" class="d-none">
-                            <div class="form-group">
-                                <label>Category</label>
-                                <select class="custom-select" name="category" id="productCategory">
-                                    <option value="Books">Books</option>
-                                    <option value="IT equipment">IT equipment</option>
-                                    <option value="Vehicles">Vehicles</option>
-                                    <option value="Clothes">Clothes</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Description</label>
-                                <input type="text" id="productDescription" name="description" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Price</label>
-                                <input type="number" name="price" class="form-control" id="productPrice">
-                            </div>
+                        <div class="modal-footer">
+                            <button id="btnCancel" type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                            <button id = "btnSaveProduct" type="submit" class="btn btn-success">Save</button>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label>Quantity</label>
-                                <input type="number" name="quantity" class="form-control" id="productQuantity">
-                            </div>
-                            <div class="form-group">
-                                <label>Available</label>
-                                <select class="custom-select" name="available" id="productAvailability">
-                                    <option value="true">Yes</option>
-                                    <option value="false">No</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Base Discount</label>
-                                <input type="number" name="baseDiscount" class="form-control" id="productBaseDiscount">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button id="btnCancel" type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        <button id = "btnSaveProduct" type="submit" class="btn btn-success">Save</button>
                     </div>
                 </div>
             </div>
+        </form>
+
+        <div class="row align-items-start justify-content-center p-2" style="border: none;" >
+            <div class="card m-3"  th:each="product : ${products}" style="width:20rem; height:20rem;">
+                <a th:href="@{'/product/' + ${product.id}}" style="text-decoration: none;color: inherit;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4 my-auto">
+                            <img th:src="@{'/products/' + ${product.imageName} + '/raw'}" class="card-img p-2" style="height: 100%">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${product.name}"></h5>
+                                <p class="card-text" th:text="${product.description}"></p>
+                                <p class="card-text"><strong>$ </strong><strong th:text="${product.price}"></strong></p>
+                                <!--<form th:method="delete" th:action="@{'/products/' + ${product.name}}">
+                                        <input type="submit" value="Delete"/>
+                                </form>-->
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
-    </form>
-
-    <table>
-        <thead>
-        <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="product : ${products}">
-            <td><a href="@{'/products/' + ${product.imageName} + '/raw'}"><img th:src="@{'/products/' + ${product.imageName} + '/raw'}" class="thumbnail" /></a></td>
-            <td th:text="${product.name}"></td>
-            <td th:text="${product.description}"></td>
-            <td th:text="${product.category}"></td>
-            <td th:text="${product.price}"></td>
-            <!-- tag::comments[] -->
-            <!--<td>
-                <ul th:id="'comments-' + ${product.id}">
-                    <li th:each="review : ${product.comments}" th:text="${review.review}"></li>
-                </ul>
-            </td>
-            <td>
-                <input th:id="'review-' + ${product.id}" type="text" value="" />
-                <button th:id="${product.id}" class="review">Submit</button>
-            </td>-->
-            <!-- end::comments[] -->
-            <td>
-                <form th:method="delete" th:action="@{'/products/' + ${product.name}}">
-                    <input type="submit" value="Delete"/>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-
+    </div>
 </div>
+</div>
+
 <script type="text/javascript" th:src="@{/js/index.js}"></script>
 </body>
 </html>

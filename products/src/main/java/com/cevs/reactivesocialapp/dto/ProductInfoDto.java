@@ -1,23 +1,19 @@
-package com.cevs.reactivesocialapp.domain;
+package com.cevs.reactivesocialapp.dto;
 
 import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Document(collection="products")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-public class Product {
-
-    @Id private long id;
+public class ProductInfoDto {
+    private long id;
     private String name;
     private String description;
     private double price;
-    private long categoryId;
+    private String categoryName;
     private int quantity;
     private boolean available;
     private int baseDiscount;

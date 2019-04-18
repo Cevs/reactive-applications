@@ -1,7 +1,8 @@
-package com.cevs.reactivesocialapp.services;
+package com.cevs.reactivesocialapp.services.implementations;
 
 import com.cevs.reactivesocialapp.domain.Advertisement;
 import com.cevs.reactivesocialapp.repositories.AdvertisementRepository;
+import com.cevs.reactivesocialapp.services.AdvertisementService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

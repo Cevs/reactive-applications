@@ -66,15 +66,9 @@
                 <i class="fas fa-copy"></i>
                 <span>Category</span>
             </a>
-            <ul class="collapse list-unstyled" id="categorySubmenu">
+            <ul class="collapse list-unstyled" id="categorySubmenu" th:each="category : ${categories}">
                 <li>
-                    <a href="#"><span>Page 1</span></a>
-                </li>
-                <li>
-                    <a href="#"><span>Page 2</span></a>
-                </li>
-                <li>
-                    <a href="#"><span>Page 3</span></a>
+                    <a href="#"><span th:text="${category.name}"></span></a>
                 </li>
             </ul>
         </li>
@@ -140,10 +134,7 @@
                                 <div class="form-group">
                                     <label>Category</label>
                                     <select class="custom-select" name="category" id="productCategory">
-                                        <option value="Books">Books</option>
-                                        <option value="IT equipment">IT equipment</option>
-                                        <option value="Vehicles">Vehicles</option>
-                                        <option value="Clothes">Clothes</option>
+                                        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Books</option>
                                     </select>
                                 </div>
                                 <div class="form-group">

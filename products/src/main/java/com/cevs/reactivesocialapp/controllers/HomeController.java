@@ -2,7 +2,6 @@ package com.cevs.reactivesocialapp.controllers;
 
 import com.cevs.reactivesocialapp.dto.ProductDto;
 import com.cevs.reactivesocialapp.CommentHelper;
-import com.cevs.reactivesocialapp.services.CategoryService;
 import com.cevs.reactivesocialapp.services.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,13 +25,13 @@ public class HomeController {
     private static final String FILENAME = "{filename:.+}";
 
     private final ProductService productService;
-    private final CategoryService categoryService;
+    private final CommentHelper commentHelper;
 
     private static final Logger log = LoggerFactory.getLogger(HomeController.class);
 
-    public HomeController(ProductService productService, CategoryService categoryService) {
+    public HomeController(ProductService productService, CommentHelper commentHelper) {
         this.productService = productService;
-        this.categoryService = categoryService;
+        this.commentHelper = commentHelper;
     }
 
     /*
@@ -78,13 +77,13 @@ public class HomeController {
                             put("name", product.getName());
                             put("description", product.getDescription());
                             put("imageName", product.getImageName());
-                            put("category", categoryService.getCategoryById(product.getCategoryId()));
+                            put("category", product.getCategory());
                             put("price", product.getPrice());
+                            //put("comments", commentHelper.getComments(product.getId()));
                         }})
                         ,1);
 
         model.addAttribute("products", reactiveDataDrivenMode);
-        model.addAttribute("categories", categoryService.getAllCategories());
         return Mono.just("index");
     }
 }

@@ -17,7 +17,7 @@ public class Product {
     private String name;
     private String description;
     private double price;
-    private long categoryId;
+    private String category;
     private int quantity;
     private boolean available;
     private int baseDiscount;

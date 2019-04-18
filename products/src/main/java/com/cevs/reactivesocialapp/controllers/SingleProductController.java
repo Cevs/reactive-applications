@@ -1,7 +1,6 @@
 package com.cevs.reactivesocialapp.controllers;
 
 
-import com.cevs.reactivesocialapp.dto.ProductInfoDto;
 import com.cevs.reactivesocialapp.dto.UserReview;
 import com.cevs.reactivesocialapp.domain.Product;
 import com.cevs.reactivesocialapp.services.AdvertisementService;
@@ -40,8 +39,8 @@ public class SingleProductController {
     public Mono<String> product(@PathVariable long productId, Model model){
 
         Flux<UserReview> fluxUserReview = singleProductService.getCompositeProductData(productId);
-        Mono<ProductInfoDto> monoProduct = singleProductService.getProductInfo(productId);
-        Flux<ProductInfoDto> fluxSimilarProduct = singleProductService.getSimilarProducts(productId);
+        Mono<Product> monoProduct = singleProductService.getProductInfo(productId);
+        Flux<Product> fluxSimilarProduct = singleProductService.getSimilarProducts(productId);
 
         IReactiveDataDriverContextVariable reactiveFluxSimilarProducts =
                 new ReactiveDataDriverContextVariable(fluxSimilarProduct,1);

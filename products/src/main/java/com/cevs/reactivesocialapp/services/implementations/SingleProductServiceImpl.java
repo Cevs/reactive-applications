@@ -1,4 +1,4 @@
-package com.cevs.reactivesocialapp.services;
+package com.cevs.reactivesocialapp.services.implementations;
 
 import com.cevs.reactivesocialapp.domain.User;
 import com.cevs.reactivesocialapp.dto.UserReview;
@@ -6,6 +6,7 @@ import com.cevs.reactivesocialapp.CommentHelper;
 import com.cevs.reactivesocialapp.domain.Product;
 import com.cevs.reactivesocialapp.repositories.ProductRepository;
 import com.cevs.reactivesocialapp.repositories.UserRepository;
+import com.cevs.reactivesocialapp.services.SingleProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

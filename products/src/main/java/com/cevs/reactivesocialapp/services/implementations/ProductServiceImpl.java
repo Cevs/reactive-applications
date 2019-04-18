@@ -1,8 +1,9 @@
-package com.cevs.reactivesocialapp.services;
+package com.cevs.reactivesocialapp.services.implementations;
 
 import com.cevs.reactivesocialapp.domain.Product;
 import com.cevs.reactivesocialapp.dto.ProductDto;
 import com.cevs.reactivesocialapp.repositories.ProductRepository;
+import com.cevs.reactivesocialapp.services.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -14,7 +15,6 @@ import reactor.core.publisher.Mono;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.UUID;
 
 @Service
 public class ProductServiceImpl implements ProductService {

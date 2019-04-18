@@ -1,9 +1,6 @@
 package com.cevs.reactivesocialapp;
 
-import com.cevs.reactivesocialapp.domain.Advertisement;
-import com.cevs.reactivesocialapp.domain.Review;
-import com.cevs.reactivesocialapp.domain.Product;
-import com.cevs.reactivesocialapp.domain.User;
+import com.cevs.reactivesocialapp.domain.*;
 import com.thedeanda.lorem.Lorem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,26 +27,42 @@ public class InitDatabase {
     private static final int MAX_PRODUCT_SUPPLIES = 50;
     private static final int MIN_BASE_DISCOUNT = 0;
     private static final int MAX_BASE_DISCOUNT = 10;
+    private static final int NUMBER_OF_CATEGORIES = 5;
 
     private List<User> userList;
     private List<Product> productList;
     private List<Review> reviewList;
     private List<Advertisement> advertisementList;
+    private List<Category> categoryList;
 
     @Bean
     CommandLineRunner init(MongoOperations operations){
         this.operations = operations;
         return args -> {
+            operations.dropCollection(Category.class);
             operations.dropCollection(Product.class);
             operations.dropCollection(Review.class);
             operations.dropCollection(User.class);
             operations.dropCollection(Advertisement.class);
 
+            insertCategories();
             insertProducts();
             insertUsers();
             insertComments();
             insertAdvertisements();
         };
+    }
+
+    private void insertCategories(){
+        categoryList = new ArrayList<>();
+        for(long i = 1; i<=NUMBER_OF_CATEGORIES; i++){
+            categoryList.add(createCategory(i));
+        }
+        operations.insertAll(categoryList);
+    }
+
+    private Category createCategory(long id){
+        return new Category(id, "Category "+id);
     }
 
     private void insertAdvertisements(){
@@ -139,7 +152,7 @@ public class InitDatabase {
                 generateProductName(id),
                 generateProductDescription(),
                 generateProductPrice(),
-                generateProductCategory(),
+                getCategory(),
                 generateProductQuantity(),
                 setAvailability(),
                 generateBaseDiscount(),
@@ -159,8 +172,8 @@ public class InitDatabase {
         return Math.round((3500 + Math.random()*((Math.random()*10000))));
     }
 
-    private String generateProductCategory(){
-        return "Category " + (int)Math.ceil(Math.random()*10);
+    private String getCategory(){
+        return categoryList.get((int)(Math.floor(Math.random()*NUMBER_OF_CATEGORIES))).getName();
     }
 
     private int generateProductQuantity(){

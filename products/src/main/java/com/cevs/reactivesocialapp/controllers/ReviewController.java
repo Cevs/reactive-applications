@@ -44,7 +44,6 @@ public class ReviewController {
         if(reviewSink != null){
             return newReview
                     .map(review -> {
-                        log.info("REVIEW_PROCESSED: " + review.toString());
                         reviewSink.next(
                                 MessageBuilder
                                         .withPayload(review)

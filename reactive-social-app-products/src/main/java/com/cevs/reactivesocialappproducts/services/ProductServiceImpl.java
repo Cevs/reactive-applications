@@ -1,9 +1,8 @@
-package com.cevs.reactivesocialapp.services.implementations;
+package com.cevs.reactivesocialappproducts.services;
 
-import com.cevs.reactivesocialapp.domain.Product;
-import com.cevs.reactivesocialapp.dto.ProductDto;
-import com.cevs.reactivesocialapp.repositories.ProductRepository;
-import com.cevs.reactivesocialapp.services.ProductService;
+import com.cevs.reactivesocialappproducts.domain.Product;
+import com.cevs.reactivesocialappproducts.dto.ProductDto;
+import com.cevs.reactivesocialappproducts.repositories.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -21,10 +20,9 @@ public class ProductServiceImpl implements ProductService {
 
     private static String UPLOAD_ROOT = "upload-dir";
     private final static Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
-
-    //Base folder where products will be saved
     private final ResourceLoader resourceLoader;
     private final ProductRepository productRepository;
+
 
     public ProductServiceImpl(ResourceLoader resourceLoader, ProductRepository productRepository) {
         this.resourceLoader = resourceLoader;
@@ -33,24 +31,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Flux<Product> findAllProducts() {
-        return productRepository.findAll().log("findAll");
+        return productRepository.findAll();
     }
 
     @Override
-    public Mono<Resource> findOneProduct(String filename){
-        //If we put Mono.just() instead of Mono.fromSupplier() the resource fetching would happen immediately
-        //when the method is called.
-        //By putting it inside a Java 8 Supplier, that won't happen until the lambda is invoked, and because
-        //its wrapped by a Mono, invocation won't happen until the client subscribes
+    public Mono<Resource> findOneProduct(String filename) {
         return Mono.fromSupplier(()->
-           resourceLoader.getResource("file:" + UPLOAD_ROOT + "/" + filename)
+            resourceLoader.getResource("file:" + UPLOAD_ROOT + "/" + filename)
         );
     }
 
     @Override
-    public Mono<Void> insertProduct(ProductDto product){
-
-
+    public Mono<Void> insertProduct(ProductDto product) {
         Mono<Product> monoLastProduct = productRepository.findTopByOrderByIdDesc();
 
         Mono<Product> saveProductDb = monoLastProduct
@@ -89,13 +81,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Mono<Void> deleteProduct(String filename){
+    public Mono<Void> deleteProduct(String filename) {
         Mono<Void> deleteDatabaseProduct = productRepository
                 .findByName(filename)
                 .log("deleteImage-find")
                 .flatMap(image -> productRepository.delete(image))
                 .log("deleteImage-record");
-        
+
         Mono<Void> deleteFiles = Mono.fromRunnable(()->{
             try {
                 Files.deleteIfExists(
@@ -112,5 +104,10 @@ public class ProductServiceImpl implements ProductService {
                 .log("deleteImage-when")
                 .then()
                 .log("deleteImage-done");
+    }
+
+    @Override
+    public Mono<Product> getProduct(long productId) {
+        return productRepository.findById(productId);
     }
 }

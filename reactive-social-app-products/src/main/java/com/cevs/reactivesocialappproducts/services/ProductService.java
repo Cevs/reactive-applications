@@ -1,7 +1,7 @@
-package com.cevs.reactivesocialapp.services;
+package com.cevs.reactivesocialappproducts.services;
 
-import com.cevs.reactivesocialapp.domain.Product;
-import com.cevs.reactivesocialapp.dto.ProductDto;
+import com.cevs.reactivesocialappproducts.domain.Product;
+import com.cevs.reactivesocialappproducts.dto.ProductDto;
 import org.springframework.core.io.Resource;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -11,4 +11,5 @@ public interface ProductService {
     Mono<Resource> findOneProduct(String filename);
     Mono<Void> insertProduct(ProductDto product);
     Mono<Void> deleteProduct(String filename);
+    Mono<Product> getProduct(long productId);
 }

@@ -1,8 +1,8 @@
 package com.cevs.reactivesocialapp.controllers;
 
 import com.cevs.reactivesocialapp.dto.ProductDto;
+import com.cevs.reactivesocialapp.helpers.ProductHelper;
 import com.cevs.reactivesocialapp.services.CategoryService;
-import com.cevs.reactivesocialapp.services.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.InputStreamResource;
@@ -24,14 +24,14 @@ public class HomeController {
     private static final String BASE_PATH = "/products";
     private static final String FILENAME = "{filename:.+}";
 
-    private final ProductService productService;
     private final CategoryService categoryService;
+    private final ProductHelper productHelper;
 
     private static final Logger log = LoggerFactory.getLogger(HomeController.class);
 
-    public HomeController(ProductService productService, CategoryService categoryService) {
-        this.productService = productService;
+    public HomeController(CategoryService categoryService, ProductHelper productHelper) {
         this.categoryService = categoryService;
+        this.productHelper = productHelper;
     }
 
     /*
@@ -44,7 +44,7 @@ public class HomeController {
     @GetMapping(value = BASE_PATH + "/" + FILENAME + "/raw", produces = MediaType.IMAGE_JPEG_VALUE)
     @ResponseBody
     public Mono<ResponseEntity<?>> oneRawImage(@PathVariable String filename){
-        return productService.findOneProduct(filename)
+        return productHelper.getProductResource(filename)
                 .map(resource -> {
                     try {
                         return ResponseEntity.ok().contentLength(resource.contentLength())
@@ -56,21 +56,22 @@ public class HomeController {
     }
 
     @PostMapping(value = BASE_PATH + "/new")
-    public Mono<String> insertProduct(ProductDto product){
-        return productService.insertProduct(product).then(Mono.just("redirect:/"));
+    public Mono<Void> insertProduct(ProductDto product){
+        log.info("PRODUCT REST CALL");
+        return productHelper.insertProduct(product);
     }
 
     @DeleteMapping(value = BASE_PATH + "/" + FILENAME)
-    public Mono<String> deleteFile(@PathVariable String filename){
+    public Mono<String> deleteProduct(@PathVariable String filename){
         //use then() to wait until the delete is done before returning back a mono-wrapped redirect:/
-        return productService.deleteProduct(filename).then(Mono.just("redirect:/"));
+        return productHelper.deleteProduct(filename).then(Mono.just("redirect:/"));
     }
 
     @GetMapping("/")
     public Mono<String> index(Model model) {
 
         IReactiveDataDriverContextVariable reactiveDataDrivenMode =
-                new ReactiveDataDriverContextVariable(  productService.findAllProducts()
+                new ReactiveDataDriverContextVariable( productHelper.getAllProducts()
                         .map(product-> new HashMap<String, Object>(){{
                             log.info(product.toString());
                             put("id", product.getId());
@@ -79,7 +80,6 @@ public class HomeController {
                             put("imageName", product.getImageName());
                             put("category", product.getCategory());
                             put("price", product.getPrice());
-                            //put("comments", commentHelper.getComments(product.getId()));
                         }})
                         ,1);
 

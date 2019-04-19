@@ -1,4 +1,4 @@
-package com.cevs.reactivesocialapp.comments;
+package com.cevs.reactivesocialapp.comments.domain;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

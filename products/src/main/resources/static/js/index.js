@@ -40,7 +40,7 @@ function readURL(input) {
 }
 
 function saveNewProduct(event){
-    endPoint = window.location + "products/new"
+    endPoint = "http://localhost:8080/products/new"
     formData = new FormData(event);
     console.log(formData);
 
@@ -51,7 +51,6 @@ function saveNewProduct(event){
         contentType: false,
         processData: false,
         success: function (response) {
-            //console.log(response);
         }
     });
 

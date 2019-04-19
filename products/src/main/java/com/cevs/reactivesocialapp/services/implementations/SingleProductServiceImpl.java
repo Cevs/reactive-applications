@@ -2,9 +2,9 @@ package com.cevs.reactivesocialapp.services.implementations;
 
 import com.cevs.reactivesocialapp.domain.User;
 import com.cevs.reactivesocialapp.dto.UserReview;
-import com.cevs.reactivesocialapp.CommentHelper;
+import com.cevs.reactivesocialapp.helpers.CommentHelper;
 import com.cevs.reactivesocialapp.domain.Product;
-import com.cevs.reactivesocialapp.repositories.ProductRepository;
+import com.cevs.reactivesocialapp.helpers.ProductHelper;
 import com.cevs.reactivesocialapp.repositories.UserRepository;
 import com.cevs.reactivesocialapp.services.SingleProductService;
 import org.slf4j.Logger;
@@ -20,16 +20,17 @@ import reactor.core.publisher.Mono;
 public class SingleProductServiceImpl implements SingleProductService {
 
     @Autowired
-    ProductRepository productRepository;
-    @Autowired
     UserRepository userRepository;
+
+    private final ProductHelper productHelper;
 
     private final Logger log = LoggerFactory.getLogger(SingleProductServiceImpl.class);
     private final CommentHelper commentHelper;
     private final ResourceLoader resourceLoader;
     private final String UPLOAD_ROOT = "upload-dir";
 
-    public SingleProductServiceImpl(CommentHelper commentHelper, ResourceLoader resourceLoader) {
+    public SingleProductServiceImpl(ProductHelper productHelper, CommentHelper commentHelper, ResourceLoader resourceLoader) {
+        this.productHelper = productHelper;
         this.commentHelper = commentHelper;
         this.resourceLoader = resourceLoader;
     }
@@ -37,7 +38,7 @@ public class SingleProductServiceImpl implements SingleProductService {
     @Override
     public Flux<UserReview> getCompositeProductData(long productId) {
 
-        return Flux.fromIterable(commentHelper.getComments(productId)).log("from-iterable")
+        return commentHelper.getReviews(productId)
                 .flatMap(review -> {
                     log.info("REVIEW: " +review.toString());
                     Mono<User> userMono  = userRepository.findById(review.getUserId());
@@ -50,10 +51,7 @@ public class SingleProductServiceImpl implements SingleProductService {
 
     @Override
     public Mono<Product> getProductInfo(long productId) {
-        return productRepository.findById(productId).map(product ->{
-            log.info("PRODUCT_DEBUG: "+product.toString());
-            return product;
-        });
+        return productHelper.getProduct(productId);
     }
 
     @Override
@@ -65,9 +63,9 @@ public class SingleProductServiceImpl implements SingleProductService {
 
     @Override
     public Flux<Product> getSimilarProducts(long productId) {
-        return productRepository.findAll()
+        return  productHelper.getAllProducts()
                 .flatMap(product -> {
-                    Mono<Product> monoProduct = productRepository.findById(productId);
+                    Mono<Product> monoProduct = productHelper.getProduct(productId);
                     return monoProduct.map(originalProduct -> {
                         if(product.getCategory().equals(originalProduct.getCategory())){
                             return product;

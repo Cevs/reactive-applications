@@ -1,0 +1,23 @@
+server:
+  port: 9090
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka
+
+spring:
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: reactive-social-application-products2
+          group: products2-service
+          content-type: application/json
+        output:
+          destination: reactive-social-application-products #TODO: replace with new name of front app
+          group: products2-chat
+          content-type: application/json
+
+  application:
+    name: products2

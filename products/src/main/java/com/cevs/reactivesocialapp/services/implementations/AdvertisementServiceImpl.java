@@ -3,8 +3,8 @@ package com.cevs.reactivesocialapp.services.implementations;
 import com.cevs.reactivesocialapp.domain.Advertisement;
 import com.cevs.reactivesocialapp.repositories.AdvertisementRepository;
 import com.cevs.reactivesocialapp.services.AdvertisementService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -15,11 +15,20 @@ import java.time.Duration;
 @Service
 public class AdvertisementServiceImpl implements AdvertisementService {
 
-    private static final Logger log = LoggerFactory.getLogger(AdvertisementServiceImpl.class);
+    private final ResourceLoader resourceLoader;
+    private static String UPLOAD_ROOT = "upload-dir";
     private final AdvertisementRepository advertisementRepository;
 
-    public AdvertisementServiceImpl(AdvertisementRepository advertisementRepository) {
+    public AdvertisementServiceImpl(ResourceLoader resourceLoader, AdvertisementRepository advertisementRepository) {
+        this.resourceLoader = resourceLoader;
         this.advertisementRepository = advertisementRepository;
+    }
+
+    @Override
+    public Mono<Resource> findOneAdvertisement(String filename) {
+        return Mono.fromSupplier(()->
+                resourceLoader.getResource("file:" + UPLOAD_ROOT + "/" + filename)
+        );
     }
 
     @Override

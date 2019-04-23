@@ -77,7 +77,6 @@ $(document).ready(function(){
 
         xhr = new XMLHttpRequest();
         xhr.open('POST', '/reviews', true);
-        console.log(button.attr("id"));
         formData = new FormData();
         formData.append('userId', 11);
         formData.append('comment', review);
@@ -144,7 +143,6 @@ function updateProduct(event){
 
     $("#modalInsertProduct").modal("hide");
     $(".modal-body input").val("");
-    $('.view-img-product img').attr('src', "/images/placeholder.jpg");
 }
 
 function readURL(input) {

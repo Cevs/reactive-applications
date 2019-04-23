@@ -40,7 +40,7 @@ function readURL(input) {
 }
 
 function saveNewProduct(event){
-    endPoint = "http://localhost:8080/products/new"
+    endPoint = "http://localhost:9090/product/new"
     formData = new FormData(event);
     console.log(formData);
 

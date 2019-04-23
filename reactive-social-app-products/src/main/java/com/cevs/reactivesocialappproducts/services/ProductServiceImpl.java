@@ -49,8 +49,9 @@ public class ProductServiceImpl implements ProductService {
                 .map(lastProduct -> {
                     return lastProduct.getId();
                 }).map(id -> {
+                    long newId = id+1;
                     return new Product(
-                            id+1,
+                            newId,
                             product.getName(),
                             product.getDescription(),
                             product.getPrice(),
@@ -58,56 +59,93 @@ public class ProductServiceImpl implements ProductService {
                             product.getQuantity(),
                             product.isAvailable(),
                             product.getBaseDiscount(),
-                            product.getImage().filename()
+                            "image"+newId+".jpg"
                     );
                 })
                 .flatMap(newProduct -> {
                     return productRepository.save(newProduct);
                 });
 
-        Mono<Void> copyFile = Mono.just(Paths.get(UPLOAD_ROOT, product.getImage().filename()).toFile())
-                .log("create-image")
-                .map(destFile->{
-                    try{
-                        destFile.createNewFile();
-                        return destFile;
-                    }catch (IOException e){
-                        throw new RuntimeException(e);
-                    }
-                })
-                .flatMap(product.getImage()::transferTo);
 
-        return Mono.when(copyFile, saveProductDb);
+        return Mono.when(copyFile(product), saveProductDb);
     }
 
     @Override
-    public Mono<Void> deleteProduct(String filename) {
+    public Mono<Void> deleteProduct(long productId) {
         Mono<Void> deleteDatabaseProduct = productRepository
-                .findByName(filename)
-                .log("deleteImage-find")
-                .flatMap(image -> productRepository.delete(image))
-                .log("deleteImage-record");
+                .findById(productId)
+                .flatMap(product -> productRepository.delete(product));
 
         Mono<Void> deleteFiles = Mono.fromRunnable(()->{
-            try {
+            try{
+                String filename = "image"+productId+".jpg";
                 Files.deleteIfExists(
                         Paths.get(UPLOAD_ROOT, filename)
                 );
-            } catch (IOException e) {
-
+            }catch (IOException e){
                 throw new RuntimeException(e);
             }
         });
 
-        // When using .when() and .then() is also known as PROMISE PATTERN
-        return Mono.when(deleteDatabaseProduct, deleteFiles)
-                .log("deleteImage-when")
-                .then()
-                .log("deleteImage-done");
+        return Mono.when(deleteDatabaseProduct,deleteFiles).then();
     }
 
     @Override
     public Mono<Product> getProduct(long productId) {
         return productRepository.findById(productId);
+    }
+
+    @Override
+    public Mono<Void> updateProduct(ProductDto productDto) {
+
+        Mono<Void> deleteProduct = productRepository.findById(productDto.getId())
+                .flatMap(product -> {
+                    return productRepository.delete(product);
+                });
+
+
+        Mono<Void> deleteFile = Mono.fromRunnable(()->{
+            try{
+                if(!productDto.getImage().filename().isEmpty()){
+                    String filename = "image"+productDto.getId()+".jpg";
+                    Files.deleteIfExists(
+                            Paths.get(UPLOAD_ROOT, filename)
+                    );
+                }
+            }catch (IOException e){
+                throw new RuntimeException(e);
+            }
+        });
+
+        return deleteFile
+                .then(deleteProduct)
+                .then(copyFile(productDto))
+                .then(Mono.just(
+                        new Product(productDto)
+                ))
+                .flatMap(product -> {
+                    return productRepository.save(product);
+                })
+                .then();
+    }
+
+
+
+    private Mono<Void> copyFile(ProductDto productDto){
+        if(!productDto.getImage().filename().isEmpty()){
+           return Mono.just(Paths.get(UPLOAD_ROOT, "image"+productDto.getId()+".jpg").toFile())
+                    .log("create-image")
+                    .map(destFile->{
+                        try{
+                            destFile.createNewFile();
+                            return destFile;
+                        }catch (IOException e){
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .flatMap(productDto.getImage()::transferTo);
+        }else{
+            return Mono.empty();
+        }
     }
 }

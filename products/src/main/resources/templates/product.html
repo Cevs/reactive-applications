@@ -50,6 +50,14 @@
                         <li class="nav-item">
                             <a id="navLinkProductUserReviews" class="nav-link" href="#">User Reviews</a>
                         </li>
+                        <li class="nav-item ml-auto" >
+                            <button th:value="${product.id}" id="btnUpdateProduct" type="button" class="btn btn-primary mx-auto" >Update</button>
+                        </li>
+                        <li class="nav-item" style="margin-left:10px;">
+                            <form th:method="delete" th:action="@{'/product/' + ${product.id}}">
+                                <button id="btnDeleteProduct" type="input" class="btn btn-danger mx-auto" >Delete</button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
                 <div class="card-body">
@@ -149,6 +157,80 @@
         </div>
     </div>
     <!-- Similar products section -->
+
+    <!-- modal -->
+    <form id="formUpdateProduct" th:object="${productDto}">
+        <!-- Modal -->
+        <div class="modal fade" id="modalInsertProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Update Product</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Picture</label>
+                                <div class="thumbnail-product">
+                                    <div class="view-img-product">
+                                        <img id="image" th:src="@{images/placeholder.jpg}">
+                                    </div>
+                                    <input type="file" id="uploadProductImage" name="image">
+                                    <button id="btnSelectImageProduct" type="button" class="btn btn-dark w-100 btn-upload">Select Image
+                                    </button>
+                                </div>
+                            </div>
+                            <input  type="number"  value=-1 id="id" name="id" class="d-none">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input id="name" type="text" name="name" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select id="category" class="custom-select" name="category">
+                                    <option  th:each="category : ${categories}" th:value="${category.name}" th:text="${category.name}"></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea id="description" type="text" name="description" class="form-control" rows="4"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Price ($)</label>
+                                <input id="price" type="number" name="price" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Quantity</label>
+                                <input id="quantity" type="number" name="quantity" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Available</label>
+                                <select id="availability" class="custom-select" name="available">
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Base Discount</label>
+                                <input id="discount" type="number" name="baseDiscount" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnCancel" type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button id = "btnSaveProduct" type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 </body>
 </html>

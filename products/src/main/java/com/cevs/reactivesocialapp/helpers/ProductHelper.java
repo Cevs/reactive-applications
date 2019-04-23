@@ -2,19 +2,14 @@ package com.cevs.reactivesocialapp.helpers;
 
 
 import com.cevs.reactivesocialapp.domain.Product;
-import com.cevs.reactivesocialapp.dto.ProductDto;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import org.springframework.core.io.Resource;
-import reactor.util.function.Tuple2;
 
 
 @Component
@@ -64,25 +59,21 @@ public class ProductHelper {
                 });
     }
 
-    public Mono<Void> insertProduct(ProductDto productDto){
-        MultipartBodyBuilder bodyBuilder = new MultipartBodyBuilder();
-        bodyBuilder.part("image", productDto.getImage());
-
-        return webClient.post()
-               .uri("/product/new")
-               .body(BodyInserters.fromObject(productDto))
-               .exchange()
-               .flatMap(clientResponse -> {
-                    return clientResponse.bodyToMono(Void.class);
-               });
-    }
-
     public Mono<Void> deleteProduct(String filename){
         return webClient.delete()
                 .uri("/product/"+filename)
                 .exchange()
                 .flatMap(clientResponse -> {
                    return clientResponse.bodyToMono(Void.class);
+                });
+    }
+
+    public Mono<Void> deleteProduct(long productId){
+        return webClient.delete()
+                .uri("/product/{productId}",productId)
+                .exchange()
+                .flatMap(clientResponse -> {
+                    return clientResponse.bodyToMono(Void.class);
                 });
     }
 }

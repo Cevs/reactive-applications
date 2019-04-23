@@ -5,6 +5,7 @@ import com.cevs.reactivesocialapp.dto.UserReview;
 import com.cevs.reactivesocialapp.domain.Product;
 import com.cevs.reactivesocialapp.helpers.ProductHelper;
 import com.cevs.reactivesocialapp.services.AdvertisementService;
+import com.cevs.reactivesocialapp.services.CategoryService;
 import com.cevs.reactivesocialapp.services.SingleProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,15 +28,23 @@ import java.io.IOException;
 import java.util.HashMap;
 
 @Controller
-public class SingleProductController {
+public class SingleProductPageController {
 
     @Autowired
     SingleProductService singleProductService;
     @Autowired
     AdvertisementService advertisementService;
+    @Autowired
+    CategoryService categoryService;
+
+    private final ProductHelper productHelper;
 
     private static final String FILENAME = "{filename:.+}";
-    private static final Logger log = LoggerFactory.getLogger(SingleProductController.class);
+    private static final Logger log = LoggerFactory.getLogger(SingleProductPageController.class);
+
+    public SingleProductPageController(ProductHelper productHelper) {
+        this.productHelper = productHelper;
+    }
 
     @GetMapping("/product/{productId}")
     public Mono<String> product(@PathVariable long productId, Model model){
@@ -58,6 +68,7 @@ public class SingleProductController {
                     }};
                 })
         );
+        model.addAttribute("categories", categoryService.getAllCategories());
         return Mono.just("product");
     }
 
@@ -75,4 +86,11 @@ public class SingleProductController {
                     }
                 });
     }
+
+    @DeleteMapping(value = "/product/{productId}")
+    public Mono<String> deleteProduct(@PathVariable long productId){
+        return productHelper.deleteProduct(productId).then(Mono.just("redirect:/"));
+    }
+
+
 }

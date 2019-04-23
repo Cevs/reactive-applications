@@ -87,5 +87,74 @@ $(document).ready(function(){
         $("#reviewText").val("");
     });
 
+    $("#btnUpdateProduct").on("click", function(){
+        $.ajax({
+            async:true,
+            type:"GET",
+            url:"http://localhost:9090/product/"+this.value,
+            success:function (data) {
+                populateProductModal(data);
+                $("#modalInsertProduct").modal({backdrop: 'static', keyboard: false}, "show");
+            }
+        })
+    });
 
+    $("#formUpdateProduct").on("submit", function () {
+        event.preventDefault();
+        updateProduct(this);
+    });
+
+    $('#btnSelectImageProduct').on('click', function () {
+        $('#uploadProductImage').trigger('click');
+    });
+
+    $("#uploadProductImage").change(function () {
+        readURL(this);
+    });
 });
+
+function populateProductModal(data) {
+    $("#formUpdateProduct .modal-body #id").val(data.id);
+    $("#formUpdateProduct .modal-body #name").val(data.name);
+    $("#formUpdateProduct .modal-body #description").val(data.description);
+    $("#formUpdateProduct .modal-body #category").val(data.category);
+    $("#formUpdateProduct .modal-body #price").val(data.price);
+    $("#formUpdateProduct .modal-body #discount").val(data.baseDiscount);
+    $("#formUpdateProduct .modal-body #quantity").val(data.quantity);
+    $("#formUpdateProduct .modal-body #availability").val(data.available+"");
+    if(data.image != ""){
+        $("#formUpdateProduct .modal-body #image").attr("src", "http://localhost:9090/product/"  + data.imageName+ "/raw")
+    }
+}
+
+function updateProduct(event){
+    formData = new FormData(event);
+    endPoint = "http://localhost:9090/product/update";
+
+    $.ajax({
+        url: endPoint,
+        type: 'PUT',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            location.reload();
+        }
+    });
+
+    $("#modalInsertProduct").modal("hide");
+    $(".modal-body input").val("");
+    $('.view-img-product img').attr('src', "/images/placeholder.jpg");
+}
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('.view-img-product img').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}

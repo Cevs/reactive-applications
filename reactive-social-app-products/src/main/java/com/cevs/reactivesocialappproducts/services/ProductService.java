@@ -10,6 +10,7 @@ public interface ProductService {
     Flux<Product> findAllProducts();
     Mono<Resource> findOneProduct(String filename);
     Mono<Void> insertProduct(ProductDto product);
-    Mono<Void> deleteProduct(String filename);
+    Mono<Void> deleteProduct(long productId);
     Mono<Product> getProduct(long productId);
+    Mono<Void> updateProduct(ProductDto productDto);
 }

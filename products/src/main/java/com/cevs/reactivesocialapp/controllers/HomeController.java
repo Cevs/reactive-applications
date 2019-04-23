@@ -55,18 +55,6 @@ public class HomeController {
                 });
     }
 
-    @PostMapping(value = BASE_PATH + "/new")
-    public Mono<Void> insertProduct(ProductDto product){
-        log.info("PRODUCT REST CALL");
-        return productHelper.insertProduct(product);
-    }
-
-    @DeleteMapping(value = BASE_PATH + "/" + FILENAME)
-    public Mono<String> deleteProduct(@PathVariable String filename){
-        //use then() to wait until the delete is done before returning back a mono-wrapped redirect:/
-        return productHelper.deleteProduct(filename).then(Mono.just("redirect:/"));
-    }
-
     @GetMapping("/")
     public Mono<String> index(Model model) {
 

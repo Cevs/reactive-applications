@@ -41,9 +41,13 @@ public class ProductController {
         return productService.insertProduct(productDto);
     }
 
-    @DeleteMapping("/product/"+FILENAME)
-    public Mono<Void> deleteProduct(@PathVariable String filename){
-        return productService.deleteProduct(filename);
+    @DeleteMapping("/product/{productId}")
+    public Mono<Void> deleteProduct(@PathVariable long productId){
+        return productService.deleteProduct(productId);
     }
 
+    @PutMapping("/product/update")
+    public Mono<Void> updateProduct(ProductDto productDto){
+        return productService.updateProduct(productDto);
+    }
 }

@@ -128,32 +128,34 @@
     <div class="card" style="border: none" >
         <h5 class="card-header text-center">Similar Products</h5>
         <div class="row align-items-start justify-content-center p-2" style="border: none;" >
-            <div th:each="similarProduct : ${similarProducts}" class="card m-2" style="width:20rem">
-                <img th:src="@{'/products/' + ${similarProduct.imageName} + '/raw'}" class="card-img mx-auto p-2" style="width:20rem; height: 15rem;">
-                <div class="card-body p-2 m-2">
-                    <table class="table table-borderless m-0 table-similar-products">
-                        <tr>
-                            <th class="text-left"><p><strong>Name:</strong></p></th>
-                            <td><p th:text="${similarProduct.name}"></p></td>
-                        </tr>
-                        <tr>
-                            <th class="text-left"><p><strong>Category:</strong></p></th>
-                            <td><p th:text="${similarProduct.category}"></p></td>
-                        </tr>
-                        <tr>
-                            <th class="text-left"><p><strong>Price:</strong></p></th>
-                            <td><p th:text="${similarProduct.price}"></p></td>
-                        </tr>
-                        <tr>
-                            <th class="text-left"><p><strong>Available:</strong></p></th>
-                            <td th:switch="${product.available}">
-                                <p th:case = 'true' >Yes</p>
-                                <p th:case = 'false'>No</p>
-                            </td>
-                        </tr>
-                    </table>
+                <div th:each="similarProduct : ${similarProducts}" class="card m-2" style="width:20rem">
+                    <a th:href="@{'/product/' + ${similarProduct.id}}" >
+                        <img th:src="@{'/products/' + ${similarProduct.imageName} + '/raw'}" class="card-img mx-auto p-2" style="width:20rem; height: 15rem;">
+                        <div class="card-body p-2 m-2">
+                            <table class="table table-borderless m-0 table-similar-products">
+                                <tr>
+                                    <th class="text-left"><p><strong>Name:</strong></p></th>
+                                    <td><p th:text="${similarProduct.name}"></p></td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"><p><strong>Category:</strong></p></th>
+                                    <td><p th:text="${similarProduct.category}"></p></td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"><p><strong>Price:</strong></p></th>
+                                    <td><p th:text="${similarProduct.price}"></p></td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left"><p><strong>Available:</strong></p></th>
+                                    <td th:switch="${product.available}">
+                                        <p th:case = 'true' >Yes</p>
+                                        <p th:case = 'false'>No</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </a>
                 </div>
-            </div>
         </div>
     </div>
     <!-- Similar products section -->

@@ -67,7 +67,7 @@ public class SingleProductServiceImpl implements SingleProductService {
                 .flatMap(product -> {
                     Mono<Product> monoProduct = productHelper.getProduct(productId);
                     return monoProduct.map(originalProduct -> {
-                        if(product.getCategory().equals(originalProduct.getCategory())){
+                        if(product.getCategory().equals(originalProduct.getCategory()) && product.getId() != productId){
                             return product;
                         }else{
                             return new Product(0,"","",0,"",0,false,0,"");

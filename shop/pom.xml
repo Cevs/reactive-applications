@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.cevs</groupId>
-	<artifactId>reactive-social-app-shop</artifactId>
+	<artifactId>reactive-shop</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>shop</name>
 

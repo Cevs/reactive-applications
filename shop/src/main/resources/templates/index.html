@@ -12,7 +12,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Reactivly</a>
+    <a class="navbar-brand" href="#">Reactively</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -40,55 +40,50 @@
     </div>
 
     <ul class="list-unstyled components">
-        <li class="active">
-
-            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle menu"><i class="fas fa-home"></i>
-                <span>Home</span>
-            </a>
-            <ul class="collapse list-unstyled" id="homeSubmenu">
-                <li>
-                    <a href="#"><span>Home 1</span></a>
-                </li>
-                <li>
-                    <a href="#"><span>Home 2</span></a>
-                </li>
-                <li>
-                    <a href="#"><span>Home 3</span></a>
-                </li>
-            </ul>
-        </li>
         <li>
-            <a href="#" class="menu">
-                <i class="fas fa-briefcase"></i>
-                <span>About</span>
-            </a>
-            <a href="#categorySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle menu">
+            <a href="#categorySubmenu" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle menu">
                 <i class="fas fa-copy"></i>
                 <span>Category</span>
             </a>
-            <ul class="collapse list-unstyled" id="categorySubmenu" th:each="category : ${categories}">
+            <ul class="list-unstyled collapse show" id="categorySubmenu" style="padding-left: 30px;">
+                <li th:each="category : ${categories}">
+                    <input type="radio" name="category" th:value="${category.name}" th:text="${category.name}"/>
+            </ul>
+        </li>
+        <li>
+            <a href="#priceSubmenu" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle menu">
+                <i class="fas fa-copy"></i>
+                <span>Price</span>
+            </a>
+            <ul class="list-unstyled collapse show" id="priceSubmenu" style="padding-left: 30px;">
                 <li>
-                    <a href="#" th:text="${category.name}"><span></span></a>
+                    <p>Lower limit </p><input type="number" name="lowerLimit" style="margin-bottom: 10px;"/> $<br/>
+                    <p>Upper limit </p><input type="number" name="upperLimit"/> $
                 </li>
             </ul>
         </li>
         <li>
-            <a href="#" class="menu">
-                <i class="fas fa-image"></i>
-                <span>Portfolio</span>
+            <a href="#lcationSubmenu" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle menu">
+                <i class="fas fa-copy"></i>
+                <span>Item location</span>
             </a>
-        </li>
-        <li>
-            <a href="#" class="menu">
-                <i class="fas fa-question"></i>
-                <span>FAQ</span>
-            </a>
-        </li>
-        <li>
-            <a href="#" class="menu">
-                <i class="fas fa-paper-plane"></i>
-                <span>Contact</span>
-            </a>
+            <ul class="list-unstyled collapse show" id="lcationSubmenu" style="padding-left: 30px;">
+                <li >
+                    <input type="radio" name="category" th:text="SAD"/>
+                </li>
+                <li >
+                    <input type="radio" name="category" th:text="Germany"/>
+                </li>
+                <li >
+                    <input type="radio" name="category" th:text="China"/>
+                </li>
+                <li >
+                    <input type="radio" name="category" th:text="India"/>
+                </li>
+                <li >
+                    <input type="radio" name="category" th:text="UK"/>
+                </li>
+            </ul>
         </li>
     </ul>
 </nav>

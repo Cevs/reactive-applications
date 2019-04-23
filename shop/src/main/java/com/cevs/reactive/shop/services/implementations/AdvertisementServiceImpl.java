@@ -1,8 +1,8 @@
-package com.cevs.reactivesocialapp.services.implementations;
+package com.cevs.reactive.shop.services.implementations;
 
-import com.cevs.reactivesocialapp.domain.Advertisement;
-import com.cevs.reactivesocialapp.repositories.AdvertisementRepository;
-import com.cevs.reactivesocialapp.services.AdvertisementService;
+import com.cevs.reactive.shop.domain.Advertisement;
+import com.cevs.reactive.shop.repositories.AdvertisementRepository;
+import com.cevs.reactive.shop.services.AdvertisementService;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.cevs.reactivesocialapp.controllers;
+package com.cevs.reactive.shop.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

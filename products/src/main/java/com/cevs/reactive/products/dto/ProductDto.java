@@ -1,4 +1,4 @@
-package com.cevs.reactivesocialappproducts.dto;
+package com.cevs.reactive.products.dto;
 
 import lombok.Data;
 import org.springframework.http.codec.multipart.FilePart;

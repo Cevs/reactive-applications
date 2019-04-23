@@ -1,7 +1,7 @@
-package com.cevs.reactivesocialapp.comments.services;
+package com.cevs.reactive.comments.services;
 
-import com.cevs.reactivesocialapp.comments.repositories.ReviewRepository;
-import com.cevs.reactivesocialapp.comments.domain.Review;
+import com.cevs.reactive.comments.repositories.ReviewRepository;
+import com.cevs.reactive.comments.domain.Review;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.annotation.EnableBinding;

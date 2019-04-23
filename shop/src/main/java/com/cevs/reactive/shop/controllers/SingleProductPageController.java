@@ -1,12 +1,12 @@
-package com.cevs.reactivesocialapp.controllers;
+package com.cevs.reactive.shop.controllers;
 
 
-import com.cevs.reactivesocialapp.dto.UserReview;
-import com.cevs.reactivesocialapp.domain.Product;
-import com.cevs.reactivesocialapp.helpers.ProductHelper;
-import com.cevs.reactivesocialapp.services.AdvertisementService;
-import com.cevs.reactivesocialapp.services.CategoryService;
-import com.cevs.reactivesocialapp.services.SingleProductService;
+import com.cevs.reactive.shop.dto.UserReview;
+import com.cevs.reactive.shop.domain.Product;
+import com.cevs.reactive.shop.helpers.ProductHelper;
+import com.cevs.reactive.shop.services.AdvertisementService;
+import com.cevs.reactive.shop.services.CategoryService;
+import com.cevs.reactive.shop.services.SingleProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

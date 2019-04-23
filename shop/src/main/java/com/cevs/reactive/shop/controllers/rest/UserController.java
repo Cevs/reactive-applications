@@ -1,7 +1,7 @@
-package com.cevs.reactivesocialapp.controllers.rest;
+package com.cevs.reactive.shop.controllers.rest;
 
-import com.cevs.reactivesocialapp.domain.User;
-import com.cevs.reactivesocialapp.services.UserService;
+import com.cevs.reactive.shop.domain.User;
+import com.cevs.reactive.shop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

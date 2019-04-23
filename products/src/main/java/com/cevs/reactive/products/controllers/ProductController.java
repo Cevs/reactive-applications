@@ -1,9 +1,9 @@
-package com.cevs.reactivesocialappproducts.controllers;
+package com.cevs.reactive.products.controllers;
 
-import com.cevs.reactivesocialappproducts.domain.Product;
-import com.cevs.reactivesocialappproducts.dto.ProductDto;
-import com.cevs.reactivesocialappproducts.repositories.ProductRepository;
-import com.cevs.reactivesocialappproducts.services.ProductService;
+import com.cevs.reactive.products.domain.Product;
+import com.cevs.reactive.products.dto.ProductDto;
+import com.cevs.reactive.products.repositories.ProductRepository;
+import com.cevs.reactive.products.services.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;

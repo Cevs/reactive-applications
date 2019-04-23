@@ -1,7 +1,7 @@
-package com.cevs.reactivesocialapp.services;
+package com.cevs.reactive.shop.services;
 
-import com.cevs.reactivesocialapp.dto.UserReview;
-import com.cevs.reactivesocialapp.domain.Product;
+import com.cevs.reactive.shop.dto.UserReview;
+import com.cevs.reactive.shop.domain.Product;
 import org.springframework.core.io.Resource;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

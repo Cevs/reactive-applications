@@ -1,6 +1,5 @@
-package com.cevs.reactivesocialapp.dto;
+package com.cevs.reactive.shop.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.http.codec.multipart.FilePart;
 

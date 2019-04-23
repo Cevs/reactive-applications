@@ -1,6 +1,6 @@
-package com.cevs.reactivesocialappproducts.domain;
+package com.cevs.reactive.products.domain;
 
-import com.cevs.reactivesocialappproducts.dto.ProductDto;
+import com.cevs.reactive.products.dto.ProductDto;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

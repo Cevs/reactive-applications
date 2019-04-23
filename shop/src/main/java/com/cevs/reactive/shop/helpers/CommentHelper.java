@@ -1,19 +1,13 @@
-package com.cevs.reactivesocialapp.helpers;
+package com.cevs.reactive.shop.helpers;
 
-import com.cevs.reactivesocialapp.domain.Review;
+import com.cevs.reactive.shop.domain.Review;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @Component
 public class CommentHelper {

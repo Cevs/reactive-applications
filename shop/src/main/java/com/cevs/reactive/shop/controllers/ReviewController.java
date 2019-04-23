@@ -1,10 +1,8 @@
-package com.cevs.reactivesocialapp.controllers;
+package com.cevs.reactive.shop.controllers;
 
-import com.cevs.reactivesocialapp.domain.Review;
-import com.cevs.reactivesocialapp.services.UserService;
+import com.cevs.reactive.shop.domain.Review;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.cloud.stream.messaging.Source;

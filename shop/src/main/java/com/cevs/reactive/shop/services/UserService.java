@@ -1,6 +1,6 @@
-package com.cevs.reactivesocialapp.services;
+package com.cevs.reactive.shop.services;
 
-import com.cevs.reactivesocialapp.domain.User;
+import com.cevs.reactive.shop.domain.User;
 import reactor.core.publisher.Mono;
 
 public interface UserService {

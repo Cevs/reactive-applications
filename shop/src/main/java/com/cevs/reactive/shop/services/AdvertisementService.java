@@ -1,6 +1,6 @@
-package com.cevs.reactivesocialapp.services;
+package com.cevs.reactive.shop.services;
 
-import com.cevs.reactivesocialapp.domain.Advertisement;
+import com.cevs.reactive.shop.domain.Advertisement;
 import org.springframework.core.io.Resource;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

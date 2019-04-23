@@ -1,4 +1,4 @@
-package com.cevs.reactivesocialapp.comments;
+package com.cevs.reactive.comments;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;

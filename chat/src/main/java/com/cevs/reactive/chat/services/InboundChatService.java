@@ -1,7 +1,6 @@
 package com.cevs.reactive.chat.services;
 
 import com.cevs.reactive.chat.UserParsingHandshakeHandler;
-import com.cevs.reactive.chat.services.ChatServiceStream;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;

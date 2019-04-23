@@ -1,8 +1,8 @@
-package com.cevs.reactivesocialapp;
+package com.cevs.reactive.shop;
 
-import com.cevs.reactivesocialapp.domain.Review;
-import com.cevs.reactivesocialapp.controllers.ReviewController;
-import com.cevs.reactivesocialapp.repositories.ProductRepository;
+import com.cevs.reactive.shop.domain.Review;
+import com.cevs.reactive.shop.controllers.ReviewController;
+import com.cevs.reactive.shop.repositories.ProductRepository;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import reactor.core.publisher.Flux;

@@ -1,6 +1,6 @@
-package com.cevs.reactivesocialapp;
+package com.cevs.reactive.shop;
 
-import com.cevs.reactivesocialapp.domain.*;
+import com.cevs.reactive.shop.domain.*;
 import com.thedeanda.lorem.Lorem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

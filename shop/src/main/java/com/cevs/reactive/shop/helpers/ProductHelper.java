@@ -1,7 +1,7 @@
-package com.cevs.reactivesocialapp.helpers;
+package com.cevs.reactive.shop.helpers;
 
 
-import com.cevs.reactivesocialapp.domain.Product;
+import com.cevs.reactive.shop.domain.Product;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

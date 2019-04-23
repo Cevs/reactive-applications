@@ -1,8 +1,8 @@
-package com.cevs.reactivesocialapp.controllers.rest;
+package com.cevs.reactive.shop.controllers.rest;
 
-import com.cevs.reactivesocialapp.domain.Advertisement;
-import com.cevs.reactivesocialapp.helpers.ProductHelper;
-import com.cevs.reactivesocialapp.services.AdvertisementService;
+import com.cevs.reactive.shop.domain.Advertisement;
+import com.cevs.reactive.shop.helpers.ProductHelper;
+import com.cevs.reactive.shop.services.AdvertisementService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.InputStreamResource;

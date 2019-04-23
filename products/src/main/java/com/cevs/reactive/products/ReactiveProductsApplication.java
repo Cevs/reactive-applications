@@ -1,4 +1,4 @@
-package com.cevs.reactivesocialappproducts;
+package com.cevs.reactive.products;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;

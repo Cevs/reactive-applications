@@ -1,8 +1,8 @@
-package com.cevs.reactivesocialapp.services.implementations;
+package com.cevs.reactive.shop.services.implementations;
 
-import com.cevs.reactivesocialapp.domain.Category;
-import com.cevs.reactivesocialapp.repositories.CategoryRepository;
-import com.cevs.reactivesocialapp.services.CategoryService;
+import com.cevs.reactive.shop.domain.Category;
+import com.cevs.reactive.shop.repositories.CategoryRepository;
+import com.cevs.reactive.shop.services.CategoryService;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 

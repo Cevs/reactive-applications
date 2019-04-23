@@ -1,4 +1,4 @@
-package com.cevs.reactivesocialappproducts.config;
+package com.cevs.reactive.products.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

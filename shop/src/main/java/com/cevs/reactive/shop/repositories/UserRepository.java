@@ -1,6 +1,6 @@
-package com.cevs.reactivesocialapp.repositories;
+package com.cevs.reactive.shop.repositories;
 
-import com.cevs.reactivesocialapp.domain.User;
+import com.cevs.reactive.shop.domain.User;
 import org.bson.types.ObjectId;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;

@@ -1,6 +1,6 @@
-package com.cevs.reactivesocialapp.comments.repositories;
+package com.cevs.reactive.comments.repositories;
 
-import com.cevs.reactivesocialapp.comments.domain.Review;
+import com.cevs.reactive.comments.domain.Review;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;

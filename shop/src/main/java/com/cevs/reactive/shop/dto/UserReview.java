@@ -1,7 +1,7 @@
-package com.cevs.reactivesocialapp.dto;
+package com.cevs.reactive.shop.dto;
 
-import com.cevs.reactivesocialapp.domain.User;
-import com.cevs.reactivesocialapp.domain.Review;
+import com.cevs.reactive.shop.domain.User;
+import com.cevs.reactive.shop.domain.Review;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

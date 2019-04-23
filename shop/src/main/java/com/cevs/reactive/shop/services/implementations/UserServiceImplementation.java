@@ -1,8 +1,8 @@
-package com.cevs.reactivesocialapp.services.implementations;
+package com.cevs.reactive.shop.services.implementations;
 
-import com.cevs.reactivesocialapp.domain.User;
-import com.cevs.reactivesocialapp.repositories.UserRepository;
-import com.cevs.reactivesocialapp.services.UserService;
+import com.cevs.reactive.shop.domain.User;
+import com.cevs.reactive.shop.repositories.UserRepository;
+import com.cevs.reactive.shop.services.UserService;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 

@@ -1,40 +1,23 @@
+server:
+  port: 9090
+
 eureka:
   client:
     service-url:
       default-zone: http://localhost:8761/eureka
 
 spring:
-  servlet:
-    multipart:
-      max-file-size: 10MB
-
   cloud:
     stream:
       bindings:
-        output:
-          destination: reactive-social-application-reviews
-          group: reviews-service
+        input:
+          destination: reactive-social-application-products
+          group: products-service
           content-type: application/json
+        output:
+          destination: reactive-social-application-shop
+          group: products-chat
+          content-type: application/json
+
   application:
     name: products
-
-  devtools:
-    restart:
-      log-condition-evaluation-delta: false
-
-logging:
-  level:
-    web: DEBUG
-    reactor:
-      core: TRACE
-      util: TRACE
-    org:
-      springframework:
-        cloud: DEBUG
-        integration: DEBUG
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: hystrix.stream, info, health

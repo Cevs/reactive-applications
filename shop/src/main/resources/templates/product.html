@@ -83,8 +83,13 @@
                             <tr>
                                 <th class="text-left"><p><strong>Price:</strong></p></th>
                                 <td><p th:text="${product.price} +' $'"></p></td>
+                                <th class="text-left"><p><strong>Location:</strong></p></th>
+                                <td><p th:text="${product.locationName}"></p></td>
+
+                            </tr>
+                            <tr>
                                 <th class="text-left"><p><strong>Description:</strong></p></th>
-                                <td><p th:text="${product.description}"></p></td>
+                                <td colspan="3"><p th:text="${product.description}"></p></td>
                             </tr>
                         </table>
                     </div>

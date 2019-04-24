@@ -1,8 +1,8 @@
 package com.cevs.reactive.shop.controllers;
 
-import com.cevs.reactive.shop.dto.ProductDto;
 import com.cevs.reactive.shop.helpers.ProductHelper;
 import com.cevs.reactive.shop.services.CategoryService;
+import com.cevs.reactive.shop.services.LocationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.InputStreamResource;
@@ -26,12 +26,14 @@ public class HomeController {
 
     private final CategoryService categoryService;
     private final ProductHelper productHelper;
+    private final LocationService locationService;
 
     private static final Logger log = LoggerFactory.getLogger(HomeController.class);
 
-    public HomeController(CategoryService categoryService, ProductHelper productHelper) {
+    public HomeController(CategoryService categoryService, ProductHelper productHelper, LocationService locationService) {
         this.categoryService = categoryService;
         this.productHelper = productHelper;
+        this.locationService = locationService;
     }
 
     /*
@@ -73,6 +75,7 @@ public class HomeController {
 
         model.addAttribute("products", reactiveDataDrivenMode);
         model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("locations", locationService.getAllLocations());
         return Mono.just("index");
     }
 }

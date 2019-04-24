@@ -11,8 +11,8 @@ public interface ProductRepository extends ReactiveCrudRepository<Product, Long>
     Mono<Product> findByName(String name);
     Mono<Product> findById(long productId);
     Flux<Product> findAll();
-    Flux<Product> findByCategory(String category);
     Mono<Product> findTopByOrderByIdDesc();
-    Flux<Product> findByNameContains(String name);
-    Flux<Product> findByNameContainsAndCategoryContains(String productName, String category);
+    Flux<Product> findByNameContainsAndCategoryContainsAndLocationNameContainsAndPriceBetween(
+            String productName, String category, String location, double lowerLimit, double upperLimit
+    );
 }

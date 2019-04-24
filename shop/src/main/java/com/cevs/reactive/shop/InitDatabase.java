@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -34,18 +35,22 @@ public class InitDatabase {
     private List<Review> reviewList;
     private List<Advertisement> advertisementList;
     private List<Category> categoryList;
+    private List<String> countryList = Arrays.asList("SAD", "China", "UK", "Croatia", "India", "Russia","Germany");
+    private List<Location> locationList;
 
     @Bean
     CommandLineRunner init(MongoOperations operations){
         this.operations = operations;
         return args -> {
             operations.dropCollection(Category.class);
+            operations.dropCollection(Location.class);
             operations.dropCollection(Product.class);
             operations.dropCollection(Review.class);
             operations.dropCollection(User.class);
             operations.dropCollection(Advertisement.class);
 
             insertCategories();
+            insertLocations();
             insertProducts();
             insertUsers();
             insertComments();
@@ -64,6 +69,19 @@ public class InitDatabase {
     private Category createCategory(long id){
         return new Category(id, "Category "+id);
     }
+
+    private void insertLocations(){
+        locationList = new ArrayList<>();
+        for(int i = 0; i<countryList.size()-1; i++){
+            locationList.add(createLocation(i));
+        }
+        operations.insertAll(locationList);
+    }
+
+    private Location createLocation(int id){
+        return new Location(++id, countryList.get(id));
+    }
+
 
     private void insertAdvertisements(){
         advertisementList = new ArrayList<>();
@@ -153,6 +171,7 @@ public class InitDatabase {
                 generateProductDescription(),
                 generateProductPrice(),
                 getCategory(),
+                getLocationName(id),
                 generateProductQuantity(),
                 setAvailability(),
                 generateBaseDiscount(),
@@ -174,6 +193,11 @@ public class InitDatabase {
 
     private String getCategory(){
         return categoryList.get((int)(Math.floor(Math.random()*NUMBER_OF_CATEGORIES))).getName();
+    }
+
+    private String getLocationName(long productId){
+        int locationId = (int) productId % locationList.size();
+        return locationList.get(locationId).getCountry();
     }
 
     private int generateProductQuantity(){

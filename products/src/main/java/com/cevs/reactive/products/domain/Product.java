@@ -20,6 +20,7 @@ public class Product {
     private String description;
     private double price;
     private String category;
+    private String locationName;
     private int quantity;
     private boolean available;
     private int baseDiscount;
@@ -31,6 +32,7 @@ public class Product {
         this.description = productDto.getDescription();
         this.price = productDto.getPrice();
         this.category = productDto.getCategory();
+        this.locationName = productDto.getLocationName();
         this.quantity = productDto.getQuantity();
         this.available = productDto.isAvailable();
         this.baseDiscount = productDto.getBaseDiscount();

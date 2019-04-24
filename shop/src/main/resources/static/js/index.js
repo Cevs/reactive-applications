@@ -1,6 +1,9 @@
 $(document).ready(function(){
 
     selectedCategory = "";
+    priceLowerLimit = "";
+    priceUpperLimit = "";
+    selectedItemLocation = "";
     nameSearch = "";
 
     $("#addNewProduct").on("click", function () {
@@ -41,6 +44,22 @@ $(document).ready(function(){
         fetchProducts();
     });
 
+
+    $("input[name='location']").change(function(){
+        selectedItemLocation = $("input[name='location']:checked").val();
+        fetchProducts();
+    });
+
+    $("#priceLowerLimit").on('change', function(){
+        priceLowerLimit = this.value;
+        fetchProducts();
+    });
+
+    $("#priceUpperLimit").on('change', function(){
+        priceUpperLimit = this.value;
+        fetchProducts();
+    });
+
 });
 
 function fetchProducts(){
@@ -50,7 +69,11 @@ function fetchProducts(){
         type: 'GET',
         data: {
             "productName": nameSearch,
-            "productCategory":selectedCategory
+            "productCategory":selectedCategory,
+            "productLocation":selectedItemLocation,
+            "priceLowerLimit":priceLowerLimit,
+            "priceUpperLimit":priceUpperLimit
+
         },
         async:true,
         success: function (dataArr) {

@@ -58,8 +58,8 @@
             </a>
             <ul class="list-unstyled collapse show" id="priceSubmenu" style="padding-left: 30px;">
                 <li>
-                    <p>Lower limit </p><input type="number" name="lowerLimit" style="margin-bottom: 10px;"/> $<br/>
-                    <p>Upper limit </p><input type="number" name="upperLimit"/> $
+                    <p>Lower limit </p><input id="priceLowerLimit" type="number" name="lowerLimit" style="margin-bottom: 10px;"/> $<br/>
+                    <p>Upper limit </p><input id="priceUpperLimit" type="number" name="upperLimit"/> $
                 </li>
             </ul>
         </li>
@@ -68,21 +68,9 @@
                 <i class="fas fa-globe-americas"></i>
                 <span>Item location</span>
             </a>
-            <ul class="list-unstyled collapse show" id="lcationSubmenu" style="padding-left: 30px;">
-                <li >
-                    <input type="radio" name="category" th:text="SAD"/>
-                </li>
-                <li >
-                    <input type="radio" name="category" th:text="Germany"/>
-                </li>
-                <li >
-                    <input type="radio" name="category" th:text="China"/>
-                </li>
-                <li >
-                    <input type="radio" name="category" th:text="India"/>
-                </li>
-                <li >
-                    <input type="radio" name="category" th:text="UK"/>
+            <ul class="list-unstyled collapse show" id="locationSubmenu" style="padding-left: 30px;">
+                <li th:each="location : ${locations}">
+                    <input type="radio" name="location" th:value="${location.country}" th:text="${location.country}"/>
                 </li>
             </ul>
         </li>
@@ -134,8 +122,17 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Description</label>
-                                    <textarea type="text" id="productDescription" name="description" class="form-control" rows="4"></textarea>
+                                    <label>Location</label>
+                                    <select class="custom-select" name="locationName" id="productLocation">
+                                        <option th:each="location : ${locations}" th:value="${location.country}" th:text="${location.country}"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Available</label>
+                                    <select class="custom-select" name="available" id="productAvailability">
+                                        <option value="true">Yes</option>
+                                        <option value="false">No</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Price</label>
@@ -148,11 +145,8 @@
                                     <input type="number" name="quantity" class="form-control" id="productQuantity">
                                 </div>
                                 <div class="form-group">
-                                    <label>Available</label>
-                                    <select class="custom-select" name="available" id="productAvailability">
-                                        <option value="true">Yes</option>
-                                        <option value="false">No</option>
-                                    </select>
+                                    <label>Description</label>
+                                    <textarea type="text" id="productDescription" name="description" class="form-control" rows="4"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label>Base Discount</label>

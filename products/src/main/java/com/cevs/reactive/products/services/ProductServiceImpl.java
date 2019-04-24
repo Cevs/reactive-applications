@@ -71,6 +71,7 @@ public class ProductServiceImpl implements ProductService {
                             product.getDescription(),
                             product.getPrice(),
                             product.getCategory(),
+                            product.getLocationName(),
                             product.getQuantity(),
                             product.isAvailable(),
                             product.getBaseDiscount(),
@@ -82,7 +83,11 @@ public class ProductServiceImpl implements ProductService {
                 });
 
 
-        return Mono.when(copyFile(product), saveProductDb);
+        return saveProductDb.zipWhen(savedProduct -> {
+            ProductDto updateProductDto = product;
+            updateProductDto.setId(savedProduct.getId());
+            return copyFile(updateProductDto).map(aVoid -> "ok");
+        }).then();
     }
 
     @Override
@@ -148,7 +153,8 @@ public class ProductServiceImpl implements ProductService {
 
     private Mono<Void> copyFile(ProductDto productDto){
         if(!productDto.getImage().filename().isEmpty()){
-           return Mono.just(Paths.get(UPLOAD_ROOT, "image"+productDto.getId()+".jpg").toFile())
+            String imageName = "image"+productDto.getId()+".jpg";
+            return Mono.just(Paths.get(UPLOAD_ROOT+"/"+imageName).toFile())
                     .log("create-image")
                     .map(destFile->{
                         try{

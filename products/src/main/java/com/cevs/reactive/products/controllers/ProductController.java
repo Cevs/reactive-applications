@@ -22,8 +22,20 @@ public class ProductController {
     }
 
     @GetMapping("/products/search")
-    public Flux<Product> getProducts(@RequestParam("productName") String productName){
-        return productService.findProductsBySearchNameCriteria(productName);
+    public Flux<Product> getProducts(@RequestParam("productName") String productName,
+                                     @RequestParam("productCategory") String productCategory){
+
+        log.info("PRODUCT NAME: " + productName);
+        log.info("PRODUCT CATEGORY:  " + productCategory);
+
+        if(!productName.isEmpty() && !productCategory.isEmpty()){
+            return  productService.findProductsBySearchNameAndCategory(productName,productCategory);
+        }else if(!productCategory.isEmpty()){
+            return productService.findProductsByCategoryCriteria(productCategory);
+        }
+        else{
+            return productService.findProductsBySearchNameCriteria(productName);
+        }
     }
 
     @GetMapping("/products")

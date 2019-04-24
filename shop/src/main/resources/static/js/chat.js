@@ -10,19 +10,19 @@ $(document).ready(function(){
 
             usernameInput = document.getElementById('username');
 
-            document.getElementById('chatBox').style.display = 'inline';
+            //document.getElementById('chatBox').style.display = 'inline';
 
             outboundChatMessage = new WebSocket('ws://localhost:8200/app/chatMessage.new?user='
                 + usernameInput.value);
 
             //Post new chat messages
             outboundChatMessage.onopen = function (event) {
-                document.getElementById('chatButton')
+                document.getElementById('send')
                     .addEventListener('click', function(){
-                        var chatInput = document.getElementById('chatInput');
-                        console.log('Publishing "' + chatInput.value + '"');
-                        outboundChatMessage.send(chatInput.value);
-                        chatInput = "";
+                        var reply = document.getElementById('reply');
+                        console.log('Publishing "' + reply.value + '"');
+                        outboundChatMessage.send(reply.value);
+                        reply.value = "";
                     });
             }
 
@@ -35,14 +35,14 @@ $(document).ready(function(){
             };
 
             usernameInput.value = "";
-            document.getElementById('chatInput').focus();
+            document.getElementById('reply').focus();
         });
 
     document.getElementById('disconnect')
         .addEventListener('click', function () {
             document.getElementById('connect').style.display = 'inline';
             document.getElementById('disconnect').style.display = 'none';
-            document.getElementById('chatBox').style.display = 'none';
+            //document.getElementById('chatBox').style.display = 'none';
 
             if (outboundChatMessage != null) {
                 outboundChatMessage.close();
@@ -51,4 +51,19 @@ $(document).ready(function(){
                 inboundChatMessages.close();
             }
         });
+
+
+
+    $("#minmax").click(function(){
+        if($("#chatbox").height() > 35){
+            $("#chatbox").height(35);
+            $("#container").hide();
+            $("#minmax").text("^");
+        } else {
+            $("#chatbox").height(400);
+            $("#container").show();
+            $("#minmax").text("X");
+        }
+    });
+
 });

@@ -1,0 +1,150 @@
+
+.chatwindow {
+    background: #fff;
+    position: absolute;
+    right: 10px;
+    bottom: 0px;
+    padding-bottom: 10px;
+    box-shadow: 2px -5px 10px #ccc;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 355px;
+}
+
+.chatheader {
+    background: #343a40;
+    padding: 5px;
+    color:#FFFFFF;
+}
+
+.replySection {
+    height: 30px;
+    /*   position: absolute; */
+    /*   bottom: 5px; */
+}
+
+.reply {
+    margin: 2px 2px 0px 8px;
+    width: 210px;
+    min-height: 20px;
+    max-height: 80px;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    padding: 2px 10px;
+    resize: none;
+    outline: none;
+}
+
+.reply:focus {
+    box-shadow: inset 0 0 5px #ccc;
+}
+
+.send {
+    float: right;
+    margin: 2px;
+    height: 25px;
+    border-radius: 15px;
+    background: #343a40;
+    border: 1px solid #343a40;
+    color: #FFFFFF;
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+}
+
+.send:hover {
+    /*   color: #fff; */
+    box-shadow: 0px 2px 6px #999;
+}
+
+.conversations {
+    overflow-y: auto;
+    margin: 0px;
+    flex-grow: 1;
+}
+
+#chatDisplay{
+    background:#ffffff;
+    border:none;
+    resize: none;
+}
+
+.quickReplies {
+    clear: both;
+    text-align: center;
+    margin: 0px 3px;
+}
+
+ul {
+    margin: 0px;
+    list-style-type: none;
+    padding: 2px 5px;
+}
+
+.conversations li {
+    clear: both;
+    padding: 5px 10px;
+    margin: 5px 3px;
+    border-radius: 15px;
+}
+
+.me {
+    float: right;
+    background: #5D9CEC;
+    color: white;
+    border: 1px solid #4A89DC;
+}
+
+.other {
+    float: left;
+    background: #CCD1D9;
+    display: inline-block;
+    border: 1px solid #AAB2BD;
+}
+
+
+
+.timestamp {
+    text-align: center;
+}
+
+.timestamp div {
+    font-size: 11px;
+    background: #efefef;
+    display: inline-block;
+    padding: 3px 7px;
+    border: 1px solid #dedede;
+    border-radius: 10px;
+}
+
+.quick {
+    margin: 5px 3px;
+    padding: 3px 8px;
+    border: 1px solid #3BAFDA;
+    color: #3BAFDA;
+    font-size: 13px;
+    border-radius: 15px;
+    display: inline-block;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+
+.quick:hover {
+    background: #3BAFDA;
+    color: #fff;
+}
+
+.minmax {
+    float: right;
+    margin: 3px;
+    cursor: pointer;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 0px 5px;
+}

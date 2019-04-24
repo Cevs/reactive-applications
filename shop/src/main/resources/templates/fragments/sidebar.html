@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<body>
+<nav id="sidebar" th:fragment="sidebar">
+    <div class="sidebar-header">
+        <h3>Reactively</h3>
+
+        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-align-justify"></i>
+        </button>
+    </div>
+
+    <ul class="list-unstyled components">
+        <li>
+            <a href="#categorySubmenu" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle menu">
+                <i class="fas fa-copy"></i>
+                <span>Category</span>
+            </a>
+            <ul class="list-unstyled collapse show" id="categorySubmenu" style="padding-left: 30px;">
+                <li th:each="category : ${categories}">
+                    <input type="radio" name="category" th:value="${category.name}" th:text="' ' + ${category.name}"/>
+            </ul>
+        </li>
+        <li>
+            <a href="#priceSubmenu" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle menu">
+                <i class="fas fa-tags"></i>
+                <span>Price</span>
+            </a>
+            <ul class="list-unstyled collapse show" id="priceSubmenu" style="padding-left: 30px;">
+                <li>
+                    <p>Lower limit </p><input id="priceLowerLimit" type="number" name="lowerLimit" style="margin-bottom: 10px;"/> $<br/>
+                    <p>Upper limit </p><input id="priceUpperLimit" type="number" name="upperLimit"/> $
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#lcationSubmenu" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle menu">
+                <i class="fas fa-globe-americas"></i>
+                <span>Item location</span>
+            </a>
+            <ul class="list-unstyled collapse show" id="locationSubmenu" style="padding-left: 30px;">
+                <li th:each="location : ${locations}">
+                    <input type="radio" name="location" th:value="${location.country}" th:text="' ' + ${location.country}"/>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+</body>
+</html>

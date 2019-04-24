@@ -6,191 +6,154 @@
     <link type="text/css" href="css/main.css" rel="stylesheet"/>
     <link type="text/css" href="css/sidebar.css" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
+    <link type="text/css" href="../css/chat.css" rel="stylesheet"/>
+    <script type="text/javascript" th:src="@{/js/chat.js}"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Reactively</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/chat">Chat</a>
-            </li>
-        </ul>
-    </div>
-</nav>
+
+<div th:replace="fragments/navbar :: navbar"></div>
 
 <div class="wrapper">
-<!-- Sidebar  -->
-<nav id="sidebar">
-    <div class="sidebar-header">
-        <h3>Reactively</h3>
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+    <div id="content">
+        <div class="container" style="padding-top: 20px; margin:0;max-width: 100%;">
 
-        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-align-justify"></i>
-        </button>
-    </div>
-
-    <ul class="list-unstyled components">
-        <li>
-            <a href="#categorySubmenu" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle menu">
-                <i class="fas fa-copy"></i>
-                <span>Category</span>
-            </a>
-            <ul class="list-unstyled collapse show" id="categorySubmenu" style="padding-left: 30px;">
-                <li th:each="category : ${categories}">
-                    <input type="radio" name="category" th:value="${category.name}" th:text="${category.name}"/>
-            </ul>
-        </li>
-        <li>
-            <a href="#priceSubmenu" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle menu">
-                <i class="fas fa-tags"></i>
-                <span>Price</span>
-            </a>
-            <ul class="list-unstyled collapse show" id="priceSubmenu" style="padding-left: 30px;">
-                <li>
-                    <p>Lower limit </p><input id="priceLowerLimit" type="number" name="lowerLimit" style="margin-bottom: 10px;"/> $<br/>
-                    <p>Upper limit </p><input id="priceUpperLimit" type="number" name="upperLimit"/> $
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a href="#lcationSubmenu" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle menu">
-                <i class="fas fa-globe-americas"></i>
-                <span>Item location</span>
-            </a>
-            <ul class="list-unstyled collapse show" id="locationSubmenu" style="padding-left: 30px;">
-                <li th:each="location : ${locations}">
-                    <input type="radio" name="location" th:value="${location.country}" th:text="${location.country}"/>
-                </li>
-            </ul>
-        </li>
-    </ul>
-</nav>
-
-<div id="content">
-    <div class="container" style="padding-top: 20px; margin:0;max-width: 100%;">
-        <!-- Button trigger modal -->
-        <button type="button" id ="addNewProduct" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-            <i class="far fa-plus-square"></i>
-        </button>
-
-        <form id="formAddNewProduct" th:object="${productDto}">
-            <!-- Modal -->
-            <div class="modal fade" id="modalInsertProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">New Product</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body row">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label>Picture</label>
-                                    <div class="thumbnail-product">
-                                        <div class="view-img-product">
-                                            <img th:src="@{images/placeholder.jpg}" id="image">
+            <form id="formAddNewProduct" th:object="${productDto}">
+                <!-- Modal -->
+                <div class="modal fade" id="modalInsertProduct" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">New Product</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>Picture</label>
+                                        <div class="thumbnail-product">
+                                            <div class="view-img-product">
+                                                <img th:src="@{images/placeholder.jpg}" id="image">
+                                            </div>
+                                            <input type="file" id="uploadProductImage" name="image">
+                                            <button id="btnSelectImageProduct" type="button"
+                                                    class="btn btn-dark w-100 btn-upload">Select Image
+                                            </button>
                                         </div>
-                                        <input type="file" id="uploadProductImage" name="image">
-                                        <button id="btnSelectImageProduct" type="button" class="btn btn-dark w-100 btn-upload">Select Image
-                                        </button>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input type="text" name="name" class="form-control" id="productName">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Name</label>
-                                    <input type="text" name="name" class="form-control" id="productName">
+                                <div class="col-lg-4">
+                                    <input type="number" value="-1" readonly id="productId" name="id" class="d-none">
+                                    <div class="form-group">
+                                        <label>Category</label>
+                                        <select class="custom-select" name="category" id="productCategory">
+                                            <option th:each="category : ${categories}" th:value="${category.name}"
+                                                    th:text="${category.name}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Location</label>
+                                        <select class="custom-select" name="locationName" id="productLocation">
+                                            <option th:each="location : ${locations}" th:value="${location.country}"
+                                                    th:text="${location.country}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Available</label>
+                                        <select class="custom-select" name="available" id="productAvailability">
+                                            <option value="true">Yes</option>
+                                            <option value="false">No</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Price</label>
+                                        <input type="number" name="price" class="form-control" id="productPrice">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>Quantity</label>
+                                        <input type="number" name="quantity" class="form-control" id="productQuantity">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea type="text" id="productDescription" name="description"
+                                                  class="form-control" rows="4"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Base Discount</label>
+                                        <input type="number" name="baseDiscount" class="form-control"
+                                               id="productBaseDiscount">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
-                                <input type="number" value="-1" readonly id="productId" name="id" class="d-none">
-                                <div class="form-group">
-                                    <label>Category</label>
-                                    <select class="custom-select" name="category" id="productCategory">
-                                        <option th:each="category : ${categories}" th:value="${category.name}" th:text="${category.name}"></option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Location</label>
-                                    <select class="custom-select" name="locationName" id="productLocation">
-                                        <option th:each="location : ${locations}" th:value="${location.country}" th:text="${location.country}"></option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Available</label>
-                                    <select class="custom-select" name="available" id="productAvailability">
-                                        <option value="true">Yes</option>
-                                        <option value="false">No</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Price</label>
-                                    <input type="number" name="price" class="form-control" id="productPrice">
-                                </div>
+                            <div class="modal-footer">
+                                <button id="btnCancel" type="button" class="btn btn-danger" data-dismiss="modal"><i
+                                        class="far fa-window-close"></i></button>
+                                <button id="btnSaveProduct" type="submit" class="btn btn-success"><i
+                                        class="fas fa-check"></i></button>
                             </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label>Quantity</label>
-                                    <input type="number" name="quantity" class="form-control" id="productQuantity">
-                                </div>
-                                <div class="form-group">
-                                    <label>Description</label>
-                                    <textarea type="text" id="productDescription" name="description" class="form-control" rows="4"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label>Base Discount</label>
-                                    <input type="number" name="baseDiscount" class="form-control" id="productBaseDiscount">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button id="btnCancel" type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-window-close"></i></button>
-                            <button id = "btnSaveProduct" type="submit" class="btn btn-success"><i class="fas fa-check"></i></button>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
 
-        <div class="input-group flex-nowrap mx-auto" style="width:70%;">
-            <input id="searchBar" type="text" class="form-control" placeholder="Item name" aria-label="ItemName" aria-describedby="addon-wrapping">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="addon-wrapping"><i class="fas fa-search"></i></span>
+            <div class="input-group flex-nowrap mx-auto" style="width:70%;">
+                <input id="searchBar" type="text" class="form-control" placeholder="Item name" aria-label="ItemName"
+                       aria-describedby="addon-wrapping">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="addon-wrapping"><i class="fas fa-search"></i></span>
+                </div>
+                <!-- Button trigger modal -->
+                <button type="button" id="addNewProduct" class="btn btn-primary" data-toggle="modal"
+                        data-target="#exampleModalCenter" style="margin-left: 5px;">
+                    <i class="far fa-plus-square"></i>
+                </button>
             </div>
-        </div>
-        <div id="productArea" class="row align-items-start justify-content-center p-2" style="border: none;" >
-            <div class="card m-3"  th:each="product : ${products}" style="width:20rem; height:20rem;">
-                <a th:href="@{'/product/' + ${product.id}}" style="text-decoration: none;color: inherit; height:100%">
-                    <div class="row no-gutters" style="height:100%">
-                        <div class="col-md-4 my-auto">
-                            <img th:src="@{'/products/' + ${product.imageName} + '/raw'}" class="card-img p-2" style="height: 100%">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body" style="height: 100%">
-                                <h5 class="card-title" th:text="${product.name}"></h5>
-                                <p class="card-text" th:text="${product.description}"></p>
-                                <p class="card-text"><strong></strong><strong th:text="${product.price}"></strong> $</p>
+            <div id="productArea" class="row align-items-start justify-content-center p-2" style="border: none;">
+                <div class="card m-3" th:each="product : ${products}" style="width:20rem; height:20rem;">
+                    <a th:href="@{'/product/' + ${product.id}}"
+                       style="text-decoration: none;color: inherit; height:100%">
+                        <div class="row no-gutters" style="height:100%">
+                            <div class="col-md-4 my-auto">
+                                <img th:src="@{'/products/' + ${product.imageName} + '/raw'}" class="card-img p-2"
+                                     style="height: 100%">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body" style="height: 100%">
+                                    <h5 class="card-title" th:text="${product.name}"></h5>
+                                    <p class="card-text" th:text="${product.description}"></p>
+                                    <p class="card-text"><strong></strong><strong th:text="${product.price}"></strong> $
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </div>
-</div>
 
-<script type="text/javascript" th:src="@{/js/index.js}"></script>
+<div th:replace="fragments/chat :: chat"></div>
+
 </body>
 </html>

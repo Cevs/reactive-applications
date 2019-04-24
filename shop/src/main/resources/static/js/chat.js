@@ -1,69 +1,54 @@
 $(document).ready(function(){
 
-    var outboundChatMessage = null;
-    var inboundChatMessages = null;
+    outboundChatMessage = null;
+    inboundChatMessages = null;
 
-    document.getElementById('connect')
-        .addEventListener('click', function () {
-            document.getElementById('connect').style.display = 'none';
-            document.getElementById('disconnect').style.display = 'inline';
+    $("#connect").on("click", function(){
+       $("#connect").hide();
+       $("#username").hide();
+       username = $("#username").val();
+       console.log(username);
 
-            usernameInput = document.getElementById('username');
+        outboundChatMessage = new WebSocket('ws://localhost:8200/app/chatMessage.new?user='
+            + username);
 
-            //document.getElementById('chatBox').style.display = 'inline';
-
-            outboundChatMessage = new WebSocket('ws://localhost:8200/app/chatMessage.new?user='
-                + usernameInput.value);
-
-            //Post new chat messages
-            outboundChatMessage.onopen = function (event) {
-                document.getElementById('send')
-                    .addEventListener('click', function(){
-                        var reply = document.getElementById('reply');
-                        console.log('Publishing "' + reply.value + '"');
-                        outboundChatMessage.send(reply.value);
-                        reply.value = "";
-                    });
-            }
-
-            inboundChatMessages = new WebSocket("ws://localhost:8200/topic/chatMessage.new?user="
-                + usernameInput.value);
-            inboundChatMessages.onmessage = function (event) {
-                console.log("Recieved " + event.data);
-                var chatDisplay = document.getElementById('chatDisplay');
-                chatDisplay.value = chatDisplay.value + event.data + "\n";
-            };
-
-            usernameInput.value = "";
-            document.getElementById('reply').focus();
-        });
-
-    document.getElementById('disconnect')
-        .addEventListener('click', function () {
-            document.getElementById('connect').style.display = 'inline';
-            document.getElementById('disconnect').style.display = 'none';
-            //document.getElementById('chatBox').style.display = 'none';
-
-            if (outboundChatMessage != null) {
-                outboundChatMessage.close();
-            }
-            if (inboundChatMessages != null) {
-                inboundChatMessages.close();
-            }
-        });
-
-
-
-    $("#minmax").click(function(){
-        if($("#chatbox").height() > 35){
-            $("#chatbox").height(35);
-            $("#container").hide();
-            $("#minmax").text("^");
-        } else {
-            $("#chatbox").height(400);
-            $("#container").show();
-            $("#minmax").text("X");
+        outboundChatMessage.onopen = function (event) {
+            $("#send").on("click", function(){
+               reply = $("#reply");
+               outboundChatMessage.send(reply.val());
+               reply.val("");
+            });
         }
+
+        inboundChatMessages = new WebSocket("ws://localhost:8200/topic/chatMessage.new?user="
+            + username);
+
+        inboundChatMessages.onmessage = function (event) {
+            console.log(event.data);
+            chatDisplay = $("#chatDisplay");
+            if((event.data.indexOf(username)) >= 0){
+                $div = "<p class='reply sender'>"+event.data+"</p>"
+            }else{
+                $div = "<p class='reply receiver'>"+event.data+"</p>"
+            }
+            chatDisplay.append($div);
+        };
+
+        $("#reply").focus();
     });
 
+    $("#minmax").click(function(){
+        console.log($("#container").is(":visible"));
+            if($("#container").is(":visible")){
+                $("#container").hide();
+                $(".replySection").hide();
+                $("#chatHeaderButton").removeClass("fa-times");
+                $("#chatHeaderButton").addClass("fa-angle-up");
+            }else{
+                $("#container").show();
+                $(".replySection").show();
+                $("#chatHeaderButton").addClass("fa-times");
+                $("#chatHeaderButton").removeClass("fa-angle-up");
+            }
+    });
 });

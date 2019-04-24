@@ -1,29 +1,33 @@
 
 .chatwindow {
     background: #fff;
-    position: absolute;
+    position: fixed;
     right: 10px;
     bottom: 0px;
-    padding-bottom: 10px;
+    width:300px;
     box-shadow: 2px -5px 10px #ccc;
 }
 
-.container {
+.container-chat {
     display: flex;
     flex-direction: column;
     height: 355px;
+    margin-top:10px;
+    margin-left:10px;
+    margin-right: 10px;
 }
 
 .chatheader {
     background: #343a40;
-    padding: 5px;
+    padding: 5px 5px 5px 10px;
     color:#FFFFFF;
 }
 
 .replySection {
     height: 30px;
-    /*   position: absolute; */
-    /*   bottom: 5px; */
+    margin-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .reply {
@@ -46,7 +50,7 @@
 .send {
     float: right;
     margin: 2px;
-    height: 25px;
+    height: 100%;
     border-radius: 15px;
     background: #343a40;
     border: 1px solid #343a40;
@@ -142,9 +146,31 @@ ul {
 
 .minmax {
     float: right;
-    margin: 3px;
     cursor: pointer;
-    border: 1px solid #333;
-    border-radius: 10px;
     padding: 0px 5px;
+}
+
+.reply{
+    display: inline-block;
+    border-radius:15px;
+    padding:2px;
+    word-break: break-all;
+}
+
+.sender{
+    float:left;
+    margin-bottom:5px;
+    font-size: 13px;
+    background-color: #A4D9EE;
+    border-color: #A4D9EE;
+    color:black;
+}
+
+.receiver{
+    float:right;
+    margin-bottom:5px;
+    font-size: 13px;
+    background-color: #F2B4F2;
+    border-color: #F2B4F2;
+    color:black;
 }

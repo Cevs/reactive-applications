@@ -35,6 +35,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Flux<Product> findProductsBySearchNameCriteria(String name) {
+        return productRepository.findByNameContains(name);
+    }
+
+    @Override
     public Mono<Resource> findOneProduct(String filename) {
         return Mono.fromSupplier(()->
             resourceLoader.getResource("file:" + UPLOAD_ROOT + "/" + filename)

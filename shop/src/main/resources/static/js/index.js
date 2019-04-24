@@ -25,6 +25,44 @@ $(document).ready(function(){
         $('.view-img-product img').attr('src', "/images/placeholder.jpg");
     });
 
+    $("#searchBar").on('keyup', function(event){
+        searchValue = this.value;
+        console.log(searchValue);
+        $.ajax({
+            url: "http://localhost:9090/products/search",
+            type: 'GET',
+            data: {
+                "productName": searchValue
+            },
+            async:true,
+            success: function (dataArr) {
+                $("#productArea").empty();
+                $.each(dataArr, function(index, value){
+                    product = value;
+                    $div =$(
+                        "<div class=\"card m-3\" style=\"width:20rem; height:20rem;\">"+
+                            "<a href=\"product/" + product.id +"\" style=\"text-decoration: none;color: inherit; height:100%\">"+
+                                "<div class=\"row no-gutters\" style=\"height:100%\">"+
+                                    "<div class=\"col-md-4 my-auto\">"+
+                                        "<img src=\"products/" + product.imageName + "/raw\" class=\"card-img p-2\" style=\"height: 100%\">"+
+                                    "</div>"+
+                                    "<div class=\"col-md-8\">"+
+                                        "<div class=\"card-body\" style=\"height: 100%\">"+
+                                            "<h5 class=\"card-title\">"+product.name+"</h5>"+
+                                            "<p class=\"card-text\">"+product.description+"</p>"+
+                                            "<p class=\"card-text\"><strong>$ </strong><strong>"+product.price+"</strong></p>"+
+                                        "</div>"+
+                                    "</div>"+
+                                "</div>"+
+                            "</a>"+
+                        "</div>"
+                    );
+                    $("#productArea").append($div);
+                });
+            }
+        });
+    });
+
 });
 
 function readURL(input) {

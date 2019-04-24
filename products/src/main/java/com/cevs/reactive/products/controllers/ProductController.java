@@ -21,6 +21,11 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @GetMapping("/products/search")
+    public Flux<Product> getProducts(@RequestParam("productName") String productName){
+        return productService.findProductsBySearchNameCriteria(productName);
+    }
+
     @GetMapping("/products")
     public Flux<Product> getAllProducts(){
         return productService.findAllProducts();

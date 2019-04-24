@@ -28,9 +28,17 @@ public class ProductController {
                                      @RequestParam(name="priceLowerLimit", defaultValue = "0") double lowerLimit,
                                      @RequestParam(name="priceUpperLimit", defaultValue = "0") double upperLimit){
 
-        return productService.findProductsBySearchNameAndCategoryAndLocationAndPriceRange(
-                productName,productCategory,productLocation,lowerLimit,upperLimit
-        );
+
+        if(lowerLimit == 0 || upperLimit == 0){
+            return productService.findProductsBySearchNameAndCategoryAndLocation(
+                    productName,productCategory,productLocation
+            );
+        }
+        else{
+            return productService.findProductsBySearchNameAndCategoryAndLocationAndPriceRange(
+                    productName,productCategory,productLocation,lowerLimit,upperLimit
+            );
+        }
     }
 
     @GetMapping("/products")

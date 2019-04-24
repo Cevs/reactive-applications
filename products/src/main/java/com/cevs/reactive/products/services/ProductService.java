@@ -11,6 +11,9 @@ public interface ProductService {
     Flux<Product> findProductsBySearchNameAndCategoryAndLocationAndPriceRange(
             String productName, String category, String location, double lowerLimit, double upperLimit
     );
+    Flux<Product> findProductsBySearchNameAndCategoryAndLocation(
+            String productName, String category, String location
+    );
     Mono<Resource> findOneProduct(String filename);
     Mono<Void> insertProduct(ProductDto product);
     Mono<Void> deleteProduct(long productId);

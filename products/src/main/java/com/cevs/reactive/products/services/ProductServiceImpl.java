@@ -44,6 +44,13 @@ public class ProductServiceImpl implements ProductService {
         );
     }
 
+    @Override
+    public Flux<Product> findProductsBySearchNameAndCategoryAndLocation(String productName, String category, String location) {
+        return productRepository.findByNameContainsAndCategoryContainsAndLocationNameContains(
+                productName,category,location
+        );
+    }
+
 
     @Override
     public Mono<Resource> findOneProduct(String filename) {

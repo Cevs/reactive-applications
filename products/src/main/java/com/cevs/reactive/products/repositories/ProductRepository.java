@@ -15,4 +15,5 @@ public interface ProductRepository extends ReactiveCrudRepository<Product, Long>
     Flux<Product> findByNameContainsAndCategoryContainsAndLocationNameContainsAndPriceBetween(
             String productName, String category, String location, double lowerLimit, double upperLimit
     );
+    Flux<Product> findByNameContainsAndCategoryContainsAndLocationNameContains(String productName, String category, String location);
 }

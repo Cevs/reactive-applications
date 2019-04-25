@@ -1,6 +1,8 @@
 package com.cevs.reactive.chat.services;
 
 import com.cevs.reactive.chat.UserParsingHandshakeHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import reactor.core.publisher.Mono;
 public class InboundChatService extends UserParsingHandshakeHandler {
 
     private final ChatServiceStream chatServiceStream;
+    private final Logger log = LoggerFactory.getLogger(InboundChatService.class);
 
     public InboundChatService(ChatServiceStream chatServiceStream) {
         this.chatServiceStream = chatServiceStream;
@@ -27,8 +30,14 @@ public class InboundChatService extends UserParsingHandshakeHandler {
                 .map(WebSocketMessage::getPayloadAsText)
                 .log(getUser(session.getId())
                         + "-inbound-convert-to-text")
-                .flatMap(message ->
-                        broadcast(message, getUser(session.getId())))
+                .flatMap(message ->{
+                        if(!message.isEmpty()){
+                            return broadcast(message, getUser(session.getId()));
+                        }
+                        else{
+                            return Mono.empty();
+                        }
+                })
                 .log(getUser(session.getId())
                         + "-inbound-broadcast-to-broker")
                 .then();

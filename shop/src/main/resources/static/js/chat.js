@@ -7,7 +7,6 @@ $(document).ready(function(){
        $("#connect").hide();
        $("#username").hide();
        username = $("#username").val();
-       console.log(username);
 
         outboundChatMessage = new WebSocket('ws://localhost:8200/app/chatMessage.new?user='
             + username);
@@ -15,8 +14,11 @@ $(document).ready(function(){
         outboundChatMessage.onopen = function (event) {
             $("#send").on("click", function(){
                reply = $("#reply");
-               outboundChatMessage.send(reply.val());
-               reply.val("");
+               if(!isEmpty(reply.val())){
+                   console.log("Sending: "+reply.val());
+                   outboundChatMessage.send(reply.val());
+                   reply.val("");
+               }
             });
         }
 
@@ -24,12 +26,12 @@ $(document).ready(function(){
             + username);
 
         inboundChatMessages.onmessage = function (event) {
-            console.log(event.data);
+            console.log("Receiving: "+event.data);
             chatDisplay = $("#chatDisplay");
             if((event.data.indexOf(username)) >= 0){
-                $div = "<p class='message sender'>"+event.data+"</p>"
+                $div = "<p class='message'><span class='sender'>"+event.data+"</span></p>"
             }else{
-                $div = "<p class='message receiver'>"+event.data+"</p>"
+                $div = "<p class='message'><span class='receiver'>"+event.data+"</span></p>"
             }
             chatDisplay.append($div);
         };
@@ -52,3 +54,7 @@ $(document).ready(function(){
             }
     });
 });
+
+function isEmpty(value) {
+    return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
+}

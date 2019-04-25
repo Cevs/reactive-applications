@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class InitDatabase {
@@ -134,7 +135,7 @@ public class InitDatabase {
 
         operations.insertAll(userList);
         operations.insert(new User(
-           11,"alemartin@foi.hr","AlenMartincevic","profile11.jpg"
+           11,"alemartin@foi.hr","AlenMartincevic","1234","profile11.jpg"
         ));
     }
 
@@ -146,6 +147,7 @@ public class InitDatabase {
                 id,
                 email,
                 firstName+lastName,
+                UUID.randomUUID().toString(),
                 getRandomUserImage()
         );
     }

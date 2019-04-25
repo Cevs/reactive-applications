@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link type="text/css" href="css/registration.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <form action="/registration" th:object="${user}" method="POST" enctype="utf8" >
+        <div class="registration mx-auto my-auto">
+            <div class="registration-screen">
+                <div class="app-title">
+                    <h1>Registration</h1>
+                </div>
+
+                <div class="registration-form">
+                    <div class="control-group">
+                        <input type="text" class="registration-field" value="" placeholder="username" id="registration-username" name="username">
+                        <label class="registration-field-icon fui-user" for="registration-username"></label>
+                    </div>
+                    <div class="control-group">
+                        <input type="text" class="registration-field" value="" placeholder="email" id="registration-email" name="email">
+                        <label class="registration-field-icon fui-user" for="registration-email"></label>
+                    </div>
+                    <div class="control-group">
+                        <input type="password" class="registration-field" value="" placeholder="password" id="registration-password" name="password">
+                        <label class="registration-field-icon fui-lock" for="registration-password"></label>
+                    </div>
+                    <div class="control-group">
+                        <input type="password" class="registration-field" value="" placeholder="Reenter password" id="registration-re-password" name="rePassword">
+                        <label class="registration-field-icon fui-lock" for="registration-re-password"></label>
+                    </div>
+
+                    <input type="submit" class="btn btn-primary btn-large" value="Register" />
+                    <!--<a class="btn btn-primary btn-large" href="#">Register</a>-->
+                    <a class="registration-link" href="/registration">Already have an account?</a>
+                    <p th:text="${message}"></p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

@@ -15,5 +15,13 @@ public class User {
     private long id;
     private String email;
     private String username;
+    private String password;
     private String imageName;
+
+    public User(String email, String username, String password){
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.imageName = "profileplaceholder.jpg";
+    }
 }

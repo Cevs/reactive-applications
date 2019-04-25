@@ -27,9 +27,9 @@ $(document).ready(function(){
             console.log(event.data);
             chatDisplay = $("#chatDisplay");
             if((event.data.indexOf(username)) >= 0){
-                $div = "<p class='reply sender'>"+event.data+"</p>"
+                $div = "<p class='message sender'>"+event.data+"</p>"
             }else{
-                $div = "<p class='reply receiver'>"+event.data+"</p>"
+                $div = "<p class='message receiver'>"+event.data+"</p>"
             }
             chatDisplay.append($div);
         };

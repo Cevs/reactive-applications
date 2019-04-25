@@ -2,7 +2,7 @@
 .chatwindow {
     background: #fff;
     position: fixed;
-    right: 10px;
+    right: 20px;
     bottom: 0px;
     width:300px;
     box-shadow: 2px -5px 10px #ccc;
@@ -25,7 +25,7 @@
 
 .replySection {
     height: 30px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -150,10 +150,10 @@ ul {
     padding: 0px 5px;
 }
 
-.reply{
+.message{
     display: inline-block;
     border-radius:15px;
-    padding:2px;
+    padding:5px 10px;
     word-break: break-all;
 }
 

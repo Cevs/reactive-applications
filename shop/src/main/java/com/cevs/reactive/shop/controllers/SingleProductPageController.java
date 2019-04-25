@@ -6,6 +6,7 @@ import com.cevs.reactive.shop.domain.Product;
 import com.cevs.reactive.shop.helpers.ProductHelper;
 import com.cevs.reactive.shop.services.AdvertisementService;
 import com.cevs.reactive.shop.services.CategoryService;
+import com.cevs.reactive.shop.services.LocationService;
 import com.cevs.reactive.shop.services.SingleProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +37,8 @@ public class SingleProductPageController {
     AdvertisementService advertisementService;
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    LocationService locationService;
 
     private final ProductHelper productHelper;
 
@@ -69,6 +72,7 @@ public class SingleProductPageController {
                 })
         );
         model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("locations", locationService.getAllLocations());
         return Mono.just("product");
     }
 
@@ -91,6 +95,4 @@ public class SingleProductPageController {
     public Mono<String> deleteProduct(@PathVariable long productId){
         return productHelper.deleteProduct(productId).then(Mono.just("redirect:/"));
     }
-
-
 }

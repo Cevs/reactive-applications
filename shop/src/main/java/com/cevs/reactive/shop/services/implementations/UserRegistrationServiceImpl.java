@@ -19,16 +19,13 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         this.userRepository = userRepository;
     }
 
-
     @Override
     public Mono<User> registerNewUserAccount(UserDto userDto) {
         Mono<Long> lastInsertedUser = userRepository.findTopByOrderByIdDesc().map(user -> {
             return user.getId();
         });
 
-
-
-        Mono<User> createNewUser = userRepository.existsByEmail(userDto.getEmail())
+        Mono<User> createNewUser = userRepository.existsByUsername(userDto.getUsername())
                 .flatMap(exists -> {
                     if(!exists){
                         return  Mono.just(new User(userDto.getEmail(),userDto.getUsername(),userDto.getPassword()));

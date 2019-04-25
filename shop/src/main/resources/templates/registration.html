@@ -15,6 +15,7 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script type="text/javascript" th:src="@{/js/registration.js}"></script>
 </head>
 <body>
 <div class="container">
@@ -27,26 +28,31 @@
 
                 <div class="registration-form">
                     <div class="control-group">
-                        <input type="text" class="registration-field" value="" placeholder="username" id="registration-username" name="username">
-                        <label class="registration-field-icon fui-user" for="registration-username"></label>
+                        <input type="text" class="registration-field" value="" placeholder="username" id="registration_username" name="username">
+                        <label class="registration-field-icon fui-user" for="registration_username"></label>
+                        <p id="err_username" class="no-display err-message"></p>
                     </div>
                     <div class="control-group">
-                        <input type="text" class="registration-field" value="" placeholder="email" id="registration-email" name="email">
-                        <label class="registration-field-icon fui-user" for="registration-email"></label>
+                        <input type="text" class="registration-field" value="" placeholder="email" id="registration_email" name="email">
+                        <label class="registration-field-icon fui-user" for="registration_email"></label>
+                        <p id="err_email" class="no-display err-message"></p>
                     </div>
                     <div class="control-group">
-                        <input type="password" class="registration-field" value="" placeholder="password" id="registration-password" name="password">
-                        <label class="registration-field-icon fui-lock" for="registration-password"></label>
+                        <input type="password" class="registration-field" value="" placeholder="password" id="registration_password" name="password">
+                        <label class="registration-field-icon fui-lock" for="registration_password"></label>
+                        <p id="err_password" class="no-display err-message"></p>
                     </div>
                     <div class="control-group">
-                        <input type="password" class="registration-field" value="" placeholder="Reenter password" id="registration-re-password" name="rePassword">
-                        <label class="registration-field-icon fui-lock" for="registration-re-password"></label>
+                        <input type="password" class="registration-field" value="" placeholder="Reenter password" id="registration_re_password" name="rePassword">
+                        <label class="registration-field-icon fui-lock" for="registration_re_password"></label>
+                        <p id="err_re_password" class="no-display err-message"></p>
                     </div>
 
-                    <input type="submit" class="btn btn-primary btn-large" value="Register" />
-                    <!--<a class="btn btn-primary btn-large" href="#">Register</a>-->
+                    <input id="btn_register" type="submit" class="btn btn-primary btn-large" value="Register" />
                     <a class="registration-link" href="/registration">Already have an account?</a>
-                    <p th:text="${message}"></p>
+                    <div class="alert alert-danger" role="alert" style="margin-top:5px;margin-bottom:5px;display:none">
+
+                    </div>
                 </div>
             </div>
         </div>

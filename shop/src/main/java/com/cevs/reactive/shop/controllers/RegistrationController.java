@@ -31,7 +31,7 @@ public class RegistrationController {
                 .flatMap(user -> {
                         return Mono.just("redirect:/login");
                 }).switchIfEmpty(Mono.defer(() -> {
-                    model.addAttribute("message", "User Already Exists");
+                    model.addAttribute("message", "Unsuccessful registration!");
                     return Mono.just("registration");
                 }));
     }

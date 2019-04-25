@@ -13,7 +13,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http){
         return http.authorizeExchange()
-                .pathMatchers("/registration*", "/resources/**", "/templates/**", "/login*",
+                .pathMatchers("/registration*", "/resources/**", "/templates/**", "/login*","/user/exist",
                         "/error", "/successRegistration*", "/upload-dir/**", "/", "/products/**", "/css/**", "/js/**", "/images/**")
                 .permitAll()
                 .anyExchange().authenticated()

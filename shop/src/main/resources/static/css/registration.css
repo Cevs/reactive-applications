@@ -87,3 +87,15 @@ input:focus {
     margin-top: 12px;
 }
 
+.err-message{
+    color:red;
+    font-weight: bold;
+    font-size:12px;
+    margin-top:5px;
+    margin-bottom:0px;
+}
+
+.no-display{
+    display:none;
+}
+

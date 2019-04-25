@@ -121,11 +121,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Mono<Void> updateProduct(ProductDto productDto) {
 
-        Mono<Void> deleteProduct = productRepository.findById(productDto.getId())
-                .flatMap(product -> {
-                    return productRepository.delete(product);
-                });
-
+        Mono<Product> findProduct = productRepository.findById(productDto.getId());
 
         Mono<Void> deleteFile = Mono.fromRunnable(()->{
             try{
@@ -140,16 +136,19 @@ public class ProductServiceImpl implements ProductService {
             }
         });
 
-        return deleteFile
-                .then(deleteProduct)
-                .then(copyFile(productDto))
-                .then(Mono.just(
-                        new Product(productDto)
-                ))
-                .flatMap(product -> {
-                    return productRepository.save(product);
-                })
-                .then();
+        return findProduct.flatMap(product -> {
+            product.setName(productDto.getName());
+            product.setDescription(productDto.getDescription());
+            product.setPrice(productDto.getPrice());
+            product.setCategory(productDto.getCategory());
+            product.setLocationName(productDto.getLocationName());
+            product.setQuantity(productDto.getQuantity());
+            product.setAvailable(productDto.isAvailable());
+            product.setBaseDiscount(productDto.getBaseDiscount());
+            return productRepository.save(product);
+        }).then(deleteFile)
+                .then(copyFile(productDto)).then();
+
     }
 
 

@@ -12,13 +12,14 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script type = "text/javascript" rel="script" src="../js/product.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link type="text/css" href="../css/chat.css" rel="stylesheet"/>
 </head>
 <body>
 
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <div class="container" style="padding-top: 20px; margin:0;max-width: 100%;">
-
+    <input id="username" style="display: none" th:value="${#authorization.getAuthentication()?.getName()}"/>
     <div class="row product-top align-items-start">
         <div class="col-sm">
             <img th:src="@{'/products/' + ${product.imageName} + '/raw'}" class="img-thumbnail rounded img-single-product mx-auto" width="700" height="500">
@@ -77,10 +78,6 @@
                                 <th class="text-left"><p><strong>Description:</strong></p></th>
                                 <td colspan="3"><p th:text="${product.description}"></p></td>
                             </tr>
-                            <tr>
-                                <th class="text-left"><p><strong>Seller:</strong></p></th>
-                                <td colspan="3"><p th:text="${product.owner}"></p></td>
-                            </tr>
                         </table>
                     </div>
                     <div class="product-review" style="display:none">
@@ -110,9 +107,9 @@
                         <h5 class="card-title">Seller Info</h5>
                         <table class="table table-borderless">
                             <tr>
-                                <td rowspan="2"><img th:src="@{'/products/' + ${user.imageName} + '/raw'}"/></td>
+                                <td rowspan="2"><img th:src="@{'/products/' + ${user.imageName} + '/raw'}" width="200" height="200"/></td>
                                 <th class="text-left"><p><strong>Username:</strong></p></th>
-                                <td><p th:text="${user.username}"></p></td>
+                                <td><p id="sellerUsername" th:text="${user.username}"></p></td>
                             </tr>
                             <tr>
                                 <th class="text-left"><p><strong>Email:</strong></p></th>
@@ -168,6 +165,10 @@
     <form id="formUpdateProduct" th:object="${productDto}">
         <div th:replace="fragments/product-modal :: modal"></div>
     </form>
+
+    <div th:replace="fragments/chat :: chat"></div>
+
 </div>
+<script type="text/javascript" th:src="@{/js/chat.js}"></script>
 </body>
 </html>

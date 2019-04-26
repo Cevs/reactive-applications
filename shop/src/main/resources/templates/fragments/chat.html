@@ -3,14 +3,10 @@
 <body>
 <div id="chatbox" class="chatwindow" th:fragment="chat">
     <div class="chatheader">
-        <div id="minmax" class="minmax"><i id="chatHeaderButton" class="fas fa-times"></i></div>
-        <div class="title">Chat</div>
+        <div id="minmax" class="minmax"><i id="chatHeaderButton" class="fas fa-angle-up"></i></div>
+        <div class="title"><span th:text="${product.owner}"></span></div>
     </div>
     <div id="container" class="container-chat">
-        <div style="float:left;">
-            <input id="username" type="text" />
-            <button id="connect">Connect</button>
-        </div>
         <div id="chatDisplay" class="conversations" disabled="true" style="overflow-y: auto; height:250px;"></div>
     </div>
     <div class="replySection">

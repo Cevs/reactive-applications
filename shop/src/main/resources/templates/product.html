@@ -34,6 +34,9 @@
                         <li class="nav-item">
                             <a id="navLinkProductUserReviews" class="nav-link" href="#">User Reviews</a>
                         </li>
+                        <li class="nav-item">
+                            <a id="navLinkSellerInfo" class="nav-link" href="#">Seller info</a>
+                        </li>
                         <li class="nav-item ml-auto" >
                             <button th:value="${product.id}" id="btnUpdateProduct" type="button" class="btn btn-primary mx-auto" ><i class="far fa-edit"></i></button>
                         </li>
@@ -74,6 +77,10 @@
                                 <th class="text-left"><p><strong>Description:</strong></p></th>
                                 <td colspan="3"><p th:text="${product.description}"></p></td>
                             </tr>
+                            <tr>
+                                <th class="text-left"><p><strong>Seller:</strong></p></th>
+                                <td colspan="3"><p th:text="${product.owner}"></p></td>
+                            </tr>
                         </table>
                     </div>
                     <div class="product-review" style="display:none">
@@ -98,6 +105,20 @@
                             <textarea th:id="reviewText" placeholder="Leave review" class="p-2" rows="3" style="width:100%"></textarea>
                         </div>
                         <button th:id="${product.id}" class="btn btn-success float-right m-1 button-review">Submit</button>
+                    </div>
+                    <div class="seller-info" style="display:none">
+                        <h5 class="card-title">Seller Info</h5>
+                        <table class="table table-borderless">
+                            <tr>
+                                <td rowspan="2"><img th:src="@{'/products/' + ${user.imageName} + '/raw'}"/></td>
+                                <th class="text-left"><p><strong>Username:</strong></p></th>
+                                <td><p th:text="${user.username}"></p></td>
+                            </tr>
+                            <tr>
+                                <th class="text-left"><p><strong>Email:</strong></p></th>
+                                <td><p th:text="${user.email}"></p></td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>

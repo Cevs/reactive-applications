@@ -1,16 +1,29 @@
 $(document).ready(function(){
     $("#navLinkProductAbout").on("click", function () {
         $("#navLinkProductUserReviews").removeClass("active");
+        $("#navLinkSellerInfo").removeClass("active");
         $(this).addClass("active");
         $(".product-review").hide();
+        $(".seller-info").hide();
         $(".product-about").show();
     });
 
     $("#navLinkProductUserReviews").on("click", function () {
         $("#navLinkProductAbout").removeClass("active");
+        $("#navLinkSellerInfo").removeClass("active");
         $(this).addClass("active");
-        $(".product-review").show();
+        $(".seller-info").hide();
         $(".product-about").hide();
+        $(".product-review").show();
+    });
+
+    $("#navLinkSellerInfo").on("click", function(){
+        $("#navLinkProductAbout").removeClass("active");
+        $("#navLinkProductUserReviews").removeClass("active");
+        $(this).addClass("active");
+        $(".product-review").hide();
+        $(".product-about").hide();
+        $(".seller-info").show();
     });
 
 

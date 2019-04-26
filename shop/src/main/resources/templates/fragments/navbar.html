@@ -17,7 +17,7 @@
                 </form>
             </li>
             <li th:if="${#authorization.getAuthentication() == null}" class="nav-item pr-2 ml-auto">
-                <form th:action="@{/login}" method="POST" >
+                <form th:action="@{/login}" method="GET" >
                     <input type="submit" class="btn btn-primary" value="Login"/>
                 </form>
             </li>

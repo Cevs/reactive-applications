@@ -78,7 +78,8 @@ public class ProductServiceImpl implements ProductService {
                             product.getQuantity(),
                             product.isAvailable(),
                             product.getBaseDiscount(),
-                            "image"+newId+".jpg"
+                            "image"+newId+".jpg",
+                            product.getOwner()
                     );
                 })
                 .flatMap(newProduct -> {

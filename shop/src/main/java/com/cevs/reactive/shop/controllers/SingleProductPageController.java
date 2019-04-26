@@ -1,19 +1,19 @@
 package com.cevs.reactive.shop.controllers;
 
 
+import com.cevs.reactive.shop.domain.User;
 import com.cevs.reactive.shop.dto.UserReview;
 import com.cevs.reactive.shop.domain.Product;
 import com.cevs.reactive.shop.helpers.ProductHelper;
-import com.cevs.reactive.shop.services.AdvertisementService;
-import com.cevs.reactive.shop.services.CategoryService;
-import com.cevs.reactive.shop.services.LocationService;
-import com.cevs.reactive.shop.services.SingleProductService;
+import com.cevs.reactive.shop.services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,6 +39,8 @@ public class SingleProductPageController {
     CategoryService categoryService;
     @Autowired
     LocationService locationService;
+    @Autowired
+    UserService userService;
 
     private final ProductHelper productHelper;
 
@@ -55,6 +57,7 @@ public class SingleProductPageController {
         Flux<UserReview> fluxUserReview = singleProductService.getCompositeProductData(productId);
         Mono<Product> monoProduct = singleProductService.getProductInfo(productId);
         Flux<Product> fluxSimilarProduct = singleProductService.getSimilarProducts(productId);
+        Mono<User> monoUser = singleProductService.getOwnerOfProduct(productId);
 
         IReactiveDataDriverContextVariable reactiveFluxSimilarProducts =
                 new ReactiveDataDriverContextVariable(fluxSimilarProduct,1);
@@ -73,6 +76,9 @@ public class SingleProductPageController {
         );
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("locations", locationService.getAllLocations());
+        model.addAttribute("user", monoUser);
+
+
         return Mono.just("product");
     }
 

@@ -25,6 +25,7 @@ public class Product {
     private boolean available;
     private int baseDiscount;
     private String imageName;
+    private String owner;
 
     public Product(ProductDto productDto){
         this.id = productDto.getId();
@@ -37,5 +38,6 @@ public class Product {
         this.available = productDto.isAvailable();
         this.baseDiscount = productDto.getBaseDiscount();
         this.imageName = "image"+id+".jpg";
+        this.owner = productDto.getOwner();
     }
 }

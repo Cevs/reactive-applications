@@ -32,6 +32,7 @@
                 </div>
                 <div class="col-lg-4">
                     <input type="number" value="-1" readonly id="productId" name="id" class="d-none">
+                    <input type="text" th:value="${#authorization.getAuthentication()?.getName()}" readonly id="productOwner" name="owner" class="d-none" >
                     <div class="form-group">
                         <label>Category</label>
                         <select class="custom-select" name="category" id="productCategory">

@@ -21,6 +21,11 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
+    public Mono<User> getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
     public Mono<Boolean> checkIfUserExists(String username) {
         return userRepository.existsByUsername(username);
     }

@@ -1,5 +1,6 @@
 package com.cevs.reactive.shop.services;
 
+import com.cevs.reactive.shop.domain.User;
 import com.cevs.reactive.shop.dto.UserReview;
 import com.cevs.reactive.shop.domain.Product;
 import org.springframework.core.io.Resource;
@@ -11,4 +12,5 @@ public interface SingleProductService {
     Mono<Product> getProductInfo(long productId);
     Mono<Resource> findOneProduct(String filename);
     Flux<Product> getSimilarProducts(long productId);
+    Mono<User> getOwnerOfProduct(long productId);
 }

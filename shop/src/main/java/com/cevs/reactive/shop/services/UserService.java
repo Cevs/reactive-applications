@@ -5,5 +5,6 @@ import reactor.core.publisher.Mono;
 
 public interface UserService {
     Mono<User> getUser(long userId);
+    Mono<User> getUserByUsername(String username);
     Mono<Boolean> checkIfUserExists(String username);
 }

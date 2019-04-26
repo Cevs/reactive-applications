@@ -23,4 +23,5 @@ public class Product {
     private boolean available;
     private int baseDiscount;
     private String imageName;
+    private String owner;
 }

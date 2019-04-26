@@ -54,8 +54,8 @@ public class InitDatabase {
             insertRoles();
             insertCategories();
             insertLocations();
-            insertProducts();
             insertUsers();
+            insertProducts();
             insertComments();
             insertAdvertisements();
         };
@@ -187,7 +187,8 @@ public class InitDatabase {
                 generateProductQuantity(),
                 setAvailability(),
                 generateBaseDiscount(),
-                generateProductImageName()
+                generateProductImageName(),
+                getRandomOwner(id)
         );
     }
 
@@ -226,5 +227,9 @@ public class InitDatabase {
 
     private String generateProductImageName(){
         return "image" + (int)Math.ceil(Math.random()*7) +".jpg";
+    }
+
+    private String getRandomOwner(long id){
+        return userList.get((int)id % NUMBER_OF_USERS).getUsername();
     }
 }

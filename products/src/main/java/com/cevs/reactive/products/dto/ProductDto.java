@@ -18,4 +18,5 @@ public class ProductDto {
     private boolean available;
     private int baseDiscount;
     private FilePart image;
+    private String owner;
 }

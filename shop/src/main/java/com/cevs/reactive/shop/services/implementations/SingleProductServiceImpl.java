@@ -70,10 +70,18 @@ public class SingleProductServiceImpl implements SingleProductService {
                         if(product.getCategory().equals(originalProduct.getCategory()) && product.getId() != productId){
                             return product;
                         }else{
-                            return new Product(0,"","",0,"","",0,false,0,"");
+                            return new Product(0,"","",0,"","",0,false,0,"", "");
                         }
                     });
                 })
                 .filter(product -> !(product.getId() == 0));
+    }
+
+    @Override
+    public Mono<User> getOwnerOfProduct(long productId) {
+        return productHelper.getProduct(productId)
+                .flatMap(product -> {
+                    return userRepository.findByUsername(product.getOwner());
+                });
     }
 }

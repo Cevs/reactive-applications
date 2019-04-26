@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" style="height:100%;">
+<html lang="en" style="height:100%;"
+      xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -18,28 +19,34 @@
 </head>
 <body>
 <div class="container">
-    <div class="login mx-auto my-auto">
-        <div class="login-screen">
-            <div class="app-title">
-                <h1>Login</h1>
-            </div>
-
-            <div class="login-form">
-                <div class="control-group">
-                    <input type="text" class="login-field" value="" placeholder="username" id="login-name">
-                    <label class="login-field-icon fui-user" for="login-name"></label>
+    <form th:action="@{/login}" method="post">
+        <div class="login mx-auto my-auto">
+            <div class="login-screen">
+                <div class="app-title">
+                    <h1>Login</h1>
                 </div>
 
-                <div class="control-group">
-                    <input type="password" class="login-field" value="" placeholder="password" id="login-pass">
-                    <label class="login-field-icon fui-lock" for="login-pass"></label>
-                </div>
+                <div class="login-form">
+                    <div class="control-group">
+                        <input type="text" class="login-field" value="" placeholder="username" id="login_name" name="username">
+                        <label class="login-field-icon fui-user" for="login_name"></label>
+                    </div>
 
-                <a class="btn btn-primary btn-large" href="#">login</a>
-                <a class="login-link" href="/registration">Don't have an account?</a>
+                    <div class="control-group">
+                        <input type="password" class="login-field" value="" placeholder="password" id="login_password" name="password">
+                        <label class="login-field-icon fui-lock" for="login_password"></label>
+                    </div>
+
+                    <div class="alert alert-danger mx-auto" role="alert" style="margin-top:5px;margin-bottom:5px; width:250px;" th:if="${param.error}">
+                        <span>Invalid Credentials</span>
+                    </div>
+
+                    <input type="submit" value="login" class="btn btn-primary btn-large"/>
+                    <a class="login-link" href="/registration">Don't have an account?</a>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 
 </body>

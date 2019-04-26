@@ -49,9 +49,9 @@
                     </div>
 
                     <input id="btn_register" type="submit" class="btn btn-primary btn-large" value="Register" />
-                    <a class="registration-link" href="/registration">Already have an account?</a>
-                    <div class="alert alert-danger" role="alert" style="margin-top:5px;margin-bottom:5px;display:none">
-
+                    <a class="registration-link" href="/login">Already have an account?</a>
+                    <div class="alert alert-danger" role="alert" style="margin-top:5px;margin-bottom:5px;" th:if="${message}">
+                        <span th:text="${message}"></span>
                     </div>
                 </div>
             </div>

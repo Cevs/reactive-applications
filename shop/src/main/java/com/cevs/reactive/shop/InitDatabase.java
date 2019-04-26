@@ -18,7 +18,6 @@ import java.util.UUID;
 public class InitDatabase {
 
     private Lorem lorem;
-    private static final Logger log = LoggerFactory.getLogger(InitDatabase.class);
     private MongoOperations operations;
 
     private static final int NUMBER_OF_USERS = 10;
@@ -38,11 +37,13 @@ public class InitDatabase {
     private List<Category> categoryList;
     private List<String> countryList = Arrays.asList("SAD", "China", "UK", "Croatia", "India", "Russia","Germany");
     private List<Location> locationList;
+    private List<Role> userRoles;
 
     @Bean
     CommandLineRunner init(MongoOperations operations){
         this.operations = operations;
         return args -> {
+            operations.dropCollection(Role.class);
             operations.dropCollection(Category.class);
             operations.dropCollection(Location.class);
             operations.dropCollection(Product.class);
@@ -50,6 +51,7 @@ public class InitDatabase {
             operations.dropCollection(User.class);
             operations.dropCollection(Advertisement.class);
 
+            insertRoles();
             insertCategories();
             insertLocations();
             insertProducts();
@@ -57,6 +59,13 @@ public class InitDatabase {
             insertComments();
             insertAdvertisements();
         };
+    }
+
+    private void insertRoles(){
+        userRoles = new ArrayList<>();
+        userRoles.add(new Role(1, "ROLE_ADMIN"));
+        userRoles.add(new Role(2, "ROLE_USER"));
+        operations.insertAll(userRoles);
     }
 
     private void insertCategories(){
@@ -135,7 +144,7 @@ public class InitDatabase {
 
         operations.insertAll(userList);
         operations.insert(new User(
-           11,"alemartin@foi.hr","AlenMartincevic","1234","profile11.jpg"
+           11,"alemartin@foi.hr","AlenMartincevic","1234","profile11.jpg",userRoles
         ));
     }
 
@@ -148,7 +157,8 @@ public class InitDatabase {
                 email,
                 firstName+lastName,
                 UUID.randomUUID().toString(),
-                getRandomUserImage()
+                getRandomUserImage(),
+                userRoles
         );
     }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="navbar">
     <a class="navbar-brand" href="#">Reactively</a>
@@ -7,9 +7,24 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav w-100">
             <li class="nav-item active">
                 <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item ml-auto pr-2" sec:authorize="isAuthenticated()">
+                <form th:action="@{/logout}" method="POST">
+                    <input type="submit" class="btn btn-danger" value="Logout"/>
+                </form>
+            </li>
+            <li th:if="${#authorization.getAuthentication() == null}" class="nav-item pr-2 ml-auto">
+                <form th:action="@{/login}" method="POST" >
+                    <input type="submit" class="btn btn-primary" value="Login"/>
+                </form>
+            </li>
+            <li th:if="${#authorization.getAuthentication() == null}" class="nav-item pr-2">
+                <form th:action="@{/registration}" method="GET" >
+                    <input type="submit" class="btn btn-light" value="Sign in"/>
+                </form>
             </li>
         </ul>
     </div>

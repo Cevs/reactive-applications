@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script type="text/javascript" th:src="@{/js/profile.js}"></script>
+
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<div class="container">
+    <h1 class="mt-5 mb-5 text-center">Profile Information</h1>
+    <form id="formUpdate" th:object="${profileDto}" enctype="multipart/form-data" method="POST">
+        <div class="row mt-5">
+            <div  id="msgSuccess" class="alert alert-success login-message mt-3 d-none w-75 mx-auto">
+                <strong><p class="p-0 m-0 text-center"/>Update successful</strong>
+            </div>
+            <div id="msgFail" class="alert alert-warning login-message mt-3 d-none w-75 mx-auto">
+                <strong><p class="p-0 m-0 text-center" />Update failed</strong>
+            </div>
+            <div class="row mx-auto">
+                <div class="col-lg-6">
+                    <div class="thumbnail">
+                        <div th:if="${user.imageName != ''}" >
+                            <img th:src="@{'/user/' + ${user.imageName} + '/raw'}" style="width:100%">
+                        </div>
+                        <div th:if="${user.imageName == ''}">
+                            <img  src="../images/profileplaceholder.jpg" style="width:100%;">
+                        </div>
+
+                        <input type="file" id="upload" name="profileImage" class="d-none">
+                        <button id="btnSelectImage" type="button" class="btn btn-dark w-100">Select Image</button>
+                    </div>
+                </div>
+                <div class="col-lg-6 pl-4 my-auto">
+                    <table class="mx-auto  table">
+                        <tr>
+                            <td>Username</td>
+                            <td><input type="text" id="username" name="username" th:value="${user.username}" style="border:none"/></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td><input type="text" id="email" name="email" th:value="${user.email}" style="border:none"/></td>
+                        </tr>
+                        <tr>
+                            <td>Password</td>
+                            <td><input type="text" id="password" name="password" th:value="${user.password}" style="border:none"/></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <br/>
+        <div class="row">
+            <div class="mx-auto w-50">
+                <button id="btnUpdateProfile" type="submit" class="btn btn-success w-75">Save</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

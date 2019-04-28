@@ -11,6 +11,9 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
+            <li class="nav-item active" sec:authorize="isAuthenticated()">
+                <a class="nav-link" href="/profile">Profile page <span class="sr-only">(current)</span></a>
+            </li>
             <li class="nav-item ml-auto pr-2 " sec:authorize="isAuthenticated()">
                 <p id="logged_username" class="m-0" style="color:white; height:100%; display:flex; align-items:center" th:text="${#authorization.getAuthentication().getName()}"></p>
             </li>

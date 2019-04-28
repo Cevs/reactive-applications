@@ -27,7 +27,8 @@ public class User {
         this.email = email;
         this.username = username;
         this.password = password;
-        this.imageName = "profileplaceholder.jpg";
+        this.imageName = "";
+        this.roles = Arrays.asList(new Role(2,"ROLE_USER"));
     }
 
     public User(User user){

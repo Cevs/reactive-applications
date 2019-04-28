@@ -10,7 +10,6 @@ import reactor.core.publisher.Mono;
 public interface SingleProductService {
     Flux<UserReview> getCompositeProductData(long productId);
     Mono<Product> getProductInfo(long productId);
-    Mono<Resource> findOneProduct(String filename);
     Flux<Product> getSimilarProducts(long productId);
     Mono<User> getOwnerOfProduct(long productId);
 }

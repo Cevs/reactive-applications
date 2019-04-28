@@ -21,18 +21,13 @@ public class SingleProductServiceImpl implements SingleProductService {
 
     @Autowired
     UserRepository userRepository;
-
     private final ProductHelper productHelper;
-
     private final Logger log = LoggerFactory.getLogger(SingleProductServiceImpl.class);
     private final CommentHelper commentHelper;
-    private final ResourceLoader resourceLoader;
-    private final String UPLOAD_ROOT = "upload-dir";
 
-    public SingleProductServiceImpl(ProductHelper productHelper, CommentHelper commentHelper, ResourceLoader resourceLoader) {
+    public SingleProductServiceImpl(ProductHelper productHelper, CommentHelper commentHelper) {
         this.productHelper = productHelper;
         this.commentHelper = commentHelper;
-        this.resourceLoader = resourceLoader;
     }
 
     @Override
@@ -40,10 +35,8 @@ public class SingleProductServiceImpl implements SingleProductService {
 
         return commentHelper.getReviews(productId)
                 .flatMap(review -> {
-                    log.info("REVIEW: " +review.toString());
                     Mono<User> userMono  = userRepository.findById(review.getUserId());
                     return userMono.map(user -> {
-                        log.info("USER: "+user.toString());
                        return new UserReview(user,review);
                     });
                 });
@@ -54,12 +47,6 @@ public class SingleProductServiceImpl implements SingleProductService {
         return productHelper.getProduct(productId);
     }
 
-    @Override
-    public Mono<Resource> findOneProduct(String filename){
-        return Mono.fromSupplier(()->
-                resourceLoader.getResource("file:" + UPLOAD_ROOT + "/" + filename)
-        );
-    }
 
     @Override
     public Flux<Product> getSimilarProducts(long productId) {

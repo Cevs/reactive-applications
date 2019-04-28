@@ -44,7 +44,6 @@ public class SingleProductPageController {
 
     private final ProductHelper productHelper;
 
-    private static final String FILENAME = "{filename:.+}";
     private static final Logger log = LoggerFactory.getLogger(SingleProductPageController.class);
 
     public SingleProductPageController(ProductHelper productHelper) {
@@ -82,20 +81,6 @@ public class SingleProductPageController {
         return Mono.just("product");
     }
 
-    //produces = MediaType.IMAGE_JPEG_VALUE => Tell browser to render image (set the Content-Type header)
-    @GetMapping(value = "product/" + FILENAME + "/raw", produces = MediaType.IMAGE_JPEG_VALUE)
-    @ResponseBody
-    public Mono<ResponseEntity<?>> oneRawImage(@PathVariable String filename){
-        return singleProductService.findOneProduct(filename)
-                .map(resource -> {
-                    try {
-                        return ResponseEntity.ok().contentLength(resource.contentLength())
-                                .body(new InputStreamResource(resource.getInputStream()));
-                    }catch(IOException e){
-                        return ResponseEntity.badRequest().body("Couldn't find " + filename + " => " + e.getMessage());
-                    }
-                });
-    }
 
     @DeleteMapping(value = "/product/{productId}")
     public Mono<String> deleteProduct(@PathVariable long productId){

@@ -34,6 +34,16 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll();
     }
 
+    @Override
+    public Flux<Product> findAllNotOwnedProducts(String username) {
+        return productRepository.findByOwnerNotContaining(username);
+    }
+
+    @Override
+    public Flux<Product> findAllProductsOwnedBy(String username) {
+        return productRepository.findByOwner(username);
+    }
+
 
     @Override
     public Flux<Product> findProductsBySearchNameAndCategoryAndLocationAndPriceRange(

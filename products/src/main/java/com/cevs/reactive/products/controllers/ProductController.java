@@ -42,8 +42,18 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public Flux<Product> getAllProducts(){
-        return productService.findAllProducts();
+    public Flux<Product> getAllProducts(@RequestParam("username") String username)
+    {
+        if(username.isEmpty()){
+            return productService.findAllProducts();
+        }else{
+            return productService.findAllNotOwnedProducts(username);
+        }
+    }
+
+    @GetMapping("/products/own")
+    public Flux<Product> getAllProductsOwnedByUser(@RequestParam("username")String username){
+        return productService.findAllProductsOwnedBy(username);
     }
 
     @GetMapping("/product/{productId}")

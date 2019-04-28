@@ -8,6 +8,8 @@ import reactor.core.publisher.Mono;
 
 public interface ProductService {
     Flux<Product> findAllProducts();
+    Flux<Product> findAllNotOwnedProducts(String username);
+    Flux<Product> findAllProductsOwnedBy(String username);
     Flux<Product> findProductsBySearchNameAndCategoryAndLocationAndPriceRange(
             String productName, String category, String location, double lowerLimit, double upperLimit
     );

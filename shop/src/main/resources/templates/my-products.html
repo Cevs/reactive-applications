@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>My Products</title>
+    <link type="text/css" href="css/main.css" rel="stylesheet"/>
+    <link type="text/css" href="css/sidebar.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="wrapper">
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+    <div id="content">
+        <div class="container" style="padding-top: 20px; margin:0;max-width: 100%;">
+
+            <form id="formAddNewProduct" th:object="${productDto}">
+                <div th:replace="fragments/product-modal :: modal"></div>
+            </form>
+
+            <div class="input-group flex-nowrap mx-auto" style="width:70%;">
+                <input id="searchBar" type="text" class="form-control" placeholder="Item name" aria-label="ItemName"
+                       aria-describedby="addon-wrapping">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="addon-wrapping"><i class="fas fa-search"></i></span>
+                </div>
+                <!-- Button trigger modal -->
+                <button type="button" id="addNewProduct" class="btn btn-primary" data-toggle="modal"
+                        data-target="#exampleModalCenter" style="margin-left: 5px;" sec:authorize="isAuthenticated()">
+                    <i class="far fa-plus-square"></i>
+                </button>
+            </div>
+            <div id="productArea" class="row align-items-start justify-content-center p-2" style="border: none;">
+                <div class="card m-3" th:each="product : ${products}" style="width:20rem; height:20rem;">
+                    <a th:href="@{'/product/' + ${product.id}}"
+                       style="text-decoration: none;color: inherit; height:100%">
+                        <div class="row no-gutters" style="height:100%">
+                            <div class="col-md-4 my-auto">
+                                <img th:src="@{'/products/' + ${product.imageName} + '/raw'}" class="card-img p-2"
+                                     style="height: 100%">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body" style="height: 100%">
+                                    <h5 class="card-title" th:text="${product.name}"></h5>
+                                    <p class="card-text" th:text="${product.description}"></p>
+                                    <p class="card-text"><strong></strong><strong th:text="${product.price}"></strong> $
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

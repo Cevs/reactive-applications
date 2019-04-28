@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <body>
-<div id="chatbox" class="chatwindow" th:fragment="chat">
-    <div class="chatheader">
-        <div id="minmax" class="minmax"><i id="chatHeaderButton" class="fas fa-angle-up"></i></div>
+<div th:id="'chatwindow-'+${product.owner}" class="chatwindow" th:fragment="chat">
+    <div  th:id="'chatheader-'+${product.owner}"  class="chatheader">
+        <div th:id="'close-'+${product.owner}" class="close-btn"><i th:id="'chatHeaderButton-'+${product.owner}" class="far fa-times-circle"></i></div>
         <div class="title"><span th:text="${product.owner}"></span></div>
     </div>
-    <div id="container" class="container-chat">
-        <div id="chatDisplay" class="conversations" disabled="true" style="overflow-y: auto; height:250px;"></div>
+    <div th:id="'container-'+${product.owner}" class="container-chat">
+        <div th:id="'chatDisplay-'+${product.owner}" class="chatDisplay conversations" disabled="true" style="overflow-y: auto; height:250px;"></div>
     </div>
-    <div class="replySection">
-        <textarea name="reply" id="reply" cols="30" rows="1" class="reply"></textarea>
-        <button id="send" class="send" >Send</button>
+    <div th:id="'replySection-'+${product.owner}" class="replySection">
+        <textarea name="reply" th:id="'reply-'+${product.owner}" cols="30" rows="1" class="reply"></textarea>
+        <button th:id="'send-'+${product.owner}" class="btn-send" >Send</button>
     </div>
 </div>
 </body>

@@ -1,5 +1,7 @@
 package com.cevs.reactive.chat;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.WebSocketSession;
 import reactor.core.publisher.Mono;
@@ -11,6 +13,7 @@ import java.util.stream.Stream;
 public abstract  class UserParsingHandshakeHandler implements WebSocketHandler {
 
     private final Map<String, String> userMap;
+    private Logger log = LoggerFactory.getLogger(UserParsingHandshakeHandler.class);
 
     public UserParsingHandshakeHandler() {
         this.userMap = new HashMap<>();
@@ -24,7 +27,9 @@ public abstract  class UserParsingHandshakeHandler implements WebSocketHandler {
        .map(s->s.split("="))
        .filter(strings->strings[0].equals("user"))
        .findFirst()
-       .map(strings -> strings[1])
+       .map(strings -> {
+           return strings[1];
+       })
        .orElse(""));
 
        return handleInternal(session);

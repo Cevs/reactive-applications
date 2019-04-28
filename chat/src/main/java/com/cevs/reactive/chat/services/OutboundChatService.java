@@ -1,6 +1,8 @@
 package com.cevs.reactive.chat.services;
 
 import com.cevs.reactive.chat.UserParsingHandshakeHandler;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -50,33 +52,13 @@ public class OutboundChatService extends UserParsingHandshakeHandler {
     }
 
     private boolean validate(Message<String> message, String user){
-        if(message.getPayload().startsWith("@")){
-            if(message.getPayload().contains(" ")){
-                String targetUser = message.getPayload().substring(1,message.getPayload().indexOf(" "));
-                String sender = message.getHeaders().get(ChatServiceStream.USER_HEADER, String.class);
-                return user.equals(sender) || user.equals(targetUser);
-            }else{
-                return true;
-            }
-        }
-        else{
-            return true;
-        }
+        JsonObject obj = new JsonParser().parse(message.getPayload()).getAsJsonObject();
+        String receiver = obj.get("receiver").getAsString();
+        String sender = message.getHeaders().get(ChatServiceStream.USER_HEADER, String.class);
+        return user.equals(sender) || user.equals(receiver);
     }
 
     private String transform(Message<String> message) {
-        String user = message.getHeaders()
-                .get(ChatServiceStream.USER_HEADER, String.class);
-        if (message.getPayload().startsWith("@")) {
-            if(message.getPayload().contains(" ")){
-                String targetUser = message.getPayload().substring(1,message.getPayload().indexOf(" "));
-                String content = message.getPayload().substring(message.getPayload().indexOf(" "));
-                return "From("+user+"): " + content;
-            }else{
-                return "From(" + user + "): " + message.getPayload();
-        }
-        } else {
-            return "From(" + user + "): " + message.getPayload();
-        }
+        return message.getPayload();
     }
 }

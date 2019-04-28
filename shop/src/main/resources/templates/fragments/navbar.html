@@ -8,7 +8,10 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav w-100">
-            <li class="nav-item ml-auto pr-2" sec:authorize="isAuthenticated()">
+            <li class="nav-item ml-auto pr-2 " sec:authorize="isAuthenticated()">
+                <p class="m-0" style="color:white; height:100%; display:flex; align-items:center" th:text="${#authorization.getAuthentication().getName()}"></p>
+            </li>
+            <li class="nav-item pr-2" sec:authorize="isAuthenticated()">
                 <form th:action="@{/logout}" method="POST">
                     <input type="submit" class="btn btn-danger" value="Logout"/>
                 </form>

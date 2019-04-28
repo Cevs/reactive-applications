@@ -64,8 +64,13 @@ public class WebSecurityConfig {
             }
 
             @Override
-            public boolean matches(CharSequence charSequence, String s) {
-                return true;
+            public boolean matches(CharSequence charSequence, String passwordFromDb) {
+                String enteredPassword = charSequence.toString();
+                if(passwordFromDb.equals(enteredPassword)){
+                    return true;
+                }else{
+                    return false;
+                }
             }
         };
     }

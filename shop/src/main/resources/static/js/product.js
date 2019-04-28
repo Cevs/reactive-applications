@@ -55,12 +55,18 @@ $(document).ready(function(){
         date = reviewData.date;
         comment = reviewData.comment;
         $.get( "http://localhost:8080/user/"+userId, function( userData ) {
+            img = "";
+            if(userData.imageName == ""){
+                img = "../images/profileplaceholder.jpg";
+            }else{
+                img="/user/"+userData.imageName+"/raw";
+            }
 
             var $div =$(
                 "<div id=\"userInfo-\" class=\"card mb-3\">"+
                     "<div class=\"row no-gutters p-1\">"+
                         "<div class='col-md-2  align-self-center'>" +
-                            "<img src=\"/products/" + userData.imageName + "/raw\"  class=\'card-img mx-auto p-1\ style=\'height:80%;\'>" +
+                            "<img src=\""+img+"\"  class=\'card-img mx-auto p-1\ style=\'height:80%;\'>" +
                             "<p style=\'font-size:12px; margin:0\'>"+userData.username+"</p>"+
                             "<p class=\'card-text\'><small class=\'text-muted\' style=\'font-size:12px;\'>"+date+"</small></p>"+
                         "</div>"+
@@ -90,7 +96,7 @@ $(document).ready(function(){
         xhr = new XMLHttpRequest();
         xhr.open('POST', '/reviews', true);
         formData = new FormData();
-        formData.append('userId', 11);
+        formData.append('username', username);
         formData.append('comment', review);
         formData.append('productId', button.attr("id"));
         formData.append('date', date);

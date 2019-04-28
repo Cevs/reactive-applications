@@ -88,7 +88,8 @@
                             <div id="userInfo" th:each="userReview : ${userReviews}" class="card mb-3">
                                 <div class="row no-gutters p-1">
                                     <div class="col-md-2  align-self-center">
-                                        <img th:src="@{'/user/' + ${userReview.user.imageName} + '/raw'}"  class="card-img mx-auto p-1" style="height:80%;">
+                                        <img th:if="${userReview.user.imageName != ''}" th:src="@{'/user/' + ${userReview.user.imageName} + '/raw'}"  class="card-img mx-auto p-1" style="height:80%;">
+                                        <img th:if="${userReview.user.imageName == ''}" th:src="@{'../images/profileplaceholder.jpg'}"  class="card-img mx-auto p-1" style="height:80%;">
                                         <p style="font-size:12px; margin:0" th:text="${userReview.user.username}"></p>
                                         <p class="card-text"><small class="text-muted" style="font-size:12px;" th:text="${userReview.review.date}"></small></p>
                                     </div>

@@ -1,6 +1,8 @@
 package com.cevs.reactive.shop.controllers;
 
 import com.cevs.reactive.shop.domain.Review;
+import com.cevs.reactive.shop.domain.User;
+import com.cevs.reactive.shop.dto.ReviewDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -13,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
@@ -38,9 +41,26 @@ public class ReviewController {
     }
 
     @PostMapping("/reviews")
-    public Mono<ResponseEntity<?>> addReview(Mono<Review> newReview){
+    public Mono<ResponseEntity<?>> addReview(ReviewDto newReviewDto){
         if(reviewSink != null){
-            return newReview
+            return ReactiveSecurityContextHolder.getContext()
+                    .map(context ->{
+                        User user = (User) context.getAuthentication().getPrincipal();
+                        return user.getId();
+                    })
+                    .map(userId ->{
+                        return new Review(userId, newReviewDto);
+                    }).map(review -> {
+                        reviewSink.next(
+                            MessageBuilder
+                                .withPayload(review)
+                                .setHeader(MessageHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE).build());
+                            return review;
+                    }).flatMap(review -> {
+                        return Mono.just(ResponseEntity.noContent().build()); //return HTTP 204(No Content) -> Indicate success
+                    });
+
+            /*return newReview
                     .map(review -> {
                         reviewSink.next(
                                 MessageBuilder
@@ -50,7 +70,7 @@ public class ReviewController {
                     })
                     .flatMap(review -> {
                         return Mono.just(ResponseEntity.noContent().build()); //return HTTP 204(No Content) -> Indicate success
-                    });
+                    });*/
         }else{
             return Mono.just(ResponseEntity.noContent().build());
         }

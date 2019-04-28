@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <body>
-<div th:id="'chatwindow-'+${product.owner}" class="chatwindow" th:fragment="chat">
+<div th:if="${product.owner} != ${#authorization.getAuthentication().getName()}" th:id="'chatwindow-'+${product.owner}" class="chatwindow" th:fragment="chat">
     <div  th:id="'chatheader-'+${product.owner}"  class="chatheader">
         <div th:id="'close-'+${product.owner}" class="close-btn"><i th:id="'chatHeaderButton-'+${product.owner}" class="far fa-times-circle"></i></div>
         <div class="title"><span th:text="${product.owner}"></span></div>

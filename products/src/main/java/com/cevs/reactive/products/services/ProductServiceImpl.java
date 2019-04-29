@@ -46,18 +46,33 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public Flux<Product> findProductsBySearchNameAndCategoryAndLocationAndPriceRange(
-            String productName, String category, String location, double lowerLimit, double upperLimit
+    public Flux<Product> findProductsBySearchCriteriaInsidePriceRangeNotOwnedByUser(
+            String productName, String category, String location, double lowerLimit, double upperLimit, String username
     ) {
-        return productRepository.findByNameContainsAndCategoryContainsAndLocationNameContainsAndPriceBetween(
-                productName,category,location, lowerLimit, upperLimit
+        return productRepository.findByNameContainsAndCategoryContainsAndLocationNameContainsAndPriceBetweenAndOwnerNotContaining(
+                productName,category,location, lowerLimit, upperLimit, username
         );
     }
 
     @Override
-    public Flux<Product> findProductsBySearchNameAndCategoryAndLocation(String productName, String category, String location) {
-        return productRepository.findByNameContainsAndCategoryContainsAndLocationNameContains(
-                productName,category,location
+    public Flux<Product> findProductsBySearchCriteriaNotOwnedByUser(
+            String productName, String category, String location,String username) {
+        return productRepository.findByNameContainsAndCategoryContainsAndLocationNameContainsAndOwnerNotContaining(
+                productName,category,location, username
+        );
+    }
+
+    @Override
+    public Flux<Product> findProductsBySearchCriteriaInsidePriceRange(String productName, String category, String location, double lowerLimit, double upperLimit, String username) {
+        return productRepository.findByNameContainsAndCategoryContainsAndLocationNameContainsAndPriceBetweenAndOwnerContaining(
+                productName,category,location, lowerLimit, upperLimit, username
+        );
+    }
+
+    @Override
+    public Flux<Product> findProductsBySearchCriteria(String productName, String category, String location, String username) {
+        return productRepository.findByNameContainsAndCategoryContainsAndLocationNameContainsAndOwnerContaining(
+                productName,category,location, username
         );
     }
 

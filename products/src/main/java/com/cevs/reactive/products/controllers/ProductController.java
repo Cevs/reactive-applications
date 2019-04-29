@@ -2,7 +2,6 @@ package com.cevs.reactive.products.controllers;
 
 import com.cevs.reactive.products.domain.Product;
 import com.cevs.reactive.products.dto.ProductDto;
-import com.cevs.reactive.products.repositories.ProductRepository;
 import com.cevs.reactive.products.services.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,23 +21,60 @@ public class ProductController {
     }
 
     @GetMapping("/products/search")
-    public Flux<Product> getProducts(@RequestParam("productName") String productName,
-                                     @RequestParam("productCategory") String productCategory,
-                                     @RequestParam("productLocation") String productLocation,
-                                     @RequestParam(name="priceLowerLimit", defaultValue = "0") double lowerLimit,
-                                     @RequestParam(name="priceUpperLimit", defaultValue = "0") double upperLimit){
+    public Flux<Product> getProducts(
+            @RequestParam("owner") String username,
+            @RequestParam("productName") String productName,
+            @RequestParam("productCategory") String productCategory,
+            @RequestParam("productLocation") String productLocation,
+            @RequestParam(name="priceLowerLimit", defaultValue = "0") double lowerLimit,
+            @RequestParam(name="priceUpperLimit", defaultValue = "0") double upperLimit){
 
-
-        if(lowerLimit == 0 || upperLimit == 0){
-            return productService.findProductsBySearchNameAndCategoryAndLocation(
-                    productName,productCategory,productLocation
-            );
+        if(username != ""){
+            if(lowerLimit == 0 || upperLimit == 0){
+                return productService.findProductsBySearchCriteriaNotOwnedByUser(
+                        productName,productCategory,productLocation, username
+                );
+            }
+            else{
+                return productService.findProductsBySearchCriteriaInsidePriceRangeNotOwnedByUser(
+                        productName,productCategory,productLocation,lowerLimit,upperLimit, username
+                );
+            }
         }
         else{
-            return productService.findProductsBySearchNameAndCategoryAndLocationAndPriceRange(
-                    productName,productCategory,productLocation,lowerLimit,upperLimit
-            );
+            if(lowerLimit == 0 || upperLimit == 0){
+                return productService.findProductsBySearchCriteria(
+                        productName,productCategory,productLocation, username
+                );
+            }
+            else{
+                return productService.findProductsBySearchCriteriaInsidePriceRange(
+                        productName,productCategory,productLocation,lowerLimit,upperLimit, username
+                );
+            }
         }
+    }
+
+    @GetMapping("/products/owner/search")
+    public Flux<Product> getOwnerProducts(
+            @RequestParam("owner") String username,
+            @RequestParam("productName") String productName,
+            @RequestParam("productCategory") String productCategory,
+            @RequestParam("productLocation") String productLocation,
+            @RequestParam(name="priceLowerLimit", defaultValue = "0") double lowerLimit,
+            @RequestParam(name="priceUpperLimit", defaultValue = "0") double upperLimit){
+
+            if(lowerLimit == 0 || upperLimit == 0){
+                return productService.findProductsBySearchCriteria(
+                        productName,productCategory,productLocation, username
+                );
+            }
+            else{
+                return productService.findProductsBySearchCriteriaInsidePriceRange(
+                        productName,productCategory,productLocation,lowerLimit,upperLimit, username
+                );
+            }
+
     }
 
     @GetMapping("/products")

@@ -12,10 +12,16 @@ public interface ProductRepository extends ReactiveCrudRepository<Product, Long>
     Mono<Product> findById(long productId);
     Flux<Product> findAll();
     Mono<Product> findTopByOrderByIdDesc();
-    Flux<Product> findByNameContainsAndCategoryContainsAndLocationNameContainsAndPriceBetween(
-            String productName, String category, String location, double lowerLimit, double upperLimit
+    Flux<Product> findByNameContainsAndCategoryContainsAndLocationNameContainsAndPriceBetweenAndOwnerNotContaining(
+            String productName, String category, String location, double lowerLimit, double upperLimit, String username
     );
-    Flux<Product> findByNameContainsAndCategoryContainsAndLocationNameContains(String productName, String category, String location);
+    Flux<Product> findByNameContainsAndCategoryContainsAndLocationNameContainsAndOwnerNotContaining(
+            String productName, String category, String location, String username);
+    Flux<Product> findByNameContainsAndCategoryContainsAndLocationNameContainsAndPriceBetweenAndOwnerContaining(
+            String productName, String category, String location, double lowerLimit, double upperLimit, String username
+    );
+    Flux<Product> findByNameContainsAndCategoryContainsAndLocationNameContainsAndOwnerContaining(
+            String productName, String category, String location, String username);
     Flux<Product> findByOwnerNotContaining(String username);
     Flux<Product> findByOwner(String username);
 }

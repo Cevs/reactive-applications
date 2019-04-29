@@ -32,10 +32,10 @@
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs">
                         <li class="nav-item">
-                            <a id="navLinkProductAbout" class="nav-link active" href="#">About</a>
+                            <a id="navLinkProductAbout" class="nav-link active" >About</a>
                         </li>
                         <li class="nav-item">
-                            <a id="navLinkProductUserReviews" class="nav-link" href="#">User Reviews</a>
+                            <a id="navLinkProductUserReviews" class="nav-link" >User Reviews</a>
                         </li>
                         <li class="nav-item">
                             <a id="navLinkSellerInfo" class="nav-link" >Seller info</a>
@@ -112,11 +112,11 @@
                             <tr>
                                 <td rowspan="2"><img th:src="@{'/user/' + ${user.imageName} + '/raw'}" width="200" height="200"/></td>
                                 <th class="text-left"><p><strong>Username:</strong></p></th>
-                                <td><p id="sellerUsername" th:text="${user.username}"></p></td>
+                                <td><span id="sellerUsername" th:text="${user.username}"></span></td>
                             </tr>
                             <tr>
                                 <th class="text-left"><p><strong>Email:</strong></p></th>
-                                <td><p th:text="${user.email}"></p></td>
+                                <td><span th:text="${user.email}"></span></td>
                             </tr>
                         </table>
                     </div>

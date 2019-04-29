@@ -10,11 +10,17 @@ public interface ProductService {
     Flux<Product> findAllProducts();
     Flux<Product> findAllNotOwnedProducts(String username);
     Flux<Product> findAllProductsOwnedBy(String username);
-    Flux<Product> findProductsBySearchNameAndCategoryAndLocationAndPriceRange(
-            String productName, String category, String location, double lowerLimit, double upperLimit
+    Flux<Product> findProductsBySearchCriteriaInsidePriceRangeNotOwnedByUser(
+            String productName, String category, String location, double lowerLimit, double upperLimit, String username
     );
-    Flux<Product> findProductsBySearchNameAndCategoryAndLocation(
-            String productName, String category, String location
+    Flux<Product> findProductsBySearchCriteriaNotOwnedByUser(
+            String productName, String category, String location, String username
+    );
+    Flux<Product> findProductsBySearchCriteriaInsidePriceRange(
+            String productName, String category, String location, double lowerLimit, double upperLimit, String username
+    );
+    Flux<Product> findProductsBySearchCriteria(
+            String productName, String category, String location, String username
     );
     Mono<Resource> findOneProduct(String filename);
     Mono<Void> insertProduct(ProductDto product);

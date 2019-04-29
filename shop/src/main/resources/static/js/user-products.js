@@ -21,7 +21,7 @@ $(document).ready(function(){
     })
 
     $("#uploadProductImage").change(function () {
-       readURL(this);
+        readURL(this);
     });
 
     $('#btnSelectImageProduct').on('click', function () {
@@ -68,7 +68,7 @@ function fetchProducts(){
     owner = $("#logged_username").text();
 
     $.ajax({
-        url: "http://localhost:9090/products/search",
+        url: "http://localhost:9090/products/owner/search",
         type: 'GET',
         data: {
             "owner": owner,

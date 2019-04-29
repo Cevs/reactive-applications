@@ -25,7 +25,7 @@ public class UserProductsController {
         this.locationService = locationService;
     }
 
-    @GetMapping("/my-products")
+    @GetMapping("/user-products")
     public Mono<String> getUserProducts(Model model){
         IReactiveDataDriverContextVariable reactiveDataDrivenMode =
                 new ReactiveDataDriverContextVariable( productHelper.getUserProducts()
@@ -42,6 +42,6 @@ public class UserProductsController {
         model.addAttribute("products", reactiveDataDrivenMode);
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("locations", locationService.getAllLocations());
-        return Mono.just("my-products");
+        return Mono.just("user-products");
     }
 }

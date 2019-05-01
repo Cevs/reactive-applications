@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav id="sidebar" th:fragment="sidebar">
+    <div class="sidebar-header">
+        <h3>Shopping cart</h3>
+    </div>
+
+    <ul class="list-unstyled components">
+        <li>
+            <a href="#categoryItemPrice" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle menu">
+                <i class="fas fa-copy"></i>
+                <span>Item/Price</span>
+            </a>
+            <ul class="list-unstyled collapse show" id="categoryItemPrice" style="padding-left: 30px;">
+                <table class="table table-borderless table-striped">
+                    <tr th:each="item : ${shoppingCart?.products}">
+                        <td th:text="${item.name}"></td>
+                        <td th:text="${item.price}"></td>
+                    </tr>
+                </table>
+            </ul>
+        </li>
+    </ul>
+</nav>
+</body>
+</html>

@@ -4,10 +4,6 @@
 <nav id="sidebar" th:fragment="sidebar">
     <div class="sidebar-header">
         <h3>Reactively</h3>
-
-        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-align-justify"></i>
-        </button>
     </div>
 
     <ul class="list-unstyled components">
@@ -19,6 +15,7 @@
             <ul class="list-unstyled collapse show" id="categorySubmenu" style="padding-left: 30px;">
                 <li th:each="category : ${categories}">
                     <input type="radio" name="category" th:value="${category.name}" th:text="' ' + ${category.name}"/>
+                </li>
             </ul>
         </li>
         <li>

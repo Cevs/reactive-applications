@@ -50,6 +50,7 @@ public class InitDatabase {
             operations.dropCollection(Review.class);
             operations.dropCollection(User.class);
             operations.dropCollection(Advertisement.class);
+            operations.dropCollection(ShoppingCart.class);
 
             insertRoles();
             insertCategories();

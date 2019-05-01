@@ -129,6 +129,21 @@ $(document).ready(function(){
     $("#uploadProductImage").change(function () {
         readURL(this);
     });
+
+    $("#btn-shoppingcart-add").on("click", function () {
+        productId = $("#productId").val();
+        console.log("PRODUCT ID: "+productId);
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/shopping-cart",
+            contentType: false,
+            processData: false,
+            data: productId,
+            success: function () {
+                console.log("ok");
+            },
+        });
+    });
 });
 
 function populateProductModal(data) {

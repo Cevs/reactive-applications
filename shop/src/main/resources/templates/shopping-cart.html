@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>ShoppingCart</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link type="text/css" href="css/main.css" rel="stylesheet"/>
+    <link type="text/css" href="css/sidebar.css" rel="stylesheet"/>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+</body>
+
+<div class="wrapper">
+    <div th:replace="fragments/sidebar-char :: sidebar"></div>
+    <div id="content">
+        <div class="container" style="padding-top: 20px; margin:0;max-width: 100%;">
+            <div class="card m-3 w-100" th:each="item : ${shoppingCart?.products}">
+                <a th:href="@{'/product/' + ${item.id}}"
+                   style="text-decoration: none;color: inherit; height:100%">
+                    <div class="row no-gutters" style="height:100%">
+                        <div class="col-md-4 my-auto">
+                            <img th:src="@{'/products/' + ${item.imageName} + '/raw'}" class="card-img p-2"
+                                 style="height: 100%">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body" style="height: 100%">
+                                <h5 class="card-title" th:text="${item.name}"></h5>
+                                <p class="card-text" th:text="${item.description}"></p>
+                                <p class="card-text"><strong></strong><strong th:text="${item.price}"></strong> $
+                                </p>
+                                <button class="btn btn-danger">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

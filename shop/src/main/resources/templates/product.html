@@ -25,6 +25,8 @@
     <div class="row product-top align-items-start">
         <div class="col-sm">
             <img th:src="@{'/products/' + ${product.imageName} + '/raw'}" class="img-thumbnail rounded img-single-product mx-auto" width="700" height="500">
+            <input th:value="${product.id}" class="d-none" id="productId"/>
+            <button id="btn-shoppingcart-add" class="btn btn-primary w-100 mt-2">Add to cart</button>
         </div>
 
         <div class="col-lg-6">

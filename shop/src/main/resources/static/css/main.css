@@ -90,3 +90,7 @@ a:hover, a:visited, a:link, a:active
     width:100%;
     height:50px;
 }
+
+.nav-link{
+    height:100% !important;
+}

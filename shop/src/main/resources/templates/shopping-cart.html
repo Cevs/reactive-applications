@@ -39,7 +39,10 @@
                                 <p class="card-text" th:text="${item.description}"></p>
                                 <p class="card-text"><strong></strong><strong th:text="${item.price}"></strong> $
                                 </p>
-                                <button class="btn btn-danger">Remove</button>
+
+                                <form th:action="@{'/shopping-cart/' + ${item.id}}" th:method="delete" >
+                                    <input type="submit" class="btn btn-danger" value="Remove"/>
+                                </form>
                             </div>
                         </div>
                     </div>

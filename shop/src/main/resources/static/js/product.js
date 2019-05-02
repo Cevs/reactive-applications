@@ -110,7 +110,6 @@ $(document).ready(function(){
             type:"GET",
             url:"http://localhost:9090/product/"+this.value,
             success:function (data) {
-                console.log(data);
                 populateProductModal(data);
                 $("#modalInsertProduct").modal({backdrop: 'static', keyboard: false}, "show");
             }
@@ -132,7 +131,6 @@ $(document).ready(function(){
 
     $("#btn-shoppingcart-add").on("click", function () {
         productId = $("#productId").val();
-        console.log("PRODUCT ID: "+productId);
         $.ajax({
             type: "POST",
             url: "http://localhost:8080/shopping-cart",
@@ -140,7 +138,8 @@ $(document).ready(function(){
             processData: false,
             data: productId,
             success: function () {
-                console.log("ok");
+                $("#alert_shoppingcart_add").fadeIn(700).delay(1500).fadeOut(700);
+                $(".fa-shopping-cart").effect("highlight", {}, 1000);
             },
         });
     });

@@ -5,7 +5,6 @@ import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 
 @SpringCloudApplication
-@EnableCircuitBreaker
 public class ReactiveChatApplication {
 
 	public static void main(String[] args) {

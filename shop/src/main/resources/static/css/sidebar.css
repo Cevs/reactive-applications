@@ -172,6 +172,7 @@ a.article, a.article:hover {
     padding: 8px;
     min-height: 100vh;
     transition: all 0.3s;
+    background:#f8f9fa!important;
 }
 /* ---------------------------------------------------
  MEDIAQUERIES

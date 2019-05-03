@@ -43,6 +43,7 @@ public class InitDatabase {
     CommandLineRunner init(MongoOperations operations){
         this.operations = operations;
         return args -> {
+            operations.dropCollection(UserOrder.class);
             operations.dropCollection(Role.class);
             operations.dropCollection(Category.class);
             operations.dropCollection(Location.class);

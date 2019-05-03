@@ -8,4 +8,5 @@ public interface ShoppingCartService {
     Mono<Void> addItemToCart(Long productId);
     Flux<ShoppingCartProductDto> getUserCart();
     Mono<Void> removeItemFromCart(Long productId);
+    Mono<Void> processOrder();
 }

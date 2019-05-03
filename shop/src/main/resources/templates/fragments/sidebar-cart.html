@@ -17,18 +17,25 @@
                 <span>Item/Price</span>
             </a>
             <ul class="list-unstyled collapse show" id="categoryItemPrice" style="padding-left: 30px;">
-                <table class="table table-borderless table-striped">
-                    <tr th:each="element : ${productQuantity}">
-                        <td th:text="${element.product.name} + ' (' + ${element.quantity} +')'"></td>
-                        <td th:text="${#numbers.formatDecimal(element.product.price*element.quantity,1,2)}  + ' $'" class="text-right"></td>
-                    </tr>
-                    <tr>
-                        <th>Total: </th>
-                        <td class="text-right">
-                            <span th:text="${#numbers.formatDecimal(total,1,2)} + ' $'"></span>
-                        </td>
-                    </tr>
-                </table>
+                <li>
+                    <table class="table table-borderless table-striped">
+                        <tr th:each="element : ${productQuantity}">
+                            <td th:text="${element.product.name} + ' (' + ${element.quantity} +')'"></td>
+                            <td th:text="${#numbers.formatDecimal(element.product.price*element.quantity,1,2)}  + ' $'" class="text-right"></td>
+                        </tr>
+                        <tr>
+                            <th>Total: </th>
+                            <td class="text-right">
+                                <span th:text="${#numbers.formatDecimal(total,1,2)} + ' $'"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </li>
+                <li class="w-100">
+                    <form  th:method="post" th:action="@{/shopping-cart/order}">
+                        <button type="submit" class="btn btn-primary my-auto float-right pt-2 pb-2 pl-3 pr-3">Buy <i class="fas fa-shopping-cart"></i></button>
+                    </form>
+                </li>
             </ul>
         </li>
     </ul>

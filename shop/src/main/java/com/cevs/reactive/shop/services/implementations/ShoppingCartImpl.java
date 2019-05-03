@@ -1,11 +1,10 @@
 package com.cevs.reactive.shop.services.implementations;
 
-import com.cevs.reactive.shop.domain.Product;
-import com.cevs.reactive.shop.domain.ShoppingCart;
-import com.cevs.reactive.shop.domain.User;
+import com.cevs.reactive.shop.domain.*;
 import com.cevs.reactive.shop.dto.ShoppingCartProductDto;
 import com.cevs.reactive.shop.repositories.ProductRepository;
 import com.cevs.reactive.shop.repositories.ShoppingCartRepository;
+import com.cevs.reactive.shop.repositories.UserOrderRepository;
 import com.cevs.reactive.shop.services.ShoppingCartService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,19 +13,22 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.HashMap;
+import java.time.LocalDate;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ShoppingCartImpl implements ShoppingCartService {
 
     private final ShoppingCartRepository shoppingCartRepository;
     private final ProductRepository productRepository;
+    private final UserOrderRepository userOrderRepository;
     private final Logger log = LoggerFactory.getLogger(ShoppingCartImpl.class);
 
-    public ShoppingCartImpl(ShoppingCartRepository shoppingCartRepository, ProductRepository productRepository) {
+    public ShoppingCartImpl(ShoppingCartRepository shoppingCartRepository, ProductRepository productRepository, UserOrderRepository userOrderRepository) {
         this.shoppingCartRepository = shoppingCartRepository;
         this.productRepository = productRepository;
+        this.userOrderRepository = userOrderRepository;
     }
 
 
@@ -73,12 +75,12 @@ public class ShoppingCartImpl implements ShoppingCartService {
              });
         });
 
-        return monoMap.map(longLongMap ->  longLongMap.entrySet())
+        return monoMap.map(productIdQuantityMap ->  productIdQuantityMap.entrySet())
                 .flatMapIterable(entries -> entries)
-                .flatMap(longLongEntry -> {
-                    Mono<Product> monoProduct = productRepository.findById(longLongEntry.getKey());
+                .flatMap(productIdQuantityEntry -> {
+                    Mono<Product> monoProduct = productRepository.findById(productIdQuantityEntry.getKey());
                     return monoProduct.map(product -> {
-                        return new ShoppingCartProductDto(product,longLongEntry.getValue());
+                        return new ShoppingCartProductDto(product,productIdQuantityEntry.getValue());
                     });
                 });
     }
@@ -107,5 +109,35 @@ public class ShoppingCartImpl implements ShoppingCartService {
             }
             return shoppingCartRepository.save(shoppingCart);
         }).then();
+    }
+
+    @Override
+    public Mono<Void> processOrder() {
+        Mono<User> monoUser = ReactiveSecurityContextHolder.getContext()
+                .map(securityContext -> (User)securityContext.getAuthentication().getPrincipal());
+
+        Mono<Void> emptyCart = monoUser.map(user -> {
+            return  user.getId();
+        }).flatMap(id ->{
+            return shoppingCartRepository.deleteById(id);
+        });
+
+        return monoUser.flatMap(user -> {
+            Mono<ShoppingCart> monoShoppingCart = shoppingCartRepository.findByUserId(user.getId());
+            return monoShoppingCart.map(shoppingCart -> {
+                return shoppingCart.getProductIdQuantity().entrySet();
+            }).flatMapIterable(entries -> entries)
+                    .flatMap(productIdQuantityEntry -> {
+                        Mono<Product> monoProduct = productRepository.findById(productIdQuantityEntry.getKey());
+                        return monoProduct.map(product -> {
+                            return new Order(product, productIdQuantityEntry.getValue());
+                        });
+
+                    }).collect(Collectors.toList()).flatMap(orders -> {
+                        UserOrder userOrder = new UserOrder(user, orders, LocalDate.now());
+                        return userOrderRepository.save(userOrder);
+            });
+        }).then(emptyCart);
+
     }
 }

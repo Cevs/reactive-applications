@@ -43,4 +43,9 @@ public class ShoppingCartController {
         return shoppingCartService.removeItemFromCart(Long.parseLong(productId))
                 .then(Mono.just("redirect:/shopping-cart"));
     }
+
+    @PostMapping("/shopping-cart/order")
+    public Mono<String> processOrder(){
+        return shoppingCartService.processOrder().then(Mono.just("redirect:/shopping-cart"));
+    }
 }

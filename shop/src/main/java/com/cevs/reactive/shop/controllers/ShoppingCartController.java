@@ -1,6 +1,7 @@
 package com.cevs.reactive.shop.controllers;
 
 import com.cevs.reactive.shop.domain.ShoppingCart;
+import com.cevs.reactive.shop.dto.ShoppingCartProductDto;
 import com.cevs.reactive.shop.services.ShoppingCartService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.math.MathFlux;
 
 @Controller
 public class ShoppingCartController {
@@ -19,8 +22,14 @@ public class ShoppingCartController {
 
     @GetMapping("/shopping-cart")
     public Mono<String> shoppingCart(Model model){
-        Mono<ShoppingCart> monoShoppingCart = shoppingCartService.getUserCart();
-        model.addAttribute("shoppingCart", monoShoppingCart);
+        Flux<ShoppingCartProductDto> fluxProduct = shoppingCartService.getUserCart();
+        model.addAttribute("productQuantity", fluxProduct);
+        model.addAttribute("total",
+                MathFlux.sumDouble(
+                        fluxProduct.map(shoppingCartProductDto -> {
+                            return shoppingCartProductDto.getProduct().getPrice() * shoppingCartProductDto.getQuantity();
+                        }).defaultIfEmpty(0.0)
+                ));
         return Mono.just("shopping-cart");
     }
 

@@ -22,25 +22,25 @@
 </body>
 
 <div class="wrapper">
-    <div th:replace="fragments/sidebar-char :: sidebar"></div>
+    <div th:replace="fragments/sidebar-cart :: sidebar"></div>
     <div id="content">
         <div class="container" style="padding-top: 20px; margin:0;max-width: 100%;">
-            <div class="card m-3 w-100" th:each="item : ${shoppingCart?.products}">
-                <a th:href="@{'/product/' + ${item.id}}"
+            <div class="card m-3 w-100" th:each="element : ${productQuantity}">
+                <a th:href="@{'/product/' + ${element.product.id}}"
                    style="text-decoration: none;color: inherit; height:100%">
                     <div class="row no-gutters" style="height:100%">
                         <div class="col-md-4 my-auto">
-                            <img th:src="@{'/products/' + ${item.imageName} + '/raw'}" class="card-img p-2"
+                            <img th:src="@{'/products/' + ${element.product.imageName} + '/raw'}" class="card-img p-2"
                                  style="height: 100%">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body" style="height: 100%">
-                                <h5 class="card-title" th:text="${item.name}"></h5>
-                                <p class="card-text" th:text="${item.description}"></p>
-                                <p class="card-text"><strong></strong><strong th:text="${item.price}"></strong> $
+                                <h5 class="card-title" th:text="${element.product.name} + ' (' + ${element.quantity}+')'"></h5>
+                                <p class="card-text" th:text="${element.product.description}"></p>
+                                <p class="card-text"><strong></strong><strong th:text="${#numbers.formatDecimal(element.product.price,1,2)}"></strong> $
                                 </p>
 
-                                <form th:action="@{'/shopping-cart/' + ${item.id}}" th:method="delete" >
+                                <form th:action="@{'/shopping-cart/' + ${element.product.id}}" th:method="delete" >
                                     <input type="submit" class="btn btn-danger" value="Remove"/>
                                 </form>
                             </div>

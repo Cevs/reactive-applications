@@ -18,9 +18,15 @@
             </a>
             <ul class="list-unstyled collapse show" id="categoryItemPrice" style="padding-left: 30px;">
                 <table class="table table-borderless table-striped">
-                    <tr th:each="item : ${shoppingCart?.products}">
-                        <td th:text="${item.name}"></td>
-                        <td th:text="${item.price}"></td>
+                    <tr th:each="element : ${productQuantity}">
+                        <td th:text="${element.product.name} + ' (' + ${element.quantity} +')'"></td>
+                        <td th:text="${#numbers.formatDecimal(element.product.price*element.quantity,1,2)}  + ' $'" class="text-right"></td>
+                    </tr>
+                    <tr>
+                        <th>Total: </th>
+                        <td class="text-right">
+                            <span th:text="${#numbers.formatDecimal(total,1,2)} + ' $'"></span>
+                        </td>
                     </tr>
                 </table>
             </ul>

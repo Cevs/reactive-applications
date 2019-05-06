@@ -53,12 +53,16 @@ public class OutboundChatService extends UserParsingHandshakeHandler {
 
     private boolean validate(Message<String> message, String user){
         JsonObject obj = new JsonParser().parse(message.getPayload()).getAsJsonObject();
-        String receiver = obj.get("receiver").getAsString();
+        String receiver = getReceiver(obj);
         String sender = message.getHeaders().get(ChatServiceStream.USER_HEADER, String.class);
         return user.equals(sender) || user.equals(receiver);
     }
 
     private String transform(Message<String> message) {
         return message.getPayload();
+    }
+
+    private String getReceiver(JsonObject jsonMessageObject){
+        return jsonMessageObject.get("receiver").getAsString();
     }
 }

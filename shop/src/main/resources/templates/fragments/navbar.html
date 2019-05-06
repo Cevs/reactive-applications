@@ -26,14 +26,10 @@
                 </form>
             </li>
             <li th:if="${#authorization.getAuthentication() == null}" class="nav-item pr-2 ml-auto">
-                <form th:action="@{/login}" method="GET" >
-                    <input type="submit" class="btn btn-primary" value="Login"/>
-                </form>
+                <a th:href="@{/login}"  class="btn btn-primary">Login</a>
             </li>
             <li th:if="${#authorization.getAuthentication() == null}" class="nav-item pr-2">
-                <form th:action="@{/registration}" method="GET" >
-                    <input type="submit" class="btn btn-light" value="Sign in"/>
-                </form>
+                <a th:href="@{/registration}"  class="btn btn-light">Sign in</a>
             </li>
         </ul>
     </div>

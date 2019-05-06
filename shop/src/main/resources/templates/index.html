@@ -17,9 +17,10 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <script type="text/javascript" th:src="@{/js/index.js}"></script>
+    <link type="text/css" href="../css/chat.css" rel="stylesheet"/>
+
 </head>
 <body>
-
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <div class="wrapper">
@@ -68,5 +69,8 @@
     </div>
 </div>
 
+<div sec:authorize="isAuthenticated()" id="chatSection">
+</div>
+<script sec:authorize="isAuthenticated()" type="text/javascript" th:src="@{/js/chat.js}"></script>
 </body>
 </html>

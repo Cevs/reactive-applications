@@ -21,7 +21,6 @@
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <div class="container" style="padding-top: 20px; margin:0;max-width: 100%;">
-    <input id="username" style="display: none" th:value="${#authorization.getAuthentication()?.getName()}"/>
     <div class="row product-top align-items-start">
         <div class="col-sm">
             <img th:src="@{'/products/' + ${product.imageName} + '/raw'}" class="img-thumbnail rounded img-single-product mx-auto" width="700" height="500">

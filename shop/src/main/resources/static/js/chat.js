@@ -4,11 +4,12 @@ $(document).ready(function(){
 
     outboundChatMessage = null;
     inboundChatMessages = null;
-    username = $("#username").val();
+    username = $("#logged_username").text()
     if((outboundChatMessage == null || inboundChatMessages == null) && username != ""){
-
         seller = $("#sellerUsername").text();
-        arrayOfExistingChats.push(seller);
+        if(seller != '' || seller == 'undefined'){
+            arrayOfExistingChats.push(seller);
+        }
         outboundChatMessage = new WebSocket('ws://localhost:8200/app/chatMessage.new?user='
             + username);
 

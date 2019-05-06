@@ -22,7 +22,7 @@
             </li>
             <li class="nav-item pr-2" sec:authorize="isAuthenticated()">
                 <form th:action="@{/logout}" method="POST">
-                    <input type="submit" class="btn btn-danger" value="Logout"/>
+                    <input id="btn_logout" type="submit" class="btn btn-danger" value="Logout"/>
                 </form>
             </li>
             <li th:if="${#authorization.getAuthentication() == null}" class="nav-item pr-2 ml-auto">

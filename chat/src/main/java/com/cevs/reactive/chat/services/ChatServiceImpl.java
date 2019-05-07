@@ -26,4 +26,11 @@ public class ChatServiceImpl implements ChatService{
                 .filter(chat -> participants.contains(chat.getReceiver()));
         return chatFlux;
     }
+
+    @Override
+    public Mono<Void> createUserChatStore(String username) {
+        return userChatStoreRepository.save(
+                new UserChatStore(username)
+        ).then();
+    }
 }

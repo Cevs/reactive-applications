@@ -2,6 +2,7 @@ package com.cevs.reactive.shop.services.implementations;
 
 import com.cevs.reactive.shop.domain.User;
 import com.cevs.reactive.shop.dto.UserDto;
+import com.cevs.reactive.shop.helpers.ChatHelper;
 import com.cevs.reactive.shop.repositories.UserRepository;
 import com.cevs.reactive.shop.services.UserRegistrationService;
 import org.slf4j.Logger;
@@ -13,10 +14,12 @@ import reactor.core.publisher.Mono;
 public class UserRegistrationServiceImpl implements UserRegistrationService {
 
     private final UserRepository userRepository;
+    private final ChatHelper chatHelper;
     private final Logger log = LoggerFactory.getLogger(UserRegistrationServiceImpl.class);
 
-    public UserRegistrationServiceImpl(UserRepository userRepository) {
+    public UserRegistrationServiceImpl(UserRepository userRepository, ChatHelper chatHelper) {
         this.userRepository = userRepository;
+        this.chatHelper = chatHelper;
     }
 
     @Override
@@ -28,7 +31,8 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         Mono<User> createNewUser = userRepository.existsByUsername(userDto.getUsername())
                 .flatMap(exists -> {
                     if(!exists){
-                        return  Mono.just(new User(userDto.getEmail(),userDto.getUsername(),userDto.getPassword()));
+                        return chatHelper.createUserChatStore(userDto.getUsername())
+                                .then(Mono.just(new User(userDto.getEmail(),userDto.getUsername(),userDto.getPassword())));
                     }else{
                         return Mono.empty();
                     }

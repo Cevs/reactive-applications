@@ -1,10 +1,10 @@
-package com.cevs.reactive.chat.domain;
+package com.cevs.reactive.shop.domain.initDb;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -13,9 +13,4 @@ import java.util.List;
 public class Chat {
     private String receiver;
     private List<Message> messages;
-
-    public Chat(String receiver){
-        this.receiver = receiver;
-        this.messages = new ArrayList<>();
-    }
 }

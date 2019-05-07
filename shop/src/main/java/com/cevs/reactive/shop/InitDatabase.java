@@ -1,6 +1,7 @@
 package com.cevs.reactive.shop;
 
 import com.cevs.reactive.shop.domain.*;
+import com.cevs.reactive.shop.domain.initDb.UserChatStore;
 import com.thedeanda.lorem.Lorem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +53,7 @@ public class InitDatabase {
             operations.dropCollection(User.class);
             operations.dropCollection(Advertisement.class);
             operations.dropCollection(ShoppingCart.class);
+            operations.dropCollection(UserChatStore.class);
 
             insertRoles();
             insertCategories();
@@ -60,6 +62,7 @@ public class InitDatabase {
             insertProducts();
             insertComments();
             insertAdvertisements();
+            createUserChatStores();
         };
     }
 
@@ -101,6 +104,19 @@ public class InitDatabase {
             advertisementList.add(getAdvertisement(i));
         }
         operations.insertAll(advertisementList);
+    }
+
+    private void createUserChatStores(){
+        List<UserChatStore> userChatStores = new ArrayList<>();
+        for(int i= 0; i<NUMBER_OF_USERS; i++){
+            userChatStores.add(createChatStore(i));
+        }
+        userChatStores.add(new UserChatStore("AlenMartincevic"));
+        operations.insertAll(userChatStores);
+    }
+
+    private UserChatStore createChatStore(int index){
+        return new UserChatStore(userList.get(index).getUsername());
     }
 
     private Advertisement getAdvertisement(long id){

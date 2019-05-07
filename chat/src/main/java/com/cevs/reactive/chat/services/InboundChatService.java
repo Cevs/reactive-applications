@@ -2,7 +2,9 @@ package com.cevs.reactive.chat.services;
 
 import com.cevs.reactive.chat.UserParsingHandshakeHandler;
 import com.cevs.reactive.chat.domain.Chat;
-import com.cevs.reactive.chat.repositories.ChatRepository;
+import com.cevs.reactive.chat.domain.Message;
+import com.cevs.reactive.chat.domain.UserChatStore;
+import com.cevs.reactive.chat.repositories.UserChatStoreRepository;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.slf4j.Logger;
@@ -12,18 +14,21 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.WebSocketSession;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @Service
 @EnableBinding(ChatServiceStream.class)
 public class InboundChatService extends UserParsingHandshakeHandler {
 
-    private final ChatRepository chatRepository;
+    private final UserChatStoreRepository userChatStoreRepository;
     private final ChatServiceStream chatServiceStream;
     private final Logger log = LoggerFactory.getLogger(InboundChatService.class);
 
-    public InboundChatService(ChatRepository chatRepository, ChatServiceStream chatServiceStream) {
-        this.chatRepository = chatRepository;
+    public InboundChatService(UserChatStoreRepository userChatStoreRepository, ChatServiceStream chatServiceStream) {
+        this.userChatStoreRepository = userChatStoreRepository;
         this.chatServiceStream = chatServiceStream;
     }
 
@@ -37,16 +42,12 @@ public class InboundChatService extends UserParsingHandshakeHandler {
                 .log(getUser(session.getId())
                         + "-inbound-convert-to-text")
                 .flatMap(message ->{
-                        if(!message.isEmpty()){
-                            return Mono.defer(() -> {
-                                return saveToDatabase(message);
-                            }).flatMap(chat -> {
-                                return broadcast(message, getUser(session.getId()));
-                            });
-                        }
-                        else{
-                            return Mono.empty();
-                        }
+                    if(!message.isEmpty()){
+                        return saveToDatabase(message).then(broadcast(message,getUser(session.getId())));
+                    }
+                    else{
+                        return Mono.empty();
+                    }
                 })
                 .log(getUser(session.getId())
                         + "-inbound-broadcast-to-broker")
@@ -65,13 +66,33 @@ public class InboundChatService extends UserParsingHandshakeHandler {
     }
 
 
-    private Mono<Chat> saveToDatabase(String message){
+    private Mono<Void> saveToDatabase(String message){
         JsonObject objMsg = new JsonParser().parse(message).getAsJsonObject();
         String receiver = getReceiver(objMsg);
         String sender = getSender(objMsg);
         String messageContent = getMessage(objMsg);
-        Chat chat = new Chat(receiver,sender,messageContent);
-        return chatRepository.save(chat);
+        Message messageObj = new Message(receiver,sender,messageContent);
+        return Mono.when(updateUserStore(sender, receiver, messageObj), updateUserStore(receiver,sender,messageObj));
+    }
+
+    private Mono<UserChatStore> updateUserStore(String chatOwner, String participant, Message message){
+        return userChatStoreRepository.findById(chatOwner)
+                .flatMap(userChatStore -> {
+                    Mono<Chat> chatMono = Flux.fromIterable(userChatStore.getChats())
+                            .filter(chat -> chat.getReceiver().equals(participant))
+                            .next()
+                            .defaultIfEmpty(new Chat(participant));
+
+                    return chatMono.flatMap(chat -> {
+                        chat.getMessages().add(message);
+                        List<Chat> existingChats = userChatStore.getChats();
+                        if(!existingChats.contains(chat)){
+                            existingChats.add(chat);
+                            userChatStore.setChats(existingChats);
+                        }
+                        return userChatStoreRepository.save(userChatStore);
+                    });
+                });
     }
 
     private String getSender(JsonObject jsonMessageObject){

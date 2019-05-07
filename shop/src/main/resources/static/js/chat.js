@@ -140,6 +140,20 @@ function clearChatWindowsSection(){
  */
 function refreshChatWindows(){
     clearChatWindowsSection();
+    $.ajax({
+        url: "http://localhost:8200/chats/"+username,
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json',
+        data:JSON.stringify(chatWindows),
+        async:true,
+        success: function (dataArr) {
+            updateChatWindows(dataArr);
+        }
+    });
+}
+
+function updateChatWindows(dataArr){
     for(var i = 0; i<chatWindows.length; i++){
         var user = chatWindows[i];
         positionRight = 20 + i * 320;
@@ -161,6 +175,24 @@ function refreshChatWindows(){
 
         //Append chatbox
         $("#chatSection").append($chatBox);
+
+
+        if(dataArr != ""){
+            $.each(dataArr, function (key,value) {
+                receiver = value.receiver;
+                if(receiver == user){
+                    msgArray = value.messages;
+                    $.each(msgArray, function(key,value){
+                        if(value.receiver == receiver){
+                            $div = $("<p class='message'><span class='send'>"+value.text+"</span></p>");
+                        }else{
+                            $div = $("<p class='message'><span class='receive'>"+value.text+"</span></p>");
+                        }
+                        $("#chatDisplay-"+user).append($div)
+                    });
+                }
+            });
+        }
 
 
         //bind functions
@@ -205,4 +237,3 @@ function refreshChatWindows(){
         });
     }
 }
-

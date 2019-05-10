@@ -197,6 +197,7 @@ function updateChatWindows(dataArr){
 
         //bind functions
         $("#chatheader-"+user).on("click",function(event){
+            user = (event.currentTarget.id).substring(11); //Remove 'chatheader--' to get username
             if($("#container-"+user).is(":visible")){
                 $("#container-"+user).hide();
                 $("#replySection-"+user).hide();

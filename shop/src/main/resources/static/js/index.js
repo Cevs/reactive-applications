@@ -84,18 +84,32 @@ function fetchProducts(){
             $.each(dataArr, function(index, value){
                 product = value;
                 $div =$(
-                    "<div class=\"card m-3\" style=\"width:20rem; height:20rem;\">"+
-                    "<a href=\"product/" + product.id +"\" style=\"text-decoration: none;color: inherit; height:100%\">"+
-                    "<div class=\"row no-gutters\" style=\"height:100%\">"+
-                    "<div class=\"col-md-4 my-auto\">"+
-                    "<img src=\"products/" + product.imageName + "/raw\" class=\"card-img p-2\" style=\"height: 100%\">"+
-                    "</div>"+
-                    "<div class=\"col-md-8\">"+
-                    "<div class=\"card-body\" style=\"height: 100%\">"+
-                    "<h5 class=\"card-title\">"+product.name+"</h5>"+
+                    // "<div class=\"card m-3\" style=\"width:20rem; height:20rem;\">"+
+                    // "<a href=\"product/" + product.id +"\" style=\"text-decoration: none;color: inherit; height:100%\">"+
+                    // "<div class=\"row no-gutters\" style=\"height:100%\">"+
+                    // "<div class=\"col-md-4 my-auto\">"+
+                    // "<img src=\"products/" + product.imageName + "/raw\" class=\"card-img p-2\" style=\"height: 100%\">"+
+                    // "</div>"+
+                    // "<div class=\"col-md-8\">"+
+                    // "<div class=\"card-body\" style=\"height: 100%\">"+
+                    // "<h5 class=\"card-title\">"+product.name+"</h5>"+
+                    // "<p class=\"card-text\">"+product.description+"</p>"+
+                    // "<p class=\"card-text\"><strong>$ </strong><strong>"+product.price+"</strong></p>"+
+                    // "</div>"+
+                    // "</div>"+
+                    // "</div>"+
+                    // "</a>"+
+                    // "</div>"
+                    "<div class=\"card m-3\" style=\"width:30rem; height:35rem;\">"+
+                    "<a href=\"product/" + product.id +"\" style=\"text-decoration: none;color: inherit; height:100%\" class=\"my-card\">"+
+                    "<div class=\"row no-gutters\">"+
+                    "<img src=\"products/" + product.imageName + "/raw\" class=\"card-img mx-auto d-block\" style=\"height: 18rem\">"+
+                    "<div class=\"card-body item\" style=\"height: 100%\">"+
+                    "<h3 class=\"card-title\">"+product.name+"</h3>"+
                     "<p class=\"card-text\">"+product.description+"</p>"+
-                    "<p class=\"card-text\"><strong>$ </strong><strong>"+product.price+"</strong></p>"+
                     "</div>"+
+                    "<div class=\"card-footer\">"+
+                    "Price: <strong>$<span>"+product.price+"</span></strong>"+
                     "</div>"+
                     "</div>"+
                     "</a>"+

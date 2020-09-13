@@ -1,5 +1,6 @@
 body{
-    font-family: monospace!important;
+    /*font-family: monospace!important;*/
+    font-family: 'Crimson Text', serif;
 }
 
 table {
@@ -14,6 +15,9 @@ td, th {
     border: 1px solid #999;
     padding: 0.5rem;
     text-align: left;
+}
+td{
+    word-break:break-all;
 }
 
 .thumbnail {
@@ -81,11 +85,27 @@ a:hover, a:visited, a:link, a:active
     padding-left: 10% !important;
 }
 
+.item{
+    /*margin-top:-75px;*/
+    height: 200px;
+}
+
 .card-text{
-    overflow: hidden;
     display: -webkit-box;
+    font-size: 20px !important;
     -webkit-line-clamp: 7;
     -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    max-height: 100px;
+    text-align: left;
+    overflow: hidden;
+}
+
+.card-footer{
+    position:absolute;
+    bottom:0;
+    width: 100%;
+    font-size: 20px !important;
 }
 
 #chatSection{
@@ -98,4 +118,50 @@ a:hover, a:visited, a:link, a:active
 .nav-link{
     height:100% !important;
     font-size:16px!important;
+}
+.my-card{
+    text-decoration: none !important;
+    color: inherit;
+    height:100%;
+    background:#f8f9fa;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 18px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.my-card:hover {
+    box-shadow: 0 0 6px rgba(35, 173, 278, 1);
+}
+
+#btnUpdateProduct, #btnUpdateProduct, #btnCancel, #btnSaveProduct{
+    width: 80px;
+}
+
+.img-thumbnail{
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 18px 0 rgba(0, 0, 0, 0.19);
+    padding:0;
+    border:none;
+}
+
+table.center {
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.underline{
+    text-decoration: underline;
+}
+
+li{
+    font-size: 20px;
+}
+.nav-link{
+    font-size: 20px !important;
+}
+
+.btn{
+    font-size: 1.2rem !important;
+}
+
+.card-img{
+    width: 100% !important;
 }

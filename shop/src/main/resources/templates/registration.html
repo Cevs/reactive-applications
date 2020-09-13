@@ -18,12 +18,12 @@
     <script type="text/javascript" th:src="@{/js/registration.js}"></script>
 </head>
 <body>
-<div class="container">
-    <form action="/registration" th:object="${user}" method="POST" enctype="utf8" >
-        <div class="registration mx-auto my-auto">
-            <div class="registration-screen">
-                <div class="app-title">
-                    <h1>Registration</h1>
+<div class="row h-100 w-100">
+    <form action="/registration" th:object="${user}" method="POST" enctype="utf8" class="mx-auto my-auto">
+        <div class="registration-screen row" style="width: 900px">
+            <div class="my-auto mx-auto" style="width: 100%;">
+                <div class="app-title my-auto">
+                    <h1 style="margin-bottom: 60px">Registration</h1>
                 </div>
 
                 <div class="registration-form">
@@ -48,7 +48,7 @@
                         <p id="err_re_password" class="no-display err-message"></p>
                     </div>
 
-                    <input id="btn_register" type="submit" class="btn btn-primary btn-large" value="Register" />
+                    <input id="btn_register" type="submit" class="btn btn-primary btn-large" value="Register" style="width: 80%;  height: 60px; font-size: 25px" />
                     <a class="registration-link" href="/login">Already have an account?</a>
                     <div class="alert alert-danger" role="alert" style="margin-top:5px;margin-bottom:5px;" th:if="${message}">
                         <span th:text="${message}"></span>

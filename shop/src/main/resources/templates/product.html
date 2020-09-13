@@ -45,19 +45,23 @@
                             <a id="navLinkSellerInfo" class="nav-link" >Seller info</a>
                         </li>
                         <li th:if="${#authorization.getAuthentication().getName()} == ${product.owner}" class="nav-item ml-auto" >
-                            <button th:value="${product.id}" id="btnUpdateProduct" type="button" class="btn btn-primary mx-auto" ><i class="far fa-edit"></i></button>
+                            <button th:value="${product.id}" id="btnUpdateProduct" type="button" class="btn btn-primary mx-auto" >
+                                Edit
+                            </button>
                         </li>
                         <li th:if="${#authorization.getAuthentication().getName()} == ${product.owner}" class="nav-item" style="margin-left:10px;">
                             <form th:method="delete" th:action="@{'/product/' + ${product.id}}">
-                                <button id="btnDeleteProduct" type="input" class="btn btn-danger mx-auto" ><i class="fas fa-trash-alt"></i></button>
+                                <button id="btnDeleteProduct" type="input" class="btn btn-danger mx-auto" >
+                                    Delete
+                                </button>
                             </form>
                         </li>
                     </ul>
                 </div>
                 <div class="card-body">
                     <div class="product-about">
-                        <h5 class="card-title">About</h5>
-                        <table class="table table-borderless">
+                        <h2 class="card-title underline">About</h2>
+                        <table class="table table-borderless" style="font-size: 20px">
                             <tr>
                                 <th class="text-left"><p><strong>Name:</strong></p></th>
                                 <td><p th:text="${product.name}"></p></td>
@@ -87,19 +91,19 @@
                         </table>
                     </div>
                     <div class="product-review" style="display:none">
-                        <h5 class="card-title">User review</h5>
+                        <h2 class="card-title underline">User review</h2>
                         <div id="userReviewSection">
                             <div id="userInfo" th:each="userReview : ${userReviews}" class="card mb-3">
                                 <div class="row no-gutters p-1">
                                     <div class="col-md-2  align-self-center">
-                                        <img th:if="${userReview.user.imageName != ''}" th:src="@{'/user/' + ${userReview.user.imageName} + '/raw'}"  class="card-img mx-auto p-1" style="height:80%;">
-                                        <img th:if="${userReview.user.imageName == ''}" th:src="@{'../images/profileplaceholder.jpg'}"  class="card-img mx-auto p-1" style="height:80%;">
-                                        <p style="font-size:12px; margin:0" th:text="${userReview.user.username}"></p>
-                                        <p class="card-text"><small class="text-muted" style="font-size:12px;" th:text="${userReview.review.date}"></small></p>
+                                        <img th:if="${userReview.user.imageName != ''}" th:src="@{'/user/' + ${userReview.user.imageName} + '/raw'}"  class="card-img mx-auto p-1" style="height:150px">
+                                        <img th:if="${userReview.user.imageName == ''}" th:src="@{'../images/profileplaceholder.jpg'}"  class="card-img mx-auto p-1" style="height:150px">
+                                        <p style="font-size:16px; margin:0" th:text="${userReview.user.username}"/>
+                                        <p class="text-muted" style="font-size:16px;" th:text="${userReview.review.date}"/>
                                     </div>
                                     <div class="col-md-10  align-self-center">
                                         <div class="card-body pt-0 pb-0">
-                                            <p class="card-text"  style="font-size:14px;" th:text="${userReview.review.comment}"></p>
+                                            <p class="card-text" th:text="${userReview.review.comment}"/>
                                         </div>
                                     </div>
                                 </div>
@@ -111,8 +115,8 @@
                         <button th:id="${product.id}" class="btn btn-success float-right m-1 button-review">Submit</button>
                     </div>
                     <div class="seller-info" style="display:none">
-                        <h5 class="card-title">Seller Info</h5>
-                        <table class="table table-borderless">
+                        <h2 class="card-title underline">Seller Info</h2>
+                        <table class="table table-borderless center" style="width:80%; font-size: 20px">
                             <tr>
                                 <td rowspan="2"><img th:src="@{'/user/' + ${user.imageName} + '/raw'}" width="200" height="200"/></td>
                                 <th class="text-left"><p><strong>Username:</strong></p></th>
@@ -129,18 +133,18 @@
         </div>
 
         <div class="col-sm">
-            <img id="advertisementImagePrimary" th:src="@{'/advertisement/' + ${initialAdvertisements.primaryImage} + '/raw'}" class="card-img  mx-auto p-1 advertisement-image">
+            <img id="advertisementImagePrimary" th:src="@{'/advertisement/' + ${initialAdvertisements.primaryImage} + '/raw'}" class="card-img mx-auto d-block p-2 advertisement-image">
             <br/>
-            <img id="advertisementImageSecondary" th:src="@{'/advertisement/' + ${initialAdvertisements.secondaryImage} + '/raw'}"   class="card-img mx-auto p-1 advertisement-image">
+            <img id="advertisementImageSecondary" th:src="@{'/advertisement/' + ${initialAdvertisements.secondaryImage} + '/raw'}"   class="card-img mx-auto d-block p-2 advertisement-image">
         </div>
     </div>
 
     <div class="card" style="border: none" >
-        <h5 class="card-header text-center">Similar Products</h5>
+        <h3 class="card-header text-center">Similar Products</h3>
         <div class="row align-items-start justify-content-center p-2" style="border: none;" >
                 <div th:each="similarProduct : ${similarProducts}" class="card m-2" style="width:20rem">
-                    <a th:href="@{'/product/' + ${similarProduct.id}}" >
-                        <img th:src="@{'/products/' + ${similarProduct.imageName} + '/raw'}" class="card-img mx-auto p-2" style="width:20rem; height: 15rem;">
+                    <a th:href="@{'/product/' + ${similarProduct.id}}" class="my-card" >
+                        <img th:src="@{'/products/' + ${similarProduct.imageName} + '/raw'}" class="card-img mx-auto" style="height: 15rem;">
                         <div class="card-body p-2 m-2">
                             <table class="table table-borderless m-0 table-similar-products">
                                 <tr>

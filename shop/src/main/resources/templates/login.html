@@ -18,34 +18,32 @@
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
 <body>
-<div class="container">
-    <form th:action="@{/login}" method="post" th:object="${user}">
-        <div class="login mx-auto my-auto">
-            <div class="login-screen">
-                <div class="app-title">
-                    <h1>Login</h1>
-                </div>
-
-                <div class="login-form">
-                    <div class="control-group">
-                        <input type="text" class="login-field" value="" placeholder="username" id="login_name" name="username">
-                        <label class="login-field-icon fui-user" for="login_name"></label>
+<div class="row h-100 w-100">
+    <form th:action="@{/login}" method="post" th:object="${user}" class="mx-auto my-auto">
+            <div class="login-screen row" style="width: 900px">
+                <div class="my-auto mx-auto" style="width: 100%;">
+                    <div class="app-title my-auto">
+                        <h1 style="margin-bottom: 60px">Sing In</h1>
                     </div>
+                    <div class="login-form">
+                        <div class="control-group">
+                            <input type="text" class="login-field" value="" placeholder="username" id="login_name" name="username">
+                            <label class="login-field-icon fui-user" for="login_name"></label>
+                        </div>
 
-                    <div class="control-group">
-                        <input type="password" class="login-field" value="" placeholder="password" id="login_password" name="password">
-                        <label class="login-field-icon fui-lock" for="login_password"></label>
+                        <div class="control-group">
+                            <input type="password" class="login-field" value="" placeholder="password" id="login_password" name="password">
+                            <label class="login-field-icon fui-lock" for="login_password"></label>
+                        </div>
+
+                        <div class="alert alert-danger mx-auto" role="alert" style="margin-top:5px;margin-bottom:5px; width:80%; height: 60px; font-size: 18px;" th:if="${param.error}">
+                            <span>Invalid Credentials</span>
+                        </div>
+                        <input type="submit" value="Login" class="btn btn-primary btn-large" style="width: 80%;  height: 60px; font-size: 25px"/>
+                        <a class="login-link" href="/registration">Don't have an account?</a>
                     </div>
-
-                    <div class="alert alert-danger mx-auto" role="alert" style="margin-top:5px;margin-bottom:5px; width:250px;" th:if="${param.error}">
-                        <span>Invalid Credentials</span>
-                    </div>
-
-                    <input type="submit" value="login" class="btn btn-primary btn-large"/>
-                    <a class="login-link" href="/registration">Don't have an account?</a>
                 </div>
             </div>
-        </div>
     </form>
 </div>
 

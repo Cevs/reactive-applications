@@ -1,9 +1,9 @@
-@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+/*@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";*/
 /*
  DEMO STYLE
  */
 body {
-    font-family: 'Poppins', sans-serif;
+    /*font-family: 'Poppins', sans-serif;*/
     background: #fafafa;
 }
 
@@ -12,9 +12,9 @@ body {
 }
 
 p {
-    font-family: 'Poppins', sans-serif;
+    /*font-family: 'Poppins', sans-serif;*/
     font-size: 1.1em;
-    font-weight: 300;
+    /*font-weight: 300;*/
     line-height: 1.7em;
     color: #999;
 }
@@ -172,7 +172,9 @@ a.article, a.article:hover {
     padding: 8px;
     min-height: 100vh;
     transition: all 0.3s;
-    background:#f8f9fa!important;
+    /*background:#f8f9fa!important;*/
+    background:#ffffff!important;
+    width: 100%;
 }
 /* ---------------------------------------------------
  MEDIAQUERIES

@@ -33,9 +33,10 @@ $(document).ready(function(){
         var tupleObject = JSON.parse(dataObj);
         var imageNamePrimary = tupleObject.t1.imageName;
         var imageNameSecondary = tupleObject.t2.imageName;
-
-        $("#advertisementImagePrimary").attr('src',  "/advertisement/" + imageNamePrimary + "/raw");
-        $("#advertisementImageSecondary").attr('src',  "/advertisement/" + imageNameSecondary + "/raw");
+        $("#advertisementImagePrimary").attr('src',  "/advertisement/"
+            + imageNamePrimary + "/raw");
+        $("#advertisementImageSecondary").attr('src',  "/advertisement/"
+            + imageNameSecondary + "/raw");
     }
 
 
@@ -66,13 +67,13 @@ $(document).ready(function(){
                 "<div id=\"userInfo-\" class=\"card mb-3\">"+
                     "<div class=\"row no-gutters p-1\">"+
                         "<div class='col-md-2  align-self-center'>" +
-                            "<img src=\""+img+"\"  class=\'card-img mx-auto p-1\ style=\'height:80%;\'>" +
-                            "<p style=\'font-size:12px; margin:0\'>"+userData.username+"</p>"+
-                            "<p class=\'card-text\'><small class=\'text-muted\' style=\'font-size:12px;\'>"+date+"</small></p>"+
-                        "</div>"+
+                            "<img src=\""+img+"\"  class=\'card-img mx-auto p-1\ style=\'height:150px;\'>" +
+                            "<p style=\'font-size:16px; margin:0\'>"+userData.username+"</p>"+
+                            "<p class=\'text-muted\' style=\'font-size:16px;\'>"+date+"</p>"+
+                "</div>"+
                         "<div class=\"col-md-10  align-self-center\">" +
                             "<div class=\"card-body pt-0 pb-0\">" +
-                                "<p class=\'card-text\'  style=\'font-size:14px;\'>"+reviewData.comment+"</p>"+
+                                "<p class=\'card-text\'>"+reviewData.comment+"</p>"+
                             "</div>"+
                         "</div>"+
                     "</div>"+

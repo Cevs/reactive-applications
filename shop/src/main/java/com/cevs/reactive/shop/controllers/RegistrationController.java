@@ -15,10 +15,8 @@ import reactor.core.publisher.Mono;
 
 @Controller
 public class RegistrationController {
-
     @Autowired
     UserRegistrationService userRegistrationService;
-    private final Logger log = LoggerFactory.getLogger(RegistrationController.class);
 
     @GetMapping("/registration")
     public Mono<String> registration(){
@@ -26,13 +24,20 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public Mono<String> registerNewUserAccount(@ModelAttribute("user") UserDto userDto, Model model){
+    public Mono<String> registerNewUserAccount(
+            @ModelAttribute("user") UserDto userDto,
+            Model model) {
         return userRegistrationService.registerNewUserAccount(userDto)
-                .flatMap(user -> {
-                        return Mono.just("redirect:/login");
-                }).switchIfEmpty(Mono.defer(() -> {
-                    model.addAttribute("message", "Unsuccessful registration!");
-                    return Mono.just("registration");
-                }));
+                .map(user -> redirectToLoginPage())
+                .switchIfEmpty(returnRegistrationPageWithErrorMsg(model));
+    }
+
+    private String redirectToLoginPage(){
+        return "redirect:/login";
+    }
+
+    private Mono<String> returnRegistrationPageWithErrorMsg(Model model){
+        model.addAttribute("message", "Unsuccessful registration!");
+        return Mono.just("registration");
     }
 }

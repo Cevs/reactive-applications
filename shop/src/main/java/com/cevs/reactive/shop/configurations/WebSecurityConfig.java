@@ -21,7 +21,9 @@ import java.net.URI;
 public class WebSecurityConfig {
 
     @Bean
-    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http){
+    public SecurityWebFilterChain securityWebFilterChain(
+            ServerHttpSecurity http)
+    {
         return http
                 .authorizeExchange()
                 .pathMatchers("/registration*", "/resources/**", "/templates/**", "/login*","/user/exist",

@@ -61,7 +61,7 @@ public class HomeController {
     public Mono<String> index(Model model) {
 
         IReactiveDataDriverContextVariable reactiveDataDrivenMode =
-                new ReactiveDataDriverContextVariable( productHelper.getAllProducts()
+                new ReactiveDataDriverContextVariable(productHelper.getAllProducts()
                         .map(product-> new HashMap<String, Object>(){{
                             log.info(product.toString());
                             put("id", product.getId());
@@ -70,8 +70,7 @@ public class HomeController {
                             put("imageName", product.getImageName());
                             put("category", product.getCategory());
                             put("price", product.getPrice());
-                        }})
-                        ,1);
+                        }}),1);
 
         model.addAttribute("products", reactiveDataDrivenMode);
         model.addAttribute("categories", categoryService.getAllCategories());

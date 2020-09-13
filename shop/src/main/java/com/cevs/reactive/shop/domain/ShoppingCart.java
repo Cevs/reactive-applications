@@ -1,6 +1,5 @@
 package com.cevs.reactive.shop.domain;
 
-import javafx.util.Pair;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

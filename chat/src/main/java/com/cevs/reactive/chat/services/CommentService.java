@@ -17,46 +17,50 @@ import reactor.core.publisher.Mono;
 
 @Service
 @EnableBinding(Sink.class)
-public class CommentService implements WebSocketHandler {
-
+public class CommentService implements WebSocketHandler
+{
     private ObjectMapper mapper;
     private Flux<Review> flux;
     private FluxSink<Review> webSocketCommentSink;
     private final static Logger log = LoggerFactory.getLogger(CommentService.class);
 
-    public CommentService(ObjectMapper mapper) {
+    public CommentService(ObjectMapper mapper)
+    {
         this.mapper = mapper;
         this.flux = Flux.<Review>create(
                 emitter -> this.webSocketCommentSink = emitter,
-                FluxSink.OverflowStrategy.IGNORE)
-                .publish()
-                .autoConnect();
+                FluxSink.OverflowStrategy.IGNORE
+        ).publish().autoConnect();
     }
 
     @StreamListener(Sink.INPUT)
-    public void broadcast(Review review){
+    public void broadcast(Review review)
+    {
         log.info("STIGAO REVIEW: " + review.toString());
-        if(webSocketCommentSink != null){
+        if (webSocketCommentSink != null)
+        {
             log.info("Publishing " + review.toString() + " to websocket...");
             webSocketCommentSink.next(review);
         }
     }
 
     @Override
-    public Mono<Void> handle(WebSocketSession session) {
+    public Mono<Void> handle(WebSocketSession session)
+    {
         return session.send(this.flux
-        .map(review ->{
-            try{
-                return mapper.writeValueAsString(review);
-            }catch (JsonProcessingException e){
-                throw new RuntimeException(e);
-            }
-        }).log("encode-as-json")
+                .map(review -> {
+                    try
+                    {
+                        return mapper.writeValueAsString(review);
+                    }
+                    catch (JsonProcessingException e)
+                    {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .log("encode-as-json")
                 .map(session::textMessage)
-                .log("wrap-as-websocket-message"))
-                .log("publish-to-websocket");
-
+                .log("wrap-as-websocket-message")
+        ).log("publish-to-websocket");
     }
-
-
 }

@@ -45,7 +45,9 @@ public class ReviewController {
         if(reviewSink != null){
             return ReactiveSecurityContextHolder.getContext()
                     .map(context ->{
-                        User user = (User) context.getAuthentication().getPrincipal();
+                        User user = (User) context
+                                .getAuthentication()
+                                .getPrincipal();
                         return user.getId();
                     })
                     .map(userId ->{
@@ -54,23 +56,15 @@ public class ReviewController {
                         reviewSink.next(
                             MessageBuilder
                                 .withPayload(review)
-                                .setHeader(MessageHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE).build());
+                                .setHeader(
+                                        MessageHeaders.CONTENT_TYPE,
+                                        MediaType.APPLICATION_JSON_VALUE
+                                )
+                                .build());
                             return review;
                     }).flatMap(review -> {
                         return Mono.just(ResponseEntity.noContent().build()); //return HTTP 204(No Content) -> Indicate success
                     });
-
-            /*return newReview
-                    .map(review -> {
-                        reviewSink.next(
-                                MessageBuilder
-                                        .withPayload(review)
-                                        .setHeader(MessageHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE).build());
-                        return review;
-                    })
-                    .flatMap(review -> {
-                        return Mono.just(ResponseEntity.noContent().build()); //return HTTP 204(No Content) -> Indicate success
-                    });*/
         }else{
             return Mono.just(ResponseEntity.noContent().build());
         }

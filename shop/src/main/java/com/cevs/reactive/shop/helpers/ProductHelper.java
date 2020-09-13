@@ -23,7 +23,6 @@ public class ProductHelper {
     public ProductHelper() {
         this.webClient = WebClient.create("http://localhost:9090");
     }
-
     @HystrixCommand(fallbackMethod = "defaultProducts")
     public Flux<Product> getAllProducts(){
         Mono<String> monoUsername = ReactiveSecurityContextHolder.getContext()

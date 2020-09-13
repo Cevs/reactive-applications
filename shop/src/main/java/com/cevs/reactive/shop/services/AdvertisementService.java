@@ -8,7 +8,6 @@ import reactor.util.function.Tuple2;
 
 public interface AdvertisementService {
     Mono<Resource> findOneAdvertisement(String filename);
-    Flux<Advertisement> getPeriodicallyAdvertisement(long period);
     Flux<Tuple2<Advertisement, Advertisement>> getPeriodicallyAdvertisements(long period);
     Mono<Tuple2<Advertisement, Advertisement>> getInitialAdvertisement();
 }

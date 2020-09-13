@@ -9,6 +9,7 @@ import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Processor;
+import org.springframework.cloud.stream.reactive.StreamEmitter;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
@@ -16,7 +17,8 @@ import reactor.core.publisher.Flux;
 @EnableBinding(Processor.class)
 public class ReviewService {
 
-    private final static Logger log = LoggerFactory.getLogger(ReviewService.class);
+    private final static Logger log =
+            LoggerFactory.getLogger(ReviewService.class);
     private ReviewRepository reviewRepository;
 
     public ReviewService(ReviewRepository reviewRepository) {
@@ -25,7 +27,10 @@ public class ReviewService {
 
     @StreamListener
     @Output(Processor.OUTPUT)
-    public Flux<Review> save(@Input(Processor.INPUT) Flux<Review> newComments){
+//    @StreamEmitter
+    public Flux<Review> save(
+            @Input(Processor.INPUT) Flux<Review> newComments)
+    {
         return reviewRepository
                 .saveAll(newComments)
                 .log("reviewService-save")
